@@ -1,6 +1,7 @@
 **/*.o
 **/*.a
 
+.vscode
 *.pdf
 obj
 minishell

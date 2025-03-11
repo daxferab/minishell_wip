@@ -6,7 +6,7 @@
 #    By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/10 20:17:51 by pdel-olm          #+#    #+#              #
-#    Updated: 2025/03/10 20:55:33 by pdel-olm         ###   ########.fr        #
+#    Updated: 2025/03/11 20:44:15 by pdel-olm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ a: all
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT_FLAG) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT_FLAG) -l readline -o $(NAME)
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_PATH)
