@@ -6,7 +6,7 @@
 #    By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/10 20:17:51 by pdel-olm          #+#    #+#              #
-#    Updated: 2025/03/11 20:44:15 by pdel-olm         ###   ########.fr        #
+#    Updated: 2025/03/11 21:12:48 by pdel-olm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ CFLAGS := -Wall -Wextra -Werror -g3 -fsanitize=address
 
 SRC_DIR := src/
 OBJ_DIR := obj/
-INC_DIR := includes/
+INC_DIR := include/
 HEADER := $(INC_DIR)/$(NAME).h
 
 LIBFT_PATH := libft/
@@ -102,13 +102,7 @@ normi:
 
 #MESSAGES
 
-.PHONY: msg_mlx_start msg_mlx_end msg_clean_start msg_clean_end msg_fclean_start msg_fclean_end
-
-msg_mlx_start:
-	@echo "$(YELLOW)Starting MLX42 compilation$(RESET)"
-
-msg_mlx_end:
-	@echo "$(GREEN)MLX42 compilation complete$(RESET)"
+.PHONY: msg_clean_start msg_clean_end msg_fclean_start msg_fclean_end
 
 msg_clean_start:
 	@echo "$(YELLOW)Cleaning minishell objects$(RED)"
