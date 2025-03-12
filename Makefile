@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+         #
+#    By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/10 20:17:51 by pdel-olm          #+#    #+#              #
-#    Updated: 2025/03/11 21:12:48 by pdel-olm         ###   ########.fr        #
+#    Updated: 2025/03/12 16:30:38 by daxferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ LIBFT_FLAG := -L $(LIBFT_PATH) -l ft
 #FILES
 
 SOURCES :=	\
+			envlist.c\
 			minishell.c\
 
 OBJECTS := $(addprefix $(OBJ_DIR), $(SOURCES:.c=.o))
