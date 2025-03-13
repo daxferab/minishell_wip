@@ -6,7 +6,7 @@
 #    By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/10 20:17:51 by pdel-olm          #+#    #+#              #
-#    Updated: 2025/03/12 16:30:38 by daxferna         ###   ########.fr        #
+#    Updated: 2025/03/12 17:28:27 by daxferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ LIBFT_FLAG := -L $(LIBFT_PATH) -l ft
 
 SOURCES :=	\
 			envlist.c\
+			free.c\
 			minishell.c\
 
 OBJECTS := $(addprefix $(OBJ_DIR), $(SOURCES:.c=.o))
