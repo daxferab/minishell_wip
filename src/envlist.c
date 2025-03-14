@@ -14,7 +14,7 @@
 
 void	display_envp(t_envp *envp)
 {
-	while (envp) //FIXME: Remove last \n
+	while (envp)
 	{
 		printf("%s=%s\n", envp->key, envp->value);
 		envp = envp->next;
