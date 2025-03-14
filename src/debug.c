@@ -6,7 +6,7 @@
 /*   By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 11:52:04 by pdel-olm          #+#    #+#             */
-/*   Updated: 2025/03/14 11:57:02 by pdel-olm         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:58:01 by pdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	debug_int(t_smash smash, char *variable, int value)
 {
-	if (!smash.debug_mode)
+	if (!smash.debug_mode || !variable)
 		return ;
 	ft_putstr_fd("\e[3;33m", STDERR_FILENO);
 	ft_putstr_fd(variable, STDERR_FILENO);
@@ -25,8 +25,10 @@ void	debug_int(t_smash smash, char *variable, int value)
 
 void	debug_string(t_smash smash, char *variable, char *value)
 {
-	if (!smash.debug_mode)
+	if (!smash.debug_mode || !variable)
 		return ;
+	if (!value)
+		return (debug_string(smash, variable, PRINT_NULL_STRING));
 	ft_putstr_fd("\e[3;33m", STDERR_FILENO);
 	ft_putstr_fd(variable, STDERR_FILENO);
 	ft_putstr_fd(" -> ", STDERR_FILENO);
