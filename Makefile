@@ -6,7 +6,7 @@
 #    By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/10 20:17:51 by pdel-olm          #+#    #+#              #
-#    Updated: 2025/03/14 11:51:45 by pdel-olm         ###   ########.fr        #
+#    Updated: 2025/03/14 12:41:29 by pdel-olm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,6 +92,11 @@ re: fclean all
 e: exec
 exec: all
 	./$(NAME)
+
+.PHONY: d debug
+d: debug
+debug: all
+	./$(NAME) debug
 
 .PHONY: n norminette normi
 n: norminette
