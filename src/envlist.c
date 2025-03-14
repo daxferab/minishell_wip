@@ -38,21 +38,6 @@ void	addnode_front(t_envp *node, t_envp **envp)
 	*envp = node;
 }
 
-void	addnode_back(t_envp *node, t_envp **envp)
-{
-	t_envp *current;
-
-	if (*envp == NULL)
-	{
-		*envp = node;
-		return;
-	}
-	current = *envp;
-	while(current->next != NULL)
-		current = current->next;
-	current->next = node;
-}
-
 char	**split_char(char *envp, char c)
 {
 	int		keysize;
@@ -66,7 +51,7 @@ char	**split_char(char *envp, char c)
 	key = malloc(sizeof(char) * (keysize + 1)); //TODO: Protect key
 	ft_strlcpy(key, envp, keysize + 1);
 	value = ft_strdup(equal_pos + 1); //TODO: Protect value
-	splitted = malloc(sizeof(char) * 3); //ODO: Protect splitted
+	splitted = malloc(sizeof(char *) * 3); //TODO: Protect splitted
 	splitted[0] = key;
 	splitted[1] = value;
 	splitted[2] = NULL;
@@ -87,7 +72,7 @@ t_envp	*init_envp(char	**envp)
 	{
 		sp_envp = split_char(envp[i], '=');
 		node = new_node(sp_envp[0], sp_envp[1]);
-		addnode_back(node, &struct_envp);
+		addnode_front(node, &struct_envp);
 		free(sp_envp);
 		i++;
 	}
