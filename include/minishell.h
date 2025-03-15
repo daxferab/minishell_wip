@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:14:23 by pdel-olm          #+#    #+#             */
-/*   Updated: 2025/03/15 01:38:34 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:50:56 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	debug_string(t_smash smash, char *variable, char *value);
 
 
 // envlist.c
+char	*get_value(t_envp *envp, char *key);
 void	update_envp(t_envp *envp, char	*key, char	*newvalue);
 void	display_envp(t_envp *envp);
 t_envp	*new_node(char *key, char *value);

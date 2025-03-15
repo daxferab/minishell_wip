@@ -6,11 +6,21 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 03:05:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/15 01:53:53 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:50:50 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*get_value(t_envp *envp, char *key)
+{
+	size_t	keylen;
+
+	keylen = ft_strlen(key);
+	while (ft_strncmp(envp->key, key, keylen))
+		envp = envp->next;
+	return(envp->value);
+}
 
 void	update_envp(t_envp *envp, char	*key, char	*newvalue)
 {
