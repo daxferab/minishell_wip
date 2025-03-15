@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 03:05:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/15 15:59:51 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/15 17:38:49 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,15 @@
 
 char	*get_value(t_envp *envp, char *key)
 {
-	size_t	keylen;
-
-	keylen = ft_strlen(envp->key);
-	while (ft_strncmp(envp->key, key, keylen))
-	{
-		keylen = ft_strlen(envp->key);
+	while (!ft_str_equals(envp->key, key)) //FIXME: return "" when key not found
 		envp = envp->next;
-	}
 	return(envp->value);
 }
 
 void	update_envp(t_envp *envp, char	*key, char	*newvalue)
 {
-	size_t	keylen;
-
-	keylen = ft_strlen(envp->key);
-	while (ft_strncmp(envp->key, key, keylen))
-	{
-		keylen = ft_strlen(envp->key);
+	while (!ft_str_equals(envp->key, key))
 		envp = envp->next;
-	}
 	free(envp->value);
 	envp->value = ft_strdup(newvalue);
 }

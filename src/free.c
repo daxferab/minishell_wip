@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:26:20 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/14 02:32:39 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/15 17:59:41 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,20 @@ void	free_t_envp(t_envp *envp)
 		envp = envp->next;
 		free(tmp);
 	}
+	free(envp);
+}
+
+void	free_node(t_envp *envp, char *key)
+{
+	t_envp	*prev;
+
+	while (!ft_str_equals(envp->key, key))
+	{
+		prev = envp;
+		envp = envp->next;
+	}
+	prev->next = envp->next;
+	free(envp->key);
+	free(envp->value);
 	free(envp);
 }

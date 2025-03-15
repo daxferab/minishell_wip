@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:14:23 by pdel-olm          #+#    #+#             */
-/*   Updated: 2025/03/15 15:50:56 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/15 18:10:36 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ t_envp	*init_envp(char	**envp);
 
 // free.c
 void	free_t_envp(t_envp *envp);
-
+void	free_node(t_envp *envp, char *key);
 
 #endif
