@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:14:23 by pdel-olm          #+#    #+#             */
-/*   Updated: 2025/03/15 19:56:40 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/15 20:30:15 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,17 @@ void	debug_int(t_smash smash, char *variable, int value);
 void	debug_string(t_smash smash, char *variable, char *value);
 
 
+//envutils.c
+char	**split_char(char *envp, char c);
+t_envp	*new_node(char *key, char *value);
+void	addnode_front(t_envp *node, t_envp **envp);
+int		envsize(t_envp *lst);
+
 // envlist.c
 char	*get_value(t_envp *envp, char *key);
 bool	new_entry(t_envp **envp, char *key, char *value);
 bool	update_envp(t_envp *envp, char	*key, char	*newvalue);
 void	display_envp(t_envp *envp);
-t_envp	*new_node(char *key, char *value);
-void	addnode_front(t_envp *node, t_envp **envp);
-char	**split_char(char *envp, char c);
 t_envp	*init_envp(char	**envp);
 
 // free.c

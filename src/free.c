@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:26:20 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/15 19:07:02 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/15 20:30:32 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_t_envp(t_envp *envp)
 {
 	t_envp	*tmp;
 
-	while(envp)
+	while (envp)
 	{
 		free(envp->key);
 		free(envp->value);
