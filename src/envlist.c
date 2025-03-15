@@ -1,16 +1,27 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   envlist.c										  :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: daxferna <daxferna@student.42madrid.com	+#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2025/03/12 14:53:59 by daxferna		  #+#	#+#			 */
-/*   Updated: 2025/03/12 16:57:10 by daxferna		 ###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   envlist.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/14 03:05:25 by daxferna          #+#    #+#             */
+/*   Updated: 2025/03/15 01:53:53 by daxferna         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	update_envp(t_envp *envp, char	*key, char	*newvalue)
+{
+	size_t	keylen;
+
+	keylen = ft_strlen(key);
+	while (ft_strncmp(envp->key, key, keylen))
+		envp = envp->next;
+	free(envp->value);
+	envp->value = ft_strdup(newvalue);
+}
 
 void	display_envp(t_envp *envp)
 {
@@ -58,7 +69,7 @@ char	**split_char(char *envp, char c)
 	return (splitted);
 }
 
-t_envp	*init_envp(char	**envp) 
+t_envp	*init_envp(char	**envp)
 {
 	//TODO: last line has to show the last executed cmd (update on every exec)
 	int		i;

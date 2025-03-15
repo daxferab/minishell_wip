@@ -6,7 +6,7 @@
 #    By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/10 20:17:51 by pdel-olm          #+#    #+#              #
-#    Updated: 2025/03/12 17:28:27 by daxferna         ###   ########.fr        #
+#    Updated: 2025/03/14 18:34:57 by daxferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ LIBFT_FLAG := -L $(LIBFT_PATH) -l ft
 SOURCES :=	\
 			envlist.c\
 			free.c\
+			debug.c\
 			minishell.c\
 
 OBJECTS := $(addprefix $(OBJ_DIR), $(SOURCES:.c=.o))
@@ -94,10 +95,15 @@ e: exec
 exec: all
 	./$(NAME)
 
+.PHONY: d debug
+d: debug
+debug: all
+	./$(NAME) debug
+
 .PHONY: n norminette normi
 n: norminette
 norminette:
-	@echo "norminette $(SRC_DIR) $(INC_DIR) $(LIBFT_Pnorm	ATH) | grep Error\n"
+	@echo "norminette $(SRC_DIR) $(INC_DIR) $(LIBFT_PATH) | grep Error\n"
 	@if norminette $(SRC_DIR) $(INC_DIR) $(LIBFT_PATH) | grep -q "Error"; then echo "$(RED)$$(norminette $(SRC_DIR) $(INC_DIR) $(LIBFT_PATH) | grep "Error" | sed -z 's/\nError/\n\$(YELLOW)  Error/g' | sed -z 's/\n/\n\$(RED)/g')$(RESET)"; else echo "$(GREEN)Everything OK!$(RESET)"; fi
 normi:
 	@if norminette $(SRC_DIR) $(INC_DIR) $(LIBFT_PATH) | grep -q "Error"; then echo "\n$(RED)$$(norminette $(SRC_DIR) $(INC_DIR) $(LIBFT_PATH) | grep "Error" | grep -v -e "TOO_MANY_FUNCS" -e "WRONG_SCOPE_COMMENT" -e "EMPTY_LINE_FUNCTION" -e "LINE_TOO_LONG" -e "TOO_MANY_LINES" -e "CONSECUTIVE_NEWLINES" | sed -z 's/\nError/\n\$(YELLOW)  Error/g' | sed -z 's/\n/\n\$(RED)/g')$(RESET)"; else echo "$(GREEN)Run full norminette!$(RESET)"; fi

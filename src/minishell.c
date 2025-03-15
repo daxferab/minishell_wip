@@ -3,17 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 20:07:58 by pdel-olm          #+#    #+#             */
-/*   Updated: 2025/03/10 20:49:15 by pdel-olm         ###   ########.fr       */
+/*   Created: 2025/03/14 18:37:46 by daxferna          #+#    #+#             */
+/*   Updated: 2025/03/15 01:43:07 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+int	main(int argc, char *argv[], char *envp[])
 {
+	t_smash	smash;
+
 	ft_printf("Minishell\n");
-	//asd
+	smash.debug_mode = argc > 1 && ft_str_equals(argv[1], "debug");
+	debug_int(smash, "argc", argc);
+	smash.envp = init_envp(envp);
+	display_envp(smash.envp);
+	update_envp(smash.envp, "PWD", "hola");
+	display_envp(smash.envp);
+	free_t_envp(smash.envp);
 }
