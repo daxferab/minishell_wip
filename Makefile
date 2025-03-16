@@ -6,7 +6,7 @@
 #    By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/10 20:17:51 by pdel-olm          #+#    #+#              #
-#    Updated: 2025/03/16 00:46:33 by daxferna         ###   ########.fr        #
+#    Updated: 2025/03/16 13:13:40 by daxferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ LIBFT_FLAG := -L $(LIBFT_PATH) -l ft
 #FILES
 
 SOURCES :=	\
-			builtins.c\
+			envbuiltins.c\
 			envlist.c\
 			envutils.c\
 			free.c\

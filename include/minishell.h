@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:14:23 by pdel-olm          #+#    #+#             */
-/*   Updated: 2025/03/16 12:43:42 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/16 13:13:32 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@ typedef struct s_smash
 void	debug_int(t_smash smash, char *variable, int value);
 void	debug_string(t_smash smash, char *variable, char *value);
 
-// builtins.c
+// envbuiltins.c
 void	cmd_env(t_smash	smash);
 void	cmd_pwd(t_smash smash);
 void	cmd_unset(t_smash *smash, char	**cmd);
+void	cmd_export(t_smash *smash, char **input);
 
 // envlist.c
 char	*get_value(t_envp *envp, char *key);

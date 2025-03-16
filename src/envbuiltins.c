@@ -1,27 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   envbuiltins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/14 18:37:46 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/16 13:07:43 by daxferna         ###   ########.fr       */
+/*   Created: 2025/03/15 23:52:25 by daxferna          #+#    #+#             */
+/*   Updated: 2025/03/16 13:14:59 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int argc, char *argv[], char *envp[])
+void	cmd_env(t_smash	smash)
 {
-    t_smash smash;
-
-	ft_printf("Minishell\n");
-	smash.debug_mode = argc > 1 && ft_str_equals(argv[1], "debug");
-	smash.envp = init_envp(envp);
-	if (!smash.envp)
-		return (0); //TODO: Handle error
 	display_envp(smash.envp);
-	free_t_envp(smash.envp);
-	return (0);
+}
+
+void	cmd_pwd(t_smash smash)
+{
+	if (get_value(smash.envp, "PWD"))
+		printf("%s\n", get_value(smash.envp, "PWD"));
+}
+
+void	cmd_unset(t_smash *smash, char	**cmd)
+{
+	int	i;
+
+	i = 1;
+	if (!smash->envp)
+		return ;
+	while (cmd[i])
+	{
+		if (get_value(smash->envp, cmd[i]))
+			unset_node(smash->envp, cmd[i]);
+		i++;
+	}
+}
+
+void	cmd_export(t_smash *smash, char **input)
+{
+	(void)smash;
+	(void)input;
+	return ;
 }
