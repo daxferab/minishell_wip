@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:14:23 by pdel-olm          #+#    #+#             */
-/*   Updated: 2025/03/16 00:59:26 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/16 12:43:42 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ int		envsize(t_envp *lst);
 
 // free.c
 void	free_t_envp(t_envp *envp);
-void	unset_node(t_envp *envp, char *key);
+bool	unset_node(t_envp *envp, char *key);
 
 #endif
