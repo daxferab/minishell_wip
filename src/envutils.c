@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 20:25:44 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/15 20:30:48 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/16 20:53:16 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,18 @@ char	**split_char(char *envp, char c)
 	int		keysize;
 	char	*key;
 	char	*value;
-	char	*equal_pos;
+	char	*delimiter_position;
 	char	**splitted;
 
-	equal_pos = ft_strchr(envp, c);
-	keysize = equal_pos - envp;
+	delimiter_position = ft_strchr(envp, c);
+	if (!delimiter_position)
+		return (NULL);
+	keysize = delimiter_position - envp;
 	key = malloc(sizeof(char) * (keysize + 1));
 	if (!key)
 		return (NULL);
 	ft_strlcpy(key, envp, keysize + 1);
-	value = ft_strdup(equal_pos + 1);
+	value = ft_strdup(delimiter_position + 1);
 	if (!value)
 		return (free(key), NULL);
 	splitted = malloc(sizeof(char *) * 3);

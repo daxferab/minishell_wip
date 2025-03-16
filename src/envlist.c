@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 03:05:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/15 20:30:44 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/16 21:56:33 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	update_envp(t_envp *envp, char	*key, char	*newvalue)
 {
 	if (!get_value(envp, key))
 	{
-		if (!new_entry(&envp, key, newvalue))
+		if (!new_entry(&envp, key, newvalue)) //FIXME: Doesn`t work
 			return (false);
 		return (true);
 	}

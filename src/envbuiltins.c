@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 23:52:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/16 13:14:59 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/16 21:56:11 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,33 @@ void	cmd_unset(t_smash *smash, char	**cmd)
 	while (cmd[i])
 	{
 		if (get_value(smash->envp, cmd[i]))
-			unset_node(smash->envp, cmd[i]);
+			free_node(smash->envp, cmd[i]);
 		i++;
 	}
 }
 
-void	cmd_export(t_smash *smash, char **input)
+void	cmd_export(t_smash *smash, char **input) //FIXME: Leaks
 {
-	(void)smash;
-	(void)input;
-	return ;
+	int		i;
+	char	**entry;
+
+	i = 1;
+	while (input[i])
+	{
+		entry = split_char(input[i], '=');
+		if (entry)
+		{
+			update_envp(smash->envp, entry[0], entry[1]);
+			free(entry);
+		}
+		i++;
+	}
 }
+// export a=c -> if "a" exists, update value to "c"
+// 			  -> if "a" does not exist, create and equal to "c"
+// export a	  -> nothing
+// export	  -> nothing
+// export a=c b=d -> exec both (like first example)
+// export a=c=b	  -> a = b=c (key is whats before the 1st "=")
+// export	  -> declare -x KEY=VALUE
+// Reserved icons(for the key) -> "-" "=" "." "$"
