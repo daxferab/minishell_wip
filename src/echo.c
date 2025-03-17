@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:46:44 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/17 01:59:03 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/17 02:10:03 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 void	cmd_echo(char	**input)
 {
-	int	i;
-	int	nl;
+	int		i;
+	bool	nl;
 
-	i = 0;
-	while (ft_str_equals(input[i], "-n"))
+	i = 1;
+	nl = true;
+	while (input[i] && ft_str_equals(input[i], "-n"))
+	{
+		nl = false;
 		i++;
-	nl = i;
+	}
 	while (input[i])
 	{
 		printf("%s", input[i]);
@@ -28,6 +31,6 @@ void	cmd_echo(char	**input)
 		if (input[i])
 			printf(" ");
 	}
-	if (!nl)
+	if (nl)
 		printf("\n");
 }
