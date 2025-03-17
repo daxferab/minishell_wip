@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 23:52:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/16 21:56:11 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:16:25 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	cmd_unset(t_smash *smash, char	**cmd)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	if (!smash->envp)
 		return ;
 	while (cmd[i])
@@ -38,18 +38,18 @@ void	cmd_unset(t_smash *smash, char	**cmd)
 	}
 }
 
-void	cmd_export(t_smash *smash, char **input) //FIXME: Leaks
+void	cmd_export(t_smash *smash, char **input)
 {
 	int		i;
 	char	**entry;
 
-	i = 1;
+	i = 0;
 	while (input[i])
 	{
 		entry = split_char(input[i], '=');
 		if (entry)
 		{
-			update_envp(smash->envp, entry[0], entry[1]);
+			update_envp(&(smash->envp), entry[0], entry[1]);
 			free(entry);
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:14:23 by pdel-olm          #+#    #+#             */
-/*   Updated: 2025/03/17 01:59:18 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:37:53 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	cmd_export(t_smash *smash, char **input);
 // envlist.c
 char	*get_value(t_envp *envp, char *key);
 bool	new_entry(t_envp **envp, char *key, char *value);
-bool	update_envp(t_envp *envp, char	*key, char	*newvalue);
+bool	update_envp(t_envp **envp, char	*key, char	*newvalue);
 void	display_envp(t_envp *envp);
 t_envp	*init_envp(char	**envp);
 

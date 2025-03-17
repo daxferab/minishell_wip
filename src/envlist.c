@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 03:05:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/16 21:56:33 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:13:15 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,31 @@ bool	new_entry(t_envp **envp, char *key, char *value)
 	return (true);
 }
 
-bool	update_envp(t_envp *envp, char	*key, char	*newvalue)
+bool update_envp(t_envp **envp, char *key, char *newvalue)
 {
-	if (!get_value(envp, key))
+	t_envp *current;
+
+	if (!get_value(*envp, key))
 	{
-		if (!new_entry(&envp, key, newvalue)) //FIXME: Doesn`t work
+		if (!new_entry(envp, key, newvalue))
 			return (false);
 		return (true);
 	}
-	while (!ft_str_equals(envp->key, key))
-		envp = envp->next;
-	free(envp->value);
-	envp->value = ft_strdup(newvalue);
+	current = *envp;
+	while (current)
+	{
+		if (ft_str_equals(current->key, key))
+		{
+			free(current->value);
+			current->value = ft_strdup(newvalue);
+			if (!current->value)
+				return (free(key), false);
+			free(key);
+			free(newvalue);
+			return (true);
+		}
+		current = current->next;
+	}
 	return (true);
 }
 
