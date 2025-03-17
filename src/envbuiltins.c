@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   envbuiltins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 23:52:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/16 21:56:11 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/17 18:05:06 by pdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	cmd_env(t_smash	smash)
+void	cmd_env(t_smash smash)
 {
 	display_envp(smash.envp);
 }
@@ -23,7 +23,7 @@ void	cmd_pwd(t_smash smash)
 		printf("%s\n", get_value(smash.envp, "PWD"));
 }
 
-void	cmd_unset(t_smash *smash, char	**cmd)
+void	cmd_unset(t_smash *smash, char **cmd)
 {
 	int	i;
 

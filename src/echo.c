@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:46:44 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/17 02:10:03 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/17 18:22:46 by pdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	cmd_echo(char	**input)
+void	cmd_echo(char **input)
 {
 	int		i;
 	bool	nl;

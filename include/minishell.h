@@ -6,7 +6,7 @@
 /*   By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:14:23 by pdel-olm          #+#    #+#             */
-/*   Updated: 2025/03/17 18:01:40 by pdel-olm         ###   ########.fr       */
+/*   Updated: 2025/03/17 18:11:56 by pdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,13 @@ t_envp	*new_node(char *key, char *value);
 void	addnode_front(t_envp *node, t_envp **envp);
 int		envsize(t_envp *lst);
 
-
 // free.c
 void	free_t_envp(t_envp *envp);
 bool	free_node(t_envp *envp, char *key);
+
+// input_handler.c
+
+void	input_handler(t_smash *smash, char **input);
+
 
 #endif
