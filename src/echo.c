@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/14 18:37:46 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/17 02:01:41 by daxferna         ###   ########.fr       */
+/*   Created: 2025/03/17 01:46:44 by daxferna          #+#    #+#             */
+/*   Updated: 2025/03/17 01:59:03 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int argc, char *argv[], char *envp[])
+void	cmd_echo(char	**input)
 {
-    t_smash smash;
+	int	i;
+	int	nl;
 
-	ft_printf("Minishell\n");
-	smash.debug_mode = argc > 1 && ft_str_equals(argv[1], "debug");
-	smash.envp = init_envp(envp);
-	if (!smash.envp)
-		return (0); //TODO: Handle error
-	display_envp(smash.envp);
-	free_t_envp(smash.envp);
-	return (0);
+	i = 0;
+	while (ft_str_equals(input[i], "-n"))
+		i++;
+	nl = i;
+	while (input[i])
+	{
+		printf("%s", input[i]);
+		i++;
+		if (input[i])
+			printf(" ");
+	}
+	if (!nl)
+		printf("\n");
 }
