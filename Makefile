@@ -6,7 +6,7 @@
 #    By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/10 20:17:51 by pdel-olm          #+#    #+#              #
-#    Updated: 2025/03/14 12:41:29 by pdel-olm         ###   ########.fr        #
+#    Updated: 2025/03/17 16:57:17 by pdel-olm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ LIBFT_FLAG := -L $(LIBFT_PATH) -l ft
 SOURCES :=	\
 			debug.c\
 			minishell.c\
+			read_line.c
 
 OBJECTS := $(addprefix $(OBJ_DIR), $(SOURCES:.c=.o))
 SOURCES := $(addprefix $(SRC_DIR), $(SOURCES))

@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   read_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 20:14:23 by pdel-olm          #+#    #+#             */
-/*   Updated: 2025/03/14 18:08:58 by pdel-olm         ###   ########.fr       */
+/*   Created: 2025/03/14 18:03:39 by pdel-olm          #+#    #+#             */
+/*   Updated: 2025/03/17 17:00:07 by pdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include "libft.h"
-# include <readline/readline.h>
-# include <readline/history.h>
-
-typedef struct s_smash
+void	read_line(t_smash *smash)
 {
-	char	*user_input;
-	bool	debug_mode;
-}	t_smash;
-
-// DEBUG
-
-void	debug_int(t_smash smash, char *variable, int value);
-void	debug_string(t_smash smash, char *variable, char *value);
-
-//READ_LINE
-
-void	read_line(t_smash *smash);
-
-#endif
+	smash->user_input = readline("\e[1;35mSMASH -> \e[0m");
+	if (!smash->user_input)
+		return ;
+	debug_string(*smash, "line", smash->user_input);
+	if (ft_strlen(smash->user_input) > 0)
+		add_history(smash->user_input);
+}
