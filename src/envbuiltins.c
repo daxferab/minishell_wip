@@ -6,15 +6,18 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 23:52:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/18 01:59:30 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/18 19:48:55 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	cmd_env(t_smash	smash)
+bool	cmd_env(t_smash	smash, char **cmd)
 {
+	if (cmd[1])
+		return (false);
 	display_envp(smash.envp);
+	return (true);
 }
 
 void	cmd_pwd(t_smash *smash)

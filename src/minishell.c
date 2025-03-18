@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:07:58 by pdel-olm          #+#    #+#             */
-/*   Updated: 2025/03/18 02:00:43 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/18 19:50:59 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int main(int argc, char *argv[], char *envp[])
 		return (0); //TODO: Handle error
 	char	*input[] = {
 		"env",
-		"PWD",
-		"OLDPWD",
 		NULL
 	};
 	input_handler(&smash, input);

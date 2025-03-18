@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:14:23 by pdel-olm          #+#    #+#             */
-/*   Updated: 2025/03/18 01:57:06 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/18 19:49:12 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	debug_string(t_smash smash, char *variable, char *value);
 void	cmd_echo(char	**input);
 
 // envbuiltins.c
-void	cmd_env(t_smash	smash);
+bool	cmd_env(t_smash	smash, char **input);
 void	cmd_pwd(t_smash *smash);
 void	cmd_unset(t_smash *smash, char	**cmd);
 void	cmd_export(t_smash *smash, char **input);
