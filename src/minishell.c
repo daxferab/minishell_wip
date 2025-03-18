@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:07:58 by pdel-olm          #+#    #+#             */
-/*   Updated: 2025/03/18 20:28:40 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/18 20:42:52 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ int main(int argc, char *argv[], char *envp[])
 	if (!smash.envp)
 		return (0); //TODO: Handle error
 	char	*input[] = {
-		"export",
-		"a=b",
+		"unset",
+		"PWD",
 		NULL
 	};
 	input_handler(&smash, input);
-	display_envp(smash.envp);
+	//display_envp(smash.envp);
 	free_smash(smash);
 	return (0);
 }

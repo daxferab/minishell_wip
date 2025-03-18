@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 23:52:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/18 20:29:39 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/18 20:39:54 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,22 @@ bool	cmd_pwd(t_smash *smash, char **input)
 	return (true);
 }
 
-void	cmd_unset(t_smash *smash, char	**cmd)
+bool	cmd_unset(t_smash *smash, char **input)
 {
 	int	i;
 
 	i = 0;
 	if (!smash->envp)
-		return ;
-	while (cmd[i])
+		return (false);
+	if (input[1] && !ft_strncmp(input[1], "-", 1))
+		return (false);
+	while (input[i])
 	{
-		if (get_value(smash->envp, cmd[i]))
-			free_node(smash->envp, cmd[i]);
+		if (get_value(smash->envp, input[i]))
+			free_node(smash->envp, input[i]);
 		i++;
 	}
+	return (true);
 }
 
 bool	cmd_export(t_smash *smash, char **input) //FIXME: Dont accept options //FIXME: Export without arguments
