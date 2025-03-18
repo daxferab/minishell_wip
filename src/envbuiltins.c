@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 23:52:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/18 20:09:18 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/18 20:29:39 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	cmd_unset(t_smash *smash, char	**cmd)
 	}
 }
 
-void	cmd_export(t_smash *smash, char **input)
+bool	cmd_export(t_smash *smash, char **input) //FIXME: Dont accept options //FIXME: Export without arguments
 {
 	int		i;
 	char	**entry;
@@ -58,11 +58,18 @@ void	cmd_export(t_smash *smash, char **input)
 		entry = split_char(input[i], '=');
 		if (entry)
 		{
+			if (!get_value(smash->envp, entry[0]))
+			{
+				if (!new_entry(&smash->envp, entry[0], entry[1]))
+					return (false);
+				return (free(entry), true);
+			}
 			update_envp(&(smash->envp), entry[0], entry[1]);
 			free(entry);
 		}
 		i++;
 	}
+	return (true);
 }
 // export a=c -> if "a" exists, update value to "c"
 // 			  -> if "a" does not exist, create and equal to "c"

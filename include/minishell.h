@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:14:23 by pdel-olm          #+#    #+#             */
-/*   Updated: 2025/03/18 20:02:51 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/18 20:24:52 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	cmd_echo(char	**input);
 bool	cmd_env(t_smash	smash, char **input);
 bool	cmd_pwd(t_smash *smash, char **input);
 void	cmd_unset(t_smash *smash, char	**cmd);
-void	cmd_export(t_smash *smash, char **input);
+bool	cmd_export(t_smash *smash, char **input);
 
 // envlist.c
 char	*get_value(t_envp *envp, char *key);
