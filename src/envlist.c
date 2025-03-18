@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envlist.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 03:05:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/18 20:22:18 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/18 20:52:22 by pdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ bool	new_entry(t_envp **envp, char *key, char *value)
 	return (true);
 }
 
-bool update_envp(t_envp **envp, char *key, char *newvalue)
+bool	update_envp(t_envp **envp, char *key, char *newvalue)
 {
-	t_envp *current;
+	t_envp	*current;
 
 	if (!get_value(*envp, key))
 		return (false);
@@ -67,7 +67,7 @@ void	display_envp(t_envp *envp)
 	}
 }
 
-t_envp	*init_envp(char	**envp)
+t_envp	*init_envp(char **envp)
 {
 	int		i;
 	char	**sp_envp;

@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   read_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 01:46:44 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/17 18:22:46 by pdel-olm         ###   ########.fr       */
+/*   Created: 2025/03/14 18:03:39 by pdel-olm          #+#    #+#             */
+/*   Updated: 2025/03/17 17:00:07 by pdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	cmd_echo(char **input)
+void	read_line(t_smash *smash)
 {
-	int		i;
-	bool	nl;
-
-	i = 1;
-	nl = true;
-	while (input[i] && ft_str_equals(input[i], "-n"))
-	{
-		nl = false;
-		i++;
-	}
-	while (input[i])
-	{
-		printf("%s", input[i]);
-		i++;
-		if (input[i])
-			printf(" ");
-	}
-	if (nl)
-		printf("\n");
+	smash->user_input = readline("\e[1;35mSMASH -> \e[0m");
+	if (!smash->user_input)
+		return ;
+	debug_string(*smash, "line", smash->user_input);
+	if (ft_strlen(smash->user_input) > 0)
+		add_history(smash->user_input);
 }

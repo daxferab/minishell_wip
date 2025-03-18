@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:26:20 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/18 01:43:51 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/18 20:04:14 by pdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ void	free_t_envp(t_envp *envp)
 	}
 	free(envp);
 }
+
 void	free_smash(t_smash smash)
 {
 	free_t_envp(smash.envp);
 	free(smash.cwd);
+	rl_clear_history();
 }
 
 bool	free_node(t_envp *envp, char *key)

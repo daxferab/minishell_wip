@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   inputhandler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 13:03:56 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/18 19:59:13 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/18 20:52:13 by pdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	input_handler(t_smash *smash, char	**input)
+void	input_handler(t_smash *smash, char **input)
 {
 	if (ft_str_equals(input[0], "env"))
 		cmd_env(*smash, input);

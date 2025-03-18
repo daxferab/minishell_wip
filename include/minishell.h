@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:14:23 by pdel-olm          #+#    #+#             */
-/*   Updated: 2025/03/18 20:37:52 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/18 20:53:15 by pdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_envp
 
 typedef struct s_smash
 {
+	char	*user_input;
 	bool	debug_mode;
 	t_envp	*envp;
 	char	*cwd;
@@ -35,6 +36,10 @@ typedef struct s_smash
 
 void	debug_int(t_smash smash, char *variable, int value);
 void	debug_string(t_smash smash, char *variable, char *value);
+
+//READ_LINE
+
+void	read_line(t_smash *smash);
 
 // echo.c
 void	cmd_echo(char **input);
@@ -50,14 +55,13 @@ char	*get_value(t_envp *envp, char *key);
 bool	new_entry(t_envp **envp, char *key, char *value);
 bool	update_envp(t_envp **envp, char	*key, char *newvalue);
 void	display_envp(t_envp *envp);
-t_envp	*init_envp(char	**envp);
+t_envp	*init_envp(char **envp);
 
 //envutils.c
 char	**split_char(char *envp, char c);
 t_envp	*new_node(char *key, char *value);
 void	addnode_front(t_envp *node, t_envp **envp);
 int		envsize(t_envp *lst);
-
 
 // free.c
 void	free_smash(t_smash smash);

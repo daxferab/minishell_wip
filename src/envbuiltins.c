@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envbuiltins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 23:52:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/18 20:39:54 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/18 20:55:01 by pdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ bool	cmd_unset(t_smash *smash, char **input)
 	return (true);
 }
 
-bool	cmd_export(t_smash *smash, char **input) //FIXME: Dont accept options //FIXME: Export without arguments
+//FIXME: Dont accept options
+//FIXME: Export without arguments
+bool	cmd_export(t_smash *smash, char **input)
 {
 	int		i;
 	char	**entry;
