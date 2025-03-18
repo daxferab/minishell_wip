@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 23:52:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/17 17:16:25 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/18 01:48:21 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ void	cmd_env(t_smash	smash)
 	display_envp(smash.envp);
 }
 
-void	cmd_pwd(t_smash smash)
+void	cmd_pwd(t_smash *smash)
 {
-	if (get_value(smash.envp, "PWD"))
-		printf("%s\n", get_value(smash.envp, "PWD"));
+	smash->cwd = getcwd(NULL, 0);
+	if (smash->cwd)
+		printf("%s\n", smash->cwd);
 }
 
 void	cmd_unset(t_smash *smash, char	**cmd)
