@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+	/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   envbuiltins.c                                      :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 23:52:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/17 18:05:06 by pdel-olm         ###   ########.fr       */
+/*   Updated: 2025/03/17 18:30:06 by pdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,18 @@ void	cmd_env(t_smash smash)
 	display_envp(smash.envp);
 }
 
-void	cmd_pwd(t_smash smash)
+void	cmd_pwd(t_smash *smash)
 {
-	if (get_value(smash.envp, "PWD"))
-		printf("%s\n", get_value(smash.envp, "PWD"));
+	smash->cwd = getcwd(NULL, 0);
+	if (smash->cwd)
+		printf("%s\n", smash->cwd);
 }
 
 void	cmd_unset(t_smash *smash, char **cmd)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	if (!smash->envp)
 		return ;
 	while (cmd[i])
@@ -38,18 +39,18 @@ void	cmd_unset(t_smash *smash, char **cmd)
 	}
 }
 
-void	cmd_export(t_smash *smash, char **input) //FIXME: Leaks
+void	cmd_export(t_smash *smash, char **input)
 {
 	int		i;
 	char	**entry;
 
-	i = 1;
+	i = 0;
 	while (input[i])
 	{
 		entry = split_char(input[i], '=');
 		if (entry)
 		{
-			update_envp(smash->envp, entry[0], entry[1]);
+			update_envp(&(smash->envp), entry[0], entry[1]);
 			free(entry);
 		}
 		i++;
