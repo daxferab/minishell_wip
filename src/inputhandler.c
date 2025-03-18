@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 13:03:56 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/18 19:50:22 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/18 19:59:13 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	input_handler(t_smash *smash, char	**input)
 	if (ft_str_equals(input[0], "env"))
 		cmd_env(*smash, input);
 	else if (ft_str_equals(input[0], "pwd"))
-		cmd_pwd(smash);
+		cmd_pwd(smash, input);
 	else if (ft_str_equals(input[0], "unset"))
 		cmd_unset(smash, input);
 	else if (ft_str_equals(input[0], "export"))

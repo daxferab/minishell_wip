@@ -6,25 +6,30 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 23:52:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/18 19:48:55 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/18 20:02:37 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	cmd_env(t_smash	smash, char **cmd)
+bool	cmd_env(t_smash	smash, char **input)
 {
-	if (cmd[1])
+	if (input[1])
 		return (false);
 	display_envp(smash.envp);
 	return (true);
 }
 
-void	cmd_pwd(t_smash *smash)
+bool	cmd_pwd(t_smash *smash, char **input)
 {
+	if (input[1])
+		return (false);
+	if (smash->cwd)
+		free(smash->cwd);
 	smash->cwd = getcwd(NULL, 0);
 	if (smash->cwd)
 		printf("%s\n", smash->cwd);
+	return (true);
 }
 
 void	cmd_unset(t_smash *smash, char	**cmd)
