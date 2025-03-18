@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:14:23 by pdel-olm          #+#    #+#             */
-/*   Updated: 2025/03/18 01:45:34 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/18 01:57:06 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,8 @@ int		envsize(t_envp *lst);
 void	free_smash(t_smash smash);
 void	free_t_envp(t_envp *envp);
 bool	free_node(t_envp *envp, char *key);
+
+// inputhandler.c
+void	input_handler(t_smash *smash, char	**input);
 
 #endif
