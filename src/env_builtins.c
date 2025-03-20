@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envbuiltins.c                                      :+:      :+:    :+:   */
+/*   env_builtins.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 23:52:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/20 11:11:17 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/20 21:09:57 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,6 @@ bool	cmd_env(t_smash	smash, char **input)
 	if (input[1])
 		return (false);
 	display_envp(smash.envp);
-	return (true);
-}
-
-bool	cmd_pwd(t_smash *smash, char **input)
-{
-	if (input[1] && !ft_strncmp(input[1], "-", 1))
-		return (false);
-	if (smash->cwd)
-		free(smash->cwd);
-	smash->cwd = getcwd(NULL, 0);
-	if (smash->cwd)
-		printf("%s\n", smash->cwd);
 	return (true);
 }
 
