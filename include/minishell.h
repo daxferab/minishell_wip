@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:14:23 by pdel-olm          #+#    #+#             */
-/*   Updated: 2025/03/20 21:14:36 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/20 22:15:19 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,15 @@
 # include "libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+
+typedef struct s_var
+{
+	char	*value;
+	int		key_len;
+	int		value_len;
+	int		pos;
+	bool	valid_name;
+}	t_var;
 
 typedef struct s_envp
 {
@@ -30,6 +39,7 @@ typedef struct s_smash
 	bool	debug_mode;
 	t_envp	*envp;
 	char	*cwd;
+	int		exit_status;
 }	t_smash;
 
 // DEBUG
@@ -71,5 +81,9 @@ bool	free_node(t_envp *envp, char *key);
 
 // inputhandler.c
 void	input_handler(t_smash *smash, char **input);
+
+// var_handler.c
+bool	valid_char(char c);
+t_var	get_var(t_smash smash, char *input, int pos);
 
 #endif

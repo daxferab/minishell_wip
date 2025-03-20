@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envutils.c                                         :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 20:25:44 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/20 11:00:42 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/20 22:16:21 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	envsize(t_envp *lst)
 	return (count);
 }
 
-bool	is_valid_key(char *key) //FIXME: Be sure this is the correct format
+bool	is_valid_key(char *key) //TODO: try to use valid_char
 {
 	int	i;
 

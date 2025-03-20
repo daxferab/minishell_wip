@@ -6,7 +6,7 @@
 #    By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/10 20:17:51 by pdel-olm          #+#    #+#              #
-#    Updated: 2025/03/20 21:12:09 by daxferna         ###   ########.fr        #
+#    Updated: 2025/03/20 22:15:00 by daxferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,8 @@ SOURCES :=	\
 			input_handler.c\
 			minishell.c\
 			pwd_builtin.c\
-			read_line.c
+			read_line.c\
+			var_handler.c\
 
 OBJECTS := $(addprefix $(OBJ_DIR), $(SOURCES:.c=.o))
 SOURCES := $(addprefix $(SRC_DIR), $(SOURCES))
