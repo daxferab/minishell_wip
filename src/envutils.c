@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 20:25:44 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/16 20:53:16 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/20 11:00:42 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,20 @@ int	envsize(t_envp *lst)
 		count++;
 	}
 	return (count);
+}
+
+bool	is_valid_key(char *key) //FIXME: Be sure this is the correct format
+{
+	int	i;
+
+	i = 0;
+	if (!ft_isalpha(key[0]) && key[0] != '_')
+		return (false);
+	while (key[i])
+	{
+		if (!ft_isalnum(key[i]) && key[i] != '_')
+			return (false);
+		i++;
+	}
+	return (true);
 }

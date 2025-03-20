@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 20:14:23 by pdel-olm          #+#    #+#             */
-/*   Updated: 2025/03/18 20:53:15 by pdel-olm         ###   ########.fr       */
+/*   Updated: 2025/03/20 11:00:52 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char	**split_char(char *envp, char c);
 t_envp	*new_node(char *key, char *value);
 void	addnode_front(t_envp *node, t_envp **envp);
 int		envsize(t_envp *lst);
+bool	is_valid_key(char *key);
 
 // free.c
 void	free_smash(t_smash smash);

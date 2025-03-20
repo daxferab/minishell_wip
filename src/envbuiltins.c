@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 23:52:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/18 21:20:21 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/20 11:01:18 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,20 @@ bool	cmd_unset(t_smash *smash, char **input)
 	return (true);
 }
 
-//FIXME: Dont accept options
 //FIXME: Export without arguments
-//FIXME: Handle wrong key format
 bool	cmd_export(t_smash *smash, char **input)
 {
 	int		i;
 	char	**entry;
 
 	i = 0;
+
+	if (input[1] && !ft_strncmp(input[1], "-", 1))
+		return (false);
 	while (input[i])
 	{
 		entry = split_char(input[i], '=');
-		if (entry)
+		if (entry && is_valid_key(entry[0]))
 		{
 			if (!get_value(smash->envp, entry[0]))
 			{
