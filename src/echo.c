@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:46:44 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/17 18:22:46 by pdel-olm         ###   ########.fr       */
+/*   Updated: 2025/03/20 11:12:46 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	cmd_echo(char **input)
 		nl = false;
 		i++;
 	}
+	if (input[i] && !ft_strncmp(input[1], "-", 1))
+		return (false);
 	while (input[i])
 	{
 		printf("%s", input[i]);

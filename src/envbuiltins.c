@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 23:52:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/20 11:01:18 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/20 11:11:17 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,3 @@ bool	cmd_export(t_smash *smash, char **input)
 	}
 	return (true);
 }
-// export a=c -> if "a" exists, update value to "c"
-// 			  -> if "a" does not exist, create and equal to "c"
-// export a	  -> nothing
-// export	  -> nothing
-// export a=c b=d -> exec both (like first example)
-// export a=c=b	  -> a = b=c (key is whats before the 1st "=")
-// export	  -> declare -x KEY=VALUE
-// Reserved icons(for the key) -> "-" "=" "." "$"
