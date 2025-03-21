@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envlist.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 03:05:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/18 20:08:22 by pdel-olm         ###   ########.fr       */
+/*   Updated: 2025/03/18 21:10:05 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,7 @@ bool	update_envp(t_envp **envp, char *key, char *newvalue)
 	t_envp	*current;
 
 	if (!get_value(*envp, key))
-	{
-		if (!new_entry(envp, key, newvalue))
-			return (false);
-		return (true);
-	}
+		return (false);
 	current = *envp;
 	while (current)
 	{

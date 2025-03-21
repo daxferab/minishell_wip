@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+         #
+#    By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/10 20:17:51 by pdel-olm          #+#    #+#              #
-#    Updated: 2025/03/18 19:56:16 by pdel-olm         ###   ########.fr        #
+#    Updated: 2025/03/20 22:15:00 by daxferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,15 +36,18 @@ LIBFT_FLAG := -L $(LIBFT_PATH) -l ft
 #FILES
 
 SOURCES :=	\
-			echo.c\
-			envbuiltins.c\
-			envlist.c\
-			envutils.c\
-			free.c\
-			inputhandler.c\
+			cd_builtin.c\
 			debug.c\
+			echo_builtin.c\
+			env_builtins.c\
+			env_list.c\
+			env_utils.c\
+			free.c\
+			input_handler.c\
 			minishell.c\
-			read_line.c
+			pwd_builtin.c\
+			read_line.c\
+			var_handler.c\
 
 OBJECTS := $(addprefix $(OBJ_DIR), $(SOURCES:.c=.o))
 SOURCES := $(addprefix $(SRC_DIR), $(SOURCES))
