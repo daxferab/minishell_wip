@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 21:32:19 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/20 22:11:59 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/21 19:10:37 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_var	get_var(t_smash smash, char *input, int pos)
 
 	i = pos + 1;
 	var.valid_name = false;
-	if (!is_alpha(input[i]) && input[i] != '_' && input[i] != '?')
+	if (!ft_isalpha(input[i]) && input[i] != '_' && input[i] != '?')
 		return (var);
 	var.valid_name = true;
 	var.pos = pos;

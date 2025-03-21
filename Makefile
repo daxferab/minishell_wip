@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+         #
+#    By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/10 20:17:51 by pdel-olm          #+#    #+#              #
-#    Updated: 2025/03/20 22:15:00 by daxferna         ###   ########.fr        #
+#    Updated: 2025/03/21 19:29:59 by pdel-olm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,19 +35,36 @@ LIBFT_FLAG := -L $(LIBFT_PATH) -l ft
 
 #FILES
 
+DIRECTORIES :=	\
+				builtins\
+				control\
+				env\
+				execution\
+				parse\
+
 SOURCES :=	\
-			cd_builtin.c\
-			debug.c\
-			echo_builtin.c\
-			env_builtins.c\
-			env_list.c\
-			env_utils.c\
-			free.c\
-			input_handler.c\
 			minishell.c\
-			pwd_builtin.c\
-			read_line.c\
-			var_handler.c\
+			$(addprefix builtins/,\
+				cd_builtin.c\
+				echo_builtin.c\
+				env_builtins.c\
+				pwd_builtin.c\
+			)\
+			$(addprefix control/,\
+				debug.c\
+				free.c\
+			)\
+			$(addprefix env/,\
+				env_list.c\
+				env_utils.c\
+			)\
+			$(addprefix execution/,\
+				input_handler.c\
+			)\
+			$(addprefix parse/,\
+				read_line.c\
+				var_handler.c\
+			)\
 
 OBJECTS := $(addprefix $(OBJ_DIR), $(SOURCES:.c=.o))
 SOURCES := $(addprefix $(SRC_DIR), $(SOURCES))
@@ -77,7 +94,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER) | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -I $(INC_DIR) -I $(LIBFT_PATH) -c $< -o $@
 
 $(OBJ_DIR):
-	$(MKDIR) $(OBJ_DIR)
+	$(MKDIR) $(addprefix $(OBJ_DIR),$(DIRECTORIES))
 
 .PHONY: c clean
 c: clean
