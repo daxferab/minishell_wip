@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+         #
+#    By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/10 20:17:51 by pdel-olm          #+#    #+#              #
-#    Updated: 2025/03/21 19:29:59 by pdel-olm         ###   ########.fr        #
+#    Updated: 2025/03/25 19:26:19 by daxferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,10 +45,12 @@ DIRECTORIES :=	\
 SOURCES :=	\
 			minishell.c\
 			$(addprefix builtins/,\
-				cd_builtin.c\
-				echo_builtin.c\
-				env_builtins.c\
-				pwd_builtin.c\
+				cd.c\
+				echo.c\
+				env.c\
+				export.c\
+				pwd.c\
+				unset.c\
 			)\
 			$(addprefix control/,\
 				debug.c\
