@@ -8,6 +8,6 @@ bool	cmd_pwd(t_smash *smash, char **input)
 		free(smash->cwd);
 	smash->cwd = getcwd(NULL, 0);
 	if (smash->cwd)
-		printf("%s\n", smash->cwd);
-	return (true);
+		return (printf("%s\n", smash->cwd), true);
+	return (false);
 }
