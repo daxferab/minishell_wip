@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   env_builtins.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/15 23:52:25 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/20 21:09:57 by daxferna         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 bool	cmd_env(t_smash	smash, char **input)
@@ -45,7 +33,6 @@ bool	cmd_export(t_smash *smash, char **input)
 	char	**entry;
 
 	i = 0;
-
 	if (input[1] && !ft_strncmp(input[1], "-", 1))
 		return (false);
 	while (input[i])
