@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   var_handler.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/20 21:32:19 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/21 19:10:37 by daxferna         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
-bool valid_char(char c)
+bool	valid_char(char c)
 {
 	if (ft_isalnum(c) || c == '_')
 		return (true);
