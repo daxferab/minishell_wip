@@ -5,6 +5,18 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef enum s_token_type
+{
+	LITERAL,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE,
+	INPUT,
+	HEREDOC,
+	OUTPUT,
+	APPEND,
+	PIPE
+}	t_token_type;
+
 typedef struct s_var
 {
 	char	*value;
@@ -21,6 +33,13 @@ typedef struct s_envp
 	struct s_envp	*next;
 }	t_envp;
 
+typedef struct s_token
+{
+	char			*value;
+	t_token_type	type;
+	struct s_token	*next;
+}	t_token;
+
 typedef struct s_smash
 {
 	char	*user_input;
@@ -28,6 +47,8 @@ typedef struct s_smash
 	t_envp	*envp;
 	char	*cwd;
 	int		exit_status;
+	t_token	*first_token;
+	t_token	*last_token;
 }	t_smash;
 
 // DEBUG
