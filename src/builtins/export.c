@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/25 19:24:24 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/25 19:24:47 by daxferna         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 //FIXME: Export without arguments
@@ -19,7 +7,6 @@ bool	cmd_export(t_smash *smash, char **input)
 	char	**entry;
 
 	i = 0;
-
 	if (input[1] && !ft_strncmp(input[1], "-", 1))
 		return (false);
 	while (input[i])

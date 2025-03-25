@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cd_builtin.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/20 11:15:28 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/25 19:20:07 by daxferna         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
-static void update_wd(t_smash *smash);
+static void	update_wd(t_smash *smash);
 static int	array_len(char **array);
 
 bool	cmd_cd(t_smash *smash, char **input)
@@ -39,7 +27,7 @@ bool	cmd_cd(t_smash *smash, char **input)
 	return (true);
 }
 
-static void update_wd(t_smash *smash) //FIXME
+static void	update_wd(t_smash *smash) //FIXME
 {
 	update_envp(&smash->envp, "OLDPWD", get_value(smash->envp, "PWD"));
 	// update_envp(&smash->envp, "OLDPWD", "");
