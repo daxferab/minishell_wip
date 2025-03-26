@@ -1,14 +1,14 @@
 #include "minishell.h"
 
 //FIXME: Export without arguments
-bool	cmd_export(t_smash *smash, char **input)
+int	cmd_export(t_smash *smash, char **input)
 {
 	int		i;
 	char	**entry;
 
 	i = 0;
 	if (input[1] && !ft_strncmp(input[1], "-", 1))
-		return (false);
+		return (127);
 	while (input[i])
 	{
 		entry = split_char(input[i], '=');
@@ -17,13 +17,13 @@ bool	cmd_export(t_smash *smash, char **input)
 			if (!get_value(smash->envp, entry[0]))
 			{
 				if (!new_entry(&smash->envp, entry[0], entry[1]))
-					return (false);
-				return (free(entry), true);
+					return (127);
+				return (free(entry), 0);
 			}
 			update_envp(&(smash->envp), entry[0], entry[1]);
 			free(entry);
 		}
 		i++;
 	}
-	return (true);
+	return (0);
 }

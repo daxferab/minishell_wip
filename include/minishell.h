@@ -46,7 +46,7 @@ int		cmd_echo(char **input);
 int		cmd_env(t_smash smash, char **input);
 int		cmd_pwd(t_smash *smash, char **input);
 int		cmd_unset(t_smash *smash, char **input);
-bool	cmd_export(t_smash *smash, char **input);
+int		cmd_export(t_smash *smash, char **input);
 
 // envlist.c
 char	*get_value(t_envp *envp, char *key);

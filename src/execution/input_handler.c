@@ -9,7 +9,7 @@ void	input_handler(t_smash *smash, char **input)
 	else if (ft_str_equals(input[0], "unset"))
 		smash->exit_status = cmd_unset(smash, input);
 	else if (ft_str_equals(input[0], "export")) //TODO: return status
-		cmd_export(smash, input);
+		smash->exit_status = cmd_export(smash, input);
 	else if (ft_str_equals(input[0], "echo"))
 		smash->exit_status = cmd_echo(input);
 	else if (ft_str_equals(input[0], "cd")) //TODO: return status
