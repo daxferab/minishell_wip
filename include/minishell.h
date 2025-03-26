@@ -43,7 +43,7 @@ void	read_line(t_smash *smash);
 
 bool	cmd_cd(t_smash *smash, char **input);
 bool	cmd_echo(char **input);
-bool	cmd_env(t_smash smash, char **input);
+int		cmd_env(t_smash smash, char **input);
 int		cmd_pwd(t_smash *smash, char **input);
 bool	cmd_unset(t_smash *smash, char **input);
 bool	cmd_export(t_smash *smash, char **input);
