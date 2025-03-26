@@ -6,8 +6,8 @@ void	input_handler(t_smash *smash, char **input)
 		smash->exit_status = cmd_env(*smash, input);
 	else if (ft_str_equals(input[0], "pwd"))
 		smash->exit_status = cmd_pwd(smash, input);
-	else if (ft_str_equals(input[0], "unset")) //TODO: return status
-		cmd_unset(smash, input);
+	else if (ft_str_equals(input[0], "unset"))
+		smash->exit_status = cmd_unset(smash, input);
 	else if (ft_str_equals(input[0], "export")) //TODO: return status
 		cmd_export(smash, input);
 	else if (ft_str_equals(input[0], "echo")) //TODO: return status
