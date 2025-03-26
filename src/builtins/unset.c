@@ -6,7 +6,7 @@
 /*   By: daxferna <daxferna@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 19:25:07 by daxferna          #+#    #+#             */
-/*   Updated: 2025/03/26 16:27:21 by daxferna         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:51:25 by daxferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	cmd_unset(t_smash *smash, char **input)
 
 	i = 0;
 	if (!smash->envp)
-		return (127);
+		return (1);
 	if (input[1] && !ft_strncmp(input[1], "-", 1))
 		return (127);
 	while (input[i])

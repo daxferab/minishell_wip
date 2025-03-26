@@ -9,5 +9,5 @@ int	cmd_pwd(t_smash *smash, char **input)
 	smash->cwd = getcwd(NULL, 0);
 	if (smash->cwd)
 		return (printf("%s\n", smash->cwd), 0);
-	return (127);
+	return (1);
 }
