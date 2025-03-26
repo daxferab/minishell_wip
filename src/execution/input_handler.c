@@ -10,8 +10,8 @@ void	input_handler(t_smash *smash, char **input)
 		smash->exit_status = cmd_unset(smash, input);
 	else if (ft_str_equals(input[0], "export")) //TODO: return status
 		cmd_export(smash, input);
-	else if (ft_str_equals(input[0], "echo")) //TODO: return status
-		cmd_echo(input);
+	else if (ft_str_equals(input[0], "echo"))
+		smash->exit_status = cmd_echo(input);
 	else if (ft_str_equals(input[0], "cd")) //TODO: return status
 		cmd_cd(smash, input);
 	else if (ft_str_equals(input[0], "exit")) //TODO: return status
