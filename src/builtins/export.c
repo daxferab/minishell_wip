@@ -8,7 +8,7 @@ int	cmd_export(t_smash *smash, char **input)
 
 	i = 0;
 	if (input[1] && !ft_strncmp(input[1], "-", 1))
-		return (127);
+		return (2);
 	while (input[i])
 	{
 		entry = split_char(input[i], '=');

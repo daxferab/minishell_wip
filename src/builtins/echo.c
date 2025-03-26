@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	cmd_echo(char **input) //FIXME: Handle variables
+int	cmd_echo(char **input)
 {
 	int		i;
 	bool	nl;
