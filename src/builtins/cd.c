@@ -30,12 +30,12 @@ bool	cmd_cd(t_smash *smash, char **input)
 static void	update_wd(t_smash *smash) //FIXME
 {
 	update_envp(&smash->envp, "OLDPWD", get_value(smash->envp, "PWD"));
-	// update_envp(&smash->envp, "OLDPWD", "");
-	// if (smash->cwd)
-	// 	free(smash->cwd);
-	// smash->cwd = getcwd(NULL, 0);
-	// if (get_value(smash->envp, "PWD"))
-	// 	update_envp(&smash->envp, "PWD", smash->cwd);
+	update_envp(&smash->envp, "OLDPWD", "");
+	if (smash->cwd)
+		free(smash->cwd);
+	smash->cwd = getcwd(NULL, 0);
+	if (get_value(smash->envp, "PWD"))
+		update_envp(&smash->envp, "PWD", smash->cwd);
 }
 
 static int	array_len(char **array)
