@@ -58,6 +58,7 @@ void	debug_string(t_smash smash, char *variable, char *value);
 
 //READ_LINE
 
+void	clear_input(t_smash *smash);
 void	read_line(t_smash *smash);
 
 //BUILTINS
