@@ -50,6 +50,7 @@ SOURCES :=	\
 				input_handler.c\
 			)\
 			$(addprefix parse/,\
+				clear_input.c\
 				read_line.c\
 				var_handler.c\
 			)\

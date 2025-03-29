@@ -1,36 +1,53 @@
 #include "minishell.h"
 
-bool	valid_char(char c)
+static bool	variable_name_valid_char(char c)
 {
-	if (ft_isalnum(c) || c == '_')
-		return (true);
-	return (false);
+	return (ft_isalnum(c) || c == '_');
 }
 
-t_var	get_var(t_smash smash, char *input, int pos)
+static bool	variable_name_valid_first_char(char c)
+{
+	return (ft_isalpha(c) || c == '_' || c == '?');
+}
+
+//TODO protect NULL
+void	get_var(t_smash *smash, int pos)
 {
 	int		i;
-	t_var	var;
 	char	*key;
 
-	i = pos + 1;
-	var.valid_name = false;
-	if (!ft_isalpha(input[i]) && input[i] != '_' && input[i] != '?')
-		return (var);
-	var.valid_name = true;
-	var.pos = pos;
-	if (input[i] == '?')
+	if (!smash->last_token->first_variable)
 	{
-		var.value = ft_itoa(smash.exit_status);
-		var.key_len = 2;
-		var.value_len = ft_strlen(var.value);
-		return (var);
+		smash->last_token->first_variable = malloc(sizeof(t_var));
+		smash->last_token->last_variable = smash->last_token->first_variable;
 	}
-	while (input[i] && valid_char(input[i]))
+	else
+	{
+		smash->last_token->last_variable->next = malloc(sizeof(t_var));
+		smash->last_token->last_variable = smash->last_token->last_variable->next;
+	}
+	smash->last_token->last_variable->next = NULL;
+	smash->last_token->last_variable->valid_name = false;
+	smash->last_token->last_variable->pos = pos;
+	smash->last_token->last_variable->key_len = 0;
+	smash->last_token->last_variable->value_len = 0;
+	smash->last_token->last_variable->value = NULL;
+	i = pos + 1;
+	if (!variable_name_valid_first_char(smash->user_input[i]))
+		return ;
+	smash->last_token->last_variable->valid_name = true;
+	if (smash->user_input[i] == '?')
+	{
+		smash->last_token->last_variable->value = ft_itoa(smash->exit_status); //TODO error malloc
+		smash->last_token->last_variable->key_len = 2;
+		smash->last_token->last_variable->value_len = ft_strlen(smash->last_token->last_variable->value);
+		return ;
+	}
+	while (variable_name_valid_char(smash->user_input[i]))
 		i++;
-	key = ft_substr(input, pos + 1, i - pos - 1);
-	var.key_len = i - pos - 1;
-	var.value = get_value(smash.envp, key);
+	smash->last_token->last_variable->key_len = i - pos;
+	key = ft_substr(smash->user_input, pos + 1, i - pos - 1); //TODO error malloc
+	smash->last_token->last_variable->value = get_value(smash->envp, key);
 	free(key);
-	return (var);
+	smash->last_token->last_variable->value_len = ft_strlen(smash->last_token->last_variable->value);
 }
