@@ -19,11 +19,11 @@ typedef enum e_token_type
 
 typedef struct s_var
 {
+	bool			valid_name;
+	int				pos;
 	char			*value;
 	int				key_len;
 	int				value_len;
-	int				pos;
-	bool			valid_name;
 	struct s_var	*next;
 }	t_var;
 
