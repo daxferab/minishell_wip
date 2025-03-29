@@ -25,6 +25,8 @@ void	extra(t_smash *smash, int start, int len)
 	var_iter = smash->last_token->first_variable;
 	while (user_iter < start + len)
 	{
+		while (var_iter && !var_iter->valid_name)
+			var_iter = var_iter->next;
 		if (var_iter && user_iter == var_iter->pos)
 		{
 			value_iter = 0;
@@ -48,7 +50,8 @@ void	expand(t_smash *smash, int start, int len)
 	new_len = len;
 	while (iter < start + len)
 	{
-		if (smash->user_input[iter] == '$')
+		if (smash->user_input[iter] == '$'
+			&& !(iter > 0 && smash->user_input[iter - 1] == '$'))
 		{
 			get_var(smash, iter);
 			new_len -= smash->last_token->last_variable->key_len;
