@@ -1,19 +1,6 @@
 #include "minishell.h"
 
-void	debug_tokens(t_smash *smash)
-{
-	t_token	*iter;
-
-	iter = smash->first_token;
-	while (iter)
-	{
-		debug_string(*smash, "Token value", iter->value);
-		debug_int(*smash, "Token type", iter->type);
-		iter = iter->next;
-	}
-}
-
-void	extra(t_smash *smash, int start, int len)
+void	expand_extra(t_smash *smash, int start, int len)
 {
 	int		user_iter;
 	int		token_iter;
@@ -60,7 +47,7 @@ void	expand(t_smash *smash, int start, int len)
 		iter++;
 	}
 	smash->last_token->value = malloc((new_len + 1) * sizeof(char));// TODO error malloc
-	extra(smash, start, len);
+	expand_extra(smash, start, len);
 }
 
 //TODO error malloc

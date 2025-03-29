@@ -32,5 +32,6 @@ static t_smash	init(int argc, char **argv, char **envp)
 	smash.cwd = getcwd(NULL, 0);
 	smash.first_token = NULL;
 	smash.last_token = NULL;
+	smash.exit_status = 0;
 	return (smash);
 }
