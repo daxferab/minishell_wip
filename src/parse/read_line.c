@@ -13,22 +13,75 @@ void	debug_tokens(t_smash *smash)
 	}
 }
 
+void	extra(t_smash *smash, int start, int len)
+{
+	int		user_iter;
+	int		token_iter;
+	int		value_iter;
+	t_var	*var_iter;
+
+	user_iter = start;
+	token_iter = 0;
+	var_iter = smash->last_token->first_variable;
+	while (user_iter < start + len)
+	{
+		if (var_iter && user_iter == var_iter->pos)
+		{
+			value_iter = 0;
+			while (value_iter < var_iter->value_len)
+				smash->last_token->value[token_iter++] = var_iter->value[value_iter++];
+			user_iter += var_iter->key_len;
+			var_iter = var_iter->next;
+		}
+		else
+			smash->last_token->value[token_iter++] = smash->user_input[user_iter++];
+	}
+	smash->last_token->value[token_iter] = 0;
+}
+
+void	expand(t_smash *smash, int start, int len)
+{
+	int	iter;
+	int	new_len;
+
+	iter = start;
+	new_len = len;
+	while (iter < start + len)
+	{
+		if (smash->user_input[iter] == '$')
+		{
+			get_var(smash, iter);
+			new_len -= smash->last_token->last_variable->key_len;
+			new_len += smash->last_token->last_variable->value_len;
+		}
+		iter++;
+	}
+	smash->last_token->value = malloc((new_len + 1) * sizeof(char));// TODO error malloc
+	extra(smash, start, len);
+}
+
 //TODO error malloc
 void	add_token(t_smash *smash, int start, int len, t_token_type type)
 {
-	t_token	*token;
-
-	token = malloc(sizeof(t_token)); //TODO error malloc
-	token->value = NULL;
-	if (type < INPUT)
-		token->value = ft_substr(smash->user_input, start, len); //TODO error malloc
-	token->type = type;
-	token->next = NULL;
 	if (!smash->first_token)
-		smash->first_token = token;
+	{
+		smash->first_token = malloc(sizeof(t_token)); //TODO error malloc
+		smash->last_token = smash->first_token;
+	}
 	else
-		smash->last_token->next = token;
-	smash->last_token = token;
+	{
+		smash->last_token->next = malloc(sizeof(t_token)); //TODO error malloc
+		smash->last_token = smash->last_token->next;
+	}
+	smash->last_token->first_variable = NULL;
+	smash->last_token->last_variable = NULL;
+	smash->last_token->value = NULL;
+	if (type == SINGLE_QUOTE)
+		smash->last_token->value = ft_substr(smash->user_input, start, len); //TODO error malloc
+	else if (type == LITERAL || type == DOUBLE_QUOTE)
+		expand(smash, start, len); // TODO malloc
+	smash->last_token->type = type;
+	smash->last_token->next = NULL;
 }
 
 bool	is_start_token(int start_token, char c)
@@ -46,7 +99,7 @@ bool	is_end_token(int start_token, char c, t_token_type type)
 		return (c == '"');
 	else if (type == LITERAL)
 		return (c == ' ' || c == '\t' || c == '\n' || c == '\0'
-		|| c == '\'' || c == '"' || c == '<' || c == '>' || c == '|');
+			|| c == '\'' || c == '"' || c == '<' || c == '>' || c == '|');
 	return (true);
 }
 
@@ -78,7 +131,7 @@ void	tokenize(t_smash *smash)
 
 	iter = 0;
 	start_token = -1;
-	//token_type = get_token_type(smash->user_input[iter], smash->user_input[iter + 1]);
+	token_type = -1;
 	while (smash->user_input[iter])
 	{
 		if (is_start_token(start_token, smash->user_input[iter]))
@@ -110,8 +163,9 @@ void	read_line(t_smash *smash)
 	smash->user_input = readline("\e[1;35mSMASH -> \e[0m");
 	if (!smash->user_input)
 		return ;
-	debug_string(*smash, "line", smash->user_input);
+	//debug_string(*smash, "line", smash->user_input);
 	if (ft_strlen(smash->user_input) > 0)
 		add_history(smash->user_input);
-	tokenize(smash); //TODO empty before callong read_line
+	tokenize(smash);
+	//TODO syntax
 }

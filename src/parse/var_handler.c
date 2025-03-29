@@ -7,30 +7,41 @@ bool	valid_char(char c)
 	return (false);
 }
 
-t_var	get_var(t_smash smash, char *input, int pos)
+//TODO protect NULL
+void	get_var(t_smash *smash, int pos)
 {
 	int		i;
-	t_var	var;
 	char	*key;
 
-	i = pos + 1;
-	var.valid_name = false;
-	if (!ft_isalpha(input[i]) && input[i] != '_' && input[i] != '?')
-		return (var);
-	var.valid_name = true;
-	var.pos = pos;
-	if (input[i] == '?')
+	if (!smash->last_token->first_variable)
 	{
-		var.value = ft_itoa(smash.exit_status);
-		var.key_len = 2;
-		var.value_len = ft_strlen(var.value);
-		return (var);
+		smash->last_token->first_variable = malloc(sizeof(t_var));
+		smash->last_token->last_variable = smash->last_token->first_variable;
 	}
-	while (input[i] && valid_char(input[i]))
+	else
+	{
+		smash->last_token->last_variable->next = malloc(sizeof(t_var));
+		smash->last_token->last_variable = smash->last_token->last_variable->next;
+	}
+	smash->last_token->last_variable->next = NULL;
+	i = pos + 1;
+	smash->last_token->last_variable->valid_name = false;
+	if (!ft_isalpha(smash->user_input[i]) && smash->user_input[i] != '_' && smash->user_input[i] != '?')
+		return ;
+	smash->last_token->last_variable->valid_name = true;
+	smash->last_token->last_variable->pos = pos;
+	if (smash->user_input[i] == '?')
+	{
+		smash->last_token->last_variable->value = ft_itoa(smash->exit_status); //TODO error malloc
+		smash->last_token->last_variable->key_len = 2;
+		smash->last_token->last_variable->value_len = ft_strlen(smash->last_token->last_variable->value);
+		return ;
+	}
+	while (smash->user_input[i] && valid_char(smash->user_input[i]))
 		i++;
-	key = ft_substr(input, pos + 1, i - pos - 1);
-	var.key_len = i - pos - 1;
-	var.value = get_value(smash.envp, key);
+	key = ft_substr(smash->user_input, pos + 1, i - pos - 1); //TODO error malloc
+	smash->last_token->last_variable->key_len = i - pos;
+	smash->last_token->last_variable->value = get_value(smash->envp, key);
 	free(key);
-	return (var);
+	smash->last_token->last_variable->value_len = ft_strlen(smash->last_token->last_variable->value);
 }
