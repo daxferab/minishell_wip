@@ -28,7 +28,8 @@ static t_smash	init(int argc, char **argv, char **envp)
 
 	ft_printf("Minishell\n");
 	smash.debug_mode = argc > 1 && ft_str_equals(argv[1], "debug");
-	smash.envp = init_envp(envp);//TODO: Handle error
+	smash.envp = init_envp(envp);
+	//TODO: Handle error
 	smash.cwd = getcwd(NULL, 0);
 	smash.first_token = NULL;
 	smash.last_token = NULL;

@@ -50,9 +50,11 @@ SOURCES :=	\
 				input_handler.c\
 			)\
 			$(addprefix parse/,\
+				add_token.c\
 				clear_input.c\
+				get_variable.c\
 				read_line.c\
-				var_handler.c\
+				tokenize.c\
 			)\
 
 OBJECTS := $(addprefix $(OBJ_DIR), $(SOURCES:.c=.o))

@@ -60,10 +60,13 @@ void	debug_int(t_smash *smash, char *variable, int value);
 void	debug_string(t_smash *smash, char *variable, char *value);
 void	debug_tokens(t_smash *smash);
 
-//READ_LINE
+//PARSE
 
+bool	add_token(t_smash *smash, int start, int len, t_token_type type);
 void	clear_input(t_smash *smash);
+bool	get_variable(t_smash *smash, int pos);
 void	read_line(t_smash *smash);
+bool	tokenize(t_smash *smash);
 
 //BUILTINS
 
@@ -95,9 +98,5 @@ bool	free_node(t_envp *envp, char *key);
 
 // inputhandler.c
 void	input_handler(t_smash *smash, char **input);
-
-// var_handler.c
-bool	valid_char(char c);
-void	get_var(t_smash *smash, int pos);
 
 #endif
