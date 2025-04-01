@@ -132,6 +132,7 @@ bool	add_token(t_smash *smash, int start, int len, t_token_type type);
 void	clear_input(t_smash *smash);
 bool	get_variable(t_smash *smash, int pos);
 void	read_line(t_smash *smash);
+bool	syntax(t_smash *smash);
 bool	tokenize(t_smash *smash);
 
 #endif
