@@ -3,9 +3,6 @@
 static void	update_wd(t_smash *smash);
 static int	array_len(char **array);
 
-static void	update_wd(t_smash *smash);
-static int	array_len(char **array);
-
 int	cmd_cd(t_smash *smash, char **input)
 {
 	int	cmd_len;
@@ -33,7 +30,6 @@ int	cmd_cd(t_smash *smash, char **input)
 static void	update_wd(t_smash *smash) //FIXME
 {
 	update_envp(&smash->envp, "OLDPWD", get_value(smash->envp, "PWD"));
-	update_envp(&smash->envp, "OLDPWD", "");
 	if (smash->cwd)
 		free(smash->cwd);
 	smash->cwd = getcwd(NULL, 0);
