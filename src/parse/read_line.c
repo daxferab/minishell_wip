@@ -8,5 +8,6 @@ void	read_line(t_smash *smash)
 	if (ft_strlen(smash->user_input) > 0)
 		add_history(smash->user_input);
 	tokenize(smash);
-	//TODO syntax
+	if (!syntax(smash))
+		ft_printf_fd(STDERR_FILENO, "smash: syntax error\n");
 }

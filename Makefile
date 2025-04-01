@@ -54,6 +54,7 @@ SOURCES :=	\
 				clear_input.c\
 				get_variable.c\
 				read_line.c\
+				syntax.c\
 				tokenize.c\
 			)\
 

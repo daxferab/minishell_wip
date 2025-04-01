@@ -99,4 +99,6 @@ bool	free_node(t_envp *envp, char *key);
 // inputhandler.c
 void	input_handler(t_smash *smash, char **input);
 
+bool	syntax(t_smash *smash);
+
 #endif
