@@ -36,9 +36,7 @@ bool	update_envp(t_envp **envp, char *key, char *newvalue)
 			free(current->value);
 			current->value = ft_strdup(newvalue);
 			if (!current->value)
-				return (free(key), false);
-			free(key);
-			free(newvalue);
+				return (false);
 			return (true);
 		}
 		current = current->next;

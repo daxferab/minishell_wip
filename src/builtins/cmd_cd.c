@@ -27,7 +27,7 @@ int	cmd_cd(t_smash *smash, char **input)
 	return (0);
 }
 
-static void	update_wd(t_smash *smash) //FIXME
+static void	update_wd(t_smash *smash)
 {
 	update_envp(&smash->envp, "OLDPWD", get_value(smash->envp, "PWD"));
 	if (smash->cwd)

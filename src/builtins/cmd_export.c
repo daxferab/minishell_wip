@@ -21,7 +21,7 @@ int	cmd_export(t_smash *smash, char **input)
 				return (free(entry), 0);
 			}
 			update_envp(&(smash->envp), entry[0], entry[1]);
-			free(entry);
+			ft_free_double_pointer((void **)entry);
 		}
 		i++;
 	}
