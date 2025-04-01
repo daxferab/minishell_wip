@@ -8,20 +8,20 @@ int	cmd_cd(t_smash *smash, char **input)
 	int	cmd_len;
 
 	cmd_len = array_len(input);
-	if (cmd_len > 2) //too many args
-		return (1);
-	if (cmd_len == 1) //no args
+	if (cmd_len > 2)
+		return (ft_putstr_fd("smash: cd: too many args\n", 2), 1);
+	if (cmd_len == 1)
 	{
 		if (!get_value(smash->envp, "HOME"))
-			return (1); //HOME not set
+			return (1);
 		if (chdir(get_value(smash->envp, "HOME")) == -1)
-			return (1); //error changing directory
+			return (1);
 		update_wd(smash);
 		return (0);
 	}
-	if (access(input[1], F_OK | X_OK) == -1) //file does not exist
-		return (1); // Not an existing directory
-	if (chdir(input[1]) == -1) //error changing directory
+	if (access(input[1], F_OK | X_OK) == -1)
+		return (1);
+	if (chdir(input[1]) == -1)
 		return (1);
 	update_wd(smash);
 	return (0);
