@@ -33,10 +33,13 @@ DIRECTORIES :=	\
 SOURCES :=	\
 			minishell.c\
 			$(addprefix builtins/,\
-				cd_builtin.c\
-				echo_builtin.c\
-				env_builtins.c\
-				pwd_builtin.c\
+				cmd_cd.c\
+				cmd_echo.c\
+				cmd_env.c\
+				cmd_exit.c\
+				cmd_export.c\
+				cmd_pwd.c\
+				cmd_unset.c\
 			)\
 			$(addprefix control/,\
 				debug.c\

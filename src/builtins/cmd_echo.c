@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-bool	cmd_echo(char **input)
+
+int	cmd_echo(char **input)
 {
 	int		i;
 	bool	nl;
@@ -12,8 +13,6 @@ bool	cmd_echo(char **input)
 		nl = false;
 		i++;
 	}
-	if (input[i] && !ft_strncmp(input[1], "-", 1))
-		return (false);
 	while (input[i])
 	{
 		printf("%s", input[i]);
@@ -23,5 +22,5 @@ bool	cmd_echo(char **input)
 	}
 	if (nl)
 		printf("\n");
-	return (true);
+	return (0);
 }

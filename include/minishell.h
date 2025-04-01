@@ -5,6 +5,14 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+/******************************************************************************/
+/*                                   MACROS                                   */
+/******************************************************************************/
+
+/******************************************************************************/
+/*                                   ENUMS                                    */
+/******************************************************************************/
+
 typedef enum e_token_type
 {
 	LITERAL,
@@ -16,6 +24,10 @@ typedef enum e_token_type
 	APPEND,
 	PIPE
 }	t_token_type;
+
+/******************************************************************************/
+/*                                  STRUCTS                                   */
+/******************************************************************************/
 
 typedef struct s_var
 {
@@ -54,30 +66,44 @@ typedef struct s_smash
 	t_token	*last_token;
 }	t_smash;
 
-// DEBUG
+/******************************************************************************/
+/*                                 FUNCTIONS                                  */
+/******************************************************************************/
+
+/******************************************************************************/
+/*                            FUNCTIONS - BUILTINS                            */
+/******************************************************************************/
+
+int		cmd_cd(t_smash *smash, char **input);
+int		cmd_echo(char **input);
+int		cmd_env(t_smash smash, char **input);
+int		cmd_exit(t_smash *smash, char **input);
+int		cmd_export(t_smash *smash, char **input);
+int		cmd_pwd(t_smash *smash, char **input);
+int		cmd_unset(t_smash *smash, char **input);
+
+/******************************************************************************/
+/*                            FUNCTIONS - CONTROL                             */
+/******************************************************************************/
+
+//debug.c
 
 void	debug_int(t_smash *smash, char *variable, int value);
 void	debug_string(t_smash *smash, char *variable, char *value);
 void	debug_tokens(t_smash *smash);
 
-//PARSE
+// free.c
 
-bool	add_token(t_smash *smash, int start, int len, t_token_type type);
-void	clear_input(t_smash *smash);
-bool	get_variable(t_smash *smash, int pos);
-void	read_line(t_smash *smash);
-bool	tokenize(t_smash *smash);
+void	free_smash(t_smash smash);
+void	free_t_envp(t_envp *envp);
+bool	free_node(t_envp *envp, char *key);
 
-//BUILTINS
-
-bool	cmd_cd(t_smash *smash, char **input);
-bool	cmd_echo(char **input);
-bool	cmd_env(t_smash smash, char **input);
-bool	cmd_pwd(t_smash *smash, char **input);
-bool	cmd_unset(t_smash *smash, char **input);
-bool	cmd_export(t_smash *smash, char **input);
+/******************************************************************************/
+/*                              FUNCTIONS - ENV                               */
+/******************************************************************************/
 
 // envlist.c
+
 char	*get_value(t_envp *envp, char *key);
 bool	new_entry(t_envp **envp, char *key, char *value);
 bool	update_envp(t_envp **envp, char	*key, char *newvalue);
@@ -85,20 +111,28 @@ void	display_envp(t_envp *envp);
 t_envp	*init_envp(char **envp);
 
 //envutils.c
+
 char	**split_char(char *envp, char c);
 t_envp	*new_node(char *key, char *value);
 void	addnode_front(t_envp *node, t_envp **envp);
 int		envsize(t_envp *lst);
 bool	is_valid_key(char *key);
 
-// free.c
-void	free_smash(t_smash smash);
-void	free_t_envp(t_envp *envp);
-bool	free_node(t_envp *envp, char *key);
+/******************************************************************************/
+/*                            FUNCTIONS - EXECUTION                           */
+/******************************************************************************/
 
-// inputhandler.c
 void	input_handler(t_smash *smash, char **input);
 
+/******************************************************************************/
+/*                             FUNCTIONS - PARSE                              */
+/******************************************************************************/
+
+bool	add_token(t_smash *smash, int start, int len, t_token_type type);
+void	clear_input(t_smash *smash);
+bool	get_variable(t_smash *smash, int pos);
+void	read_line(t_smash *smash);
 bool	syntax(t_smash *smash);
+bool	tokenize(t_smash *smash);
 
 #endif
