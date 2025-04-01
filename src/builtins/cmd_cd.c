@@ -13,12 +13,14 @@ int	cmd_cd(t_smash *smash, char **input)
 	if (cmd_len == 1)
 	{
 		if (!get_value(smash->envp, "HOME"))
-			return (1);
+		return (ft_putstr_fd("smash: cd: HOME is not set\n", 2), 1);
 		if (chdir(get_value(smash->envp, "HOME")) == -1)
-			return (1);
+		return (1);
 		update_wd(smash);
 		return (0);
 	}
+	if (ft_strncmp(input[1], "-", 1) == 0)
+		return (ft_putstr_fd("smash: cd: -: invalid option\n", 2), 2);
 	if (access(input[1], F_OK | X_OK) == -1)
 		return (1);
 	if (chdir(input[1]) == -1)
