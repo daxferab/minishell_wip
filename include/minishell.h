@@ -29,6 +29,20 @@ typedef enum e_token_type
 /*                                  STRUCTS                                   */
 /******************************************************************************/
 
+typedef struct s_redir
+{
+	t_token_type	type;
+	char			*value;
+	t_redir			*next;
+}	t_redir;
+
+typedef struct s_pipelines
+{
+	char		**cmd;
+	t_redir		*redir_lst;
+	t_pipelines	*next;
+}	t_pipelines;
+
 typedef struct s_var
 {
 	bool			valid_name;
