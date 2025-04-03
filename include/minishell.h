@@ -33,14 +33,14 @@ typedef struct s_redir
 {
 	t_token_type	type;
 	char			*value;
-	t_redir			*next;
+	struct s_redir	*next;
 }	t_redir;
 
 typedef struct s_pipelines
 {
-	char		**cmd;
-	t_redir		*redir_lst;
-	t_pipelines	*next;
+	char				**cmd;
+	t_redir				*redir_lst;
+	struct t_pipelines	*next;
 }	t_pipelines;
 
 typedef struct s_var
@@ -78,6 +78,7 @@ typedef struct s_smash
 	int		exit_status;
 	t_token	*first_token;
 	t_token	*last_token;
+	t_redir	*first_redir;
 }	t_smash;
 
 /******************************************************************************/
@@ -145,8 +146,11 @@ void	input_handler(t_smash *smash, char **input);
 bool	add_token(t_smash *smash, int start, int len, t_token_type type);
 void	clear_input(t_smash *smash);
 bool	get_variable(t_smash *smash, int pos);
+void	parse_pipeline(t_smash *smash);
 void	read_line(t_smash *smash);
 bool	syntax(t_smash *smash);
+bool	is_redirection(t_token_type type);
+bool	is_word(t_token_type type);
 bool	tokenize(t_smash *smash);
 
 #endif

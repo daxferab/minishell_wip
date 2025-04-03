@@ -1,8 +1,5 @@
 #include "minishell.h"
 
-static bool	is_redirection(t_token_type type);
-static bool	is_word(t_token_type type);
-
 //TODO syntax error, but where?
 bool	syntax(t_smash *smash)
 {
@@ -22,15 +19,4 @@ bool	syntax(t_smash *smash)
 		iter = iter->next;
 	}
 	return (true);
-}
-
-static bool	is_redirection(t_token_type type)
-{
-	return (type == INPUT || type == HEREDOC
-		|| type == OUTPUT || type == APPEND);
-}
-
-static bool	is_word(t_token_type type)
-{
-	return (type == LITERAL || type == SINGLE_QUOTE || type == DOUBLE_QUOTE);
 }

@@ -10,4 +10,5 @@ void	read_line(t_smash *smash)
 	tokenize(smash);
 	if (!syntax(smash))
 		ft_printf_fd(STDERR_FILENO, "smash: syntax error\n");
+	parse_pipeline(smash);
 }
