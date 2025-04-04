@@ -7,7 +7,7 @@ static int	get_cmd_num(t_token *current)
 	t_token	*before;
 	cmd_num = 0;
 	before = NULL;
-	while (current->next || current->type == PIPE)
+	while (current && current->type != PIPE)
 	{
 		if (is_word(current->type) && (!before || !is_redirection(before->type)))
 		{
