@@ -71,14 +71,14 @@ typedef struct s_envp
 
 typedef struct s_smash
 {
-	char	*user_input;
-	bool	debug_mode;
-	t_envp	*envp;
-	char	*cwd;
-	int		exit_status;
-	t_token	*first_token;
-	t_token	*last_token;
-	t_redir	*first_redir;
+	char		*user_input;
+	bool		debug_mode;
+	t_envp		*envp;
+	char		*cwd;
+	int			exit_status;
+	t_token		*first_token;
+	t_token		*last_token;
+	t_pipelines	*first_pipeline;
 }	t_smash;
 
 /******************************************************************************/
