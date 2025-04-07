@@ -3,7 +3,7 @@
 void	read_line(t_smash *smash)
 {
 	smash->user_input = readline("\e[1;35mSMASH -> \e[0m");
-	if (!smash->user_input)
+	if (!smash->user_input || !smash->user_input[0])
 		return ;
 	add_history_entry(smash);
 	tokenize(smash);
