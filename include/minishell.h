@@ -76,6 +76,7 @@ typedef struct s_smash
 	t_envp		*envp;
 	char		*cwd;
 	int			exit_status;
+	char		*history_file;
 	t_token		*first_token;
 	t_token		*last_token;
 	t_pipeline	*first_pipeline;
