@@ -34,5 +34,7 @@ static t_smash	init(int argc, char **argv, char **envp)
 	smash.first_token = NULL;
 	smash.last_token = NULL;
 	smash.exit_status = 0;
+	smash.history_file = NULL;
+	import_history(&smash);
 	return (smash);
 }

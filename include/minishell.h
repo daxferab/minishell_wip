@@ -113,6 +113,11 @@ void	free_smash(t_smash smash);
 void	free_t_envp(t_envp *envp);
 bool	free_node(t_envp *envp, char *key);
 
+// history.c
+
+void	import_history(t_smash *smash);
+void	add_history_entry(t_smash *smash);
+
 /******************************************************************************/
 /*                              FUNCTIONS - ENV                               */
 /******************************************************************************/

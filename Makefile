@@ -44,6 +44,7 @@ SOURCES :=	\
 			$(addprefix control/,\
 				debug.c\
 				free.c\
+				history.c\
 			)\
 			$(addprefix env/,\
 				env_list.c\
