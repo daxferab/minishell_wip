@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+         #
+#    By: pdel-olm <pdel-olm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/02 16:43:04 by pdel-olm          #+#    #+#              #
-#    Updated: 2025/02/17 16:24:50 by pdel-olm         ###   ########.fr        #
+#    Updated: 2025/04/07 16:59:38 by pdel-olm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SOURCES =	\
 				ft_bzero.c\
 				ft_calloc.c\
 				ft_get_next_line.c\
+				ft_get_next_line_no_nl.c\
 				ft_itoa.c\
 				ft_split.c\
 				ft_substr.c\

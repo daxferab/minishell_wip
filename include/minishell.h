@@ -76,6 +76,7 @@ typedef struct s_smash
 	t_envp		*envp;
 	char		*cwd;
 	int			exit_status;
+	char		*history_file;
 	t_token		*first_token;
 	t_token		*last_token;
 	t_pipelines	*first_pipeline;
@@ -112,6 +113,11 @@ void	debug_tokens(t_smash *smash);
 void	free_smash(t_smash smash);
 void	free_t_envp(t_envp *envp);
 bool	free_node(t_envp *envp, char *key);
+
+// history.c
+
+void	import_history(t_smash *smash);
+void	add_history_entry(t_smash *smash);
 
 /******************************************************************************/
 /*                              FUNCTIONS - ENV                               */
