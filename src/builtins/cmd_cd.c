@@ -13,9 +13,9 @@ int	cmd_cd(t_smash *smash, char **input)
 	if (cmd_len == 1)
 	{
 		if (!get_value(smash->envp, "HOME"))
-		return (ft_putstr_fd("smash: cd: HOME is not set\n", 2), 1);
+			return (ft_putstr_fd("smash: cd: HOME is not set\n", 2), 1);
 		if (chdir(get_value(smash->envp, "HOME")) == -1)
-		return (1);
+			return (1);
 		update_wd(smash);
 		return (0);
 	}

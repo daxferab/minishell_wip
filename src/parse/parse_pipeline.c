@@ -1,7 +1,8 @@
 #include "minishell.h"
 
-static int	get_cmd_num(t_token *current);
 static void	new_pipeline(t_pipeline *pipelst, t_token *current);
+static int	get_cmd_num(t_token *current);
+static void	add_redirection(t_pipeline *pipelst, t_token *current);
 
 void	parse_pipeline(t_smash *smash)
 {
@@ -12,42 +13,13 @@ void	parse_pipeline(t_smash *smash)
 	current = smash->first_token;
 	while (current)
 	{
-		new_pipeline(pipelst, current);
+		new_pipeline(pipelst, current); //TODO: protect
 		while (current && current->type != PIPE)
 			current = current->next;
-		if  (current && current->type == PIPE)
+		if (current && current->type == PIPE)
 			current = current->next;
 	}
 	smash->first_pipeline = pipelst;
-	t_pipeline	*aux = pipelst;
-	while (aux)
-	{
-		int i = 0;
-		while (aux->cmd[i])
-		{
-			ft_printf("cmd[%d] = %s\n", i, aux->cmd[i]);
-			i++;
-		}
-		aux = aux->next;
-	}
-}
-
-static void	add_redirection(t_pipeline *pipelst, t_token *current)
-{
-	t_redir	*redir;
-	t_redir	*aux;
-
-	redir = malloc(sizeof(t_redir)); //TODO: protect
-	redir->type = current->type;
-	redir->next = NULL;
-	redir->value = current->next->value;
-	aux = pipelst->redir_lst;
-	while (aux && aux->next)
-		aux = aux->next;
-	if (aux)
-		aux->next = redir;
-	else
-		pipelst->redir_lst = redir;
 }
 
 static void	new_pipeline(t_pipeline *pipelst, t_token *current)
@@ -79,8 +51,8 @@ static void	new_pipeline(t_pipeline *pipelst, t_token *current)
 static int	get_cmd_num(t_token *current)
 {
 	int		cmd_num;
-
 	t_token	*before;
+
 	cmd_num = 0;
 	before = NULL;
 	while (current && current->type != PIPE)
@@ -91,4 +63,22 @@ static int	get_cmd_num(t_token *current)
 		current = current->next;
 	}
 	return (cmd_num);
+}
+
+static void	add_redirection(t_pipeline *pipelst, t_token *current)
+{
+	t_redir	*redir;
+	t_redir	*aux;
+
+	redir = malloc(sizeof(t_redir)); //TODO: protect
+	redir->type = current->type;
+	redir->next = NULL;
+	redir->value = current->next->value;
+	aux = pipelst->redir_lst;
+	while (aux && aux->next)
+		aux = aux->next;
+	if (aux)
+		aux->next = redir;
+	else
+		pipelst->redir_lst = redir;
 }
