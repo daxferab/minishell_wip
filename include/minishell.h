@@ -36,12 +36,12 @@ typedef struct s_redir
 	struct s_redir	*next;
 }	t_redir;
 
-typedef struct s_pipelines
+typedef struct s_pipeline
 {
 	char				**cmd;
 	t_redir				*redir_lst;
-	struct t_pipelines	*next;
-}	t_pipelines;
+	struct s_pipeline	*next;
+}	t_pipeline;
 
 typedef struct s_var
 {
@@ -71,14 +71,14 @@ typedef struct s_envp
 
 typedef struct s_smash
 {
-	char	*user_input;
-	bool	debug_mode;
-	t_envp	*envp;
-	char	*cwd;
-	int		exit_status;
-	t_token	*first_token;
-	t_token	*last_token;
-	t_redir	*first_redir;
+	char		*user_input;
+	bool		debug_mode;
+	t_envp		*envp;
+	char		*cwd;
+	int			exit_status;
+	t_token		*first_token;
+	t_token		*last_token;
+	t_pipeline	*first_pipeline;
 }	t_smash;
 
 /******************************************************************************/
