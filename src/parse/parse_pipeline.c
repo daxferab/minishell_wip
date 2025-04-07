@@ -40,6 +40,7 @@ static void	add_redirection(t_pipeline *pipelst, t_token *current)
 	redir = malloc(sizeof(t_redir)); //TODO: protect
 	redir->type = current->type;
 	redir->next = NULL;
+	redir->value = current->next->value;
 	aux = pipelst->redir_lst;
 	while (aux && aux->next)
 		aux = aux->next;
@@ -65,17 +66,12 @@ static void	new_pipeline(t_pipeline *pipelst, t_token *current)
 	{
 		if (is_redirection(current->type))
 		{
-			add_redirection(new_pipeline, current); //TODO: create this function
+			add_redirection(new_pipeline, current);
 			current = current->next;
 		}
 		else
 			new_pipeline->cmd[i++] = current->value;
 		current = current->next;
-	}
-	while (new_pipeline->redir_lst)
-	{
-		printf("redir = %i\n", new_pipeline->redir_lst->type);
-		new_pipeline->redir_lst = new_pipeline->redir_lst->next;
 	}
 	new_pipeline->cmd[i] = NULL;
 }
