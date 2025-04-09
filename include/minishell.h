@@ -155,8 +155,12 @@ bool	get_variable(t_smash *smash, int pos);
 void	parse_pipeline(t_smash *smash);
 void	read_line(t_smash *smash);
 bool	syntax(t_smash *smash);
+bool	tokenize(t_smash *smash);
+
+// token_type.c
+
+t_token_type	get_token_type(char *c);
 bool	is_redirection(t_token_type type);
 bool	is_word(t_token_type type);
-bool	tokenize(t_smash *smash);
 
 #endif

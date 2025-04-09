@@ -7,6 +7,9 @@ void	read_line(t_smash *smash)
 		return ;
 	add_history_entry(smash);
 	tokenize(smash);
+	debug_tokens(smash);
+	//TODO variable expansion here
+	//TODO quote removal
 	if (!syntax(smash))
 		ft_printf_fd(STDERR_FILENO, "smash: syntax error\n");
 	parse_pipeline(smash);
