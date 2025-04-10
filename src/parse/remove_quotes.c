@@ -1,37 +1,21 @@
 #include "minishell.h"
 
-static void	get_new_token_value(t_token *token, char **new_value)
-{
-	int				token_iter;
-	int				value_iter;
-	t_token_type	type;
-	t_token_type	last_type;
+static bool	remove_token(t_token *token);
+static bool	change_token_value(t_token *token, int new_len);
+static void	get_new_token_value(t_token *token, char **new_value);
 
-	token_iter = 0;
-	value_iter = 0;
-	type = LITERAL;
-	last_type = LITERAL;
-	while (token->value[token_iter])
+bool	remove_quotes(t_smash *smash)
+{
+	t_token	*iter;
+
+	iter = smash->first_token;
+	while (iter)
 	{
-		mutate(&type, token->value[token_iter]);
-		if (type == last_type)
-			(*new_value)[value_iter++] = token->value[token_iter];
-		last_type = type;
-		token_iter++;
+		if (iter->type == LITERAL)
+			if (!remove_token(iter))
+				return (false);
+		iter = iter->next;
 	}
-	(*new_value)[value_iter] = 0;
-}
-
-static bool	change_token_value(t_token *token, int new_len)
-{
-	char	*new_value;
-
-	new_value = malloc((new_len + 1) * sizeof(char));
-	if (!new_value)
-		return (false);
-	get_new_token_value(token, &new_value);
-	free(token->value);
-	token->value = new_value;
 	return (true);
 }
 
@@ -59,17 +43,37 @@ static bool	remove_token(t_token *token)
 	return (true);
 }
 
-bool	remove_quotes(t_smash *smash)
+static bool	change_token_value(t_token *token, int new_len)
 {
-	t_token	*iter;
+	char	*new_value;
 
-	iter = smash->first_token;
-	while (iter)
-	{
-		if (iter->type == LITERAL)
-			if (!remove_token(iter))
-				return (false);
-		iter = iter->next;
-	}
+	new_value = malloc((new_len + 1) * sizeof(char));
+	if (!new_value)
+		return (false);
+	get_new_token_value(token, &new_value);
+	free(token->value);
+	token->value = new_value;
 	return (true);
+}
+
+static void	get_new_token_value(t_token *token, char **new_value)
+{
+	int				token_iter;
+	int				value_iter;
+	t_token_type	type;
+	t_token_type	last_type;
+
+	token_iter = 0;
+	value_iter = 0;
+	type = LITERAL;
+	last_type = LITERAL;
+	while (token->value[token_iter])
+	{
+		mutate(&type, token->value[token_iter]);
+		if (type == last_type)
+			(*new_value)[value_iter++] = token->value[token_iter];
+		last_type = type;
+		token_iter++;
+	}
+	(*new_value)[value_iter] = 0;
 }

@@ -1,19 +1,6 @@
 #include "minishell.h"
 
-static void	clear_vars(t_token *token)
-{
-	t_var	*iter;
-	t_var	*next;
-
-	iter = token->first_variable;
-	while (iter)
-	{
-		next = iter->next;
-		free(iter->value);
-		free(iter);
-		iter = next;
-	}
-}
+static void	clear_vars(t_token *token);
 
 void	clear_input(t_smash *smash)
 {
@@ -32,4 +19,19 @@ void	clear_input(t_smash *smash)
 	smash->first_token = NULL;
 	smash->last_token = NULL;
 	free(smash->user_input);
+}
+
+static void	clear_vars(t_token *token)
+{
+	t_var	*iter;
+	t_var	*next;
+
+	iter = token->first_variable;
+	while (iter)
+	{
+		next = iter->next;
+		free(iter->value);
+		free(iter);
+		iter = next;
+	}
 }
