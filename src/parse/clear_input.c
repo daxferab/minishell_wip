@@ -1,9 +1,18 @@
 #include "minishell.h"
 
+static void	clear_tokens(t_smash *smash);
 static void	clear_vars(t_token *token);
-static void	free_redir(t_redir *redir);
+static void	clear_pipelines(t_smash *smash);
+static void	clear_redirs(t_pipeline *pipeline);
 
 void	clear_input(t_smash *smash)
+{
+	clear_tokens(smash);
+	clear_pipelines(smash);
+	free(smash->user_input);
+}
+
+static void	clear_tokens(t_smash *smash)
 {
 	t_token	*iter;
 	t_token	*next;
@@ -19,7 +28,6 @@ void	clear_input(t_smash *smash)
 	}
 	smash->first_token = NULL;
 	smash->last_token = NULL;
-	free(smash->user_input);
 }
 
 static void	clear_vars(t_token *token)
@@ -37,30 +45,33 @@ static void	clear_vars(t_token *token)
 	}
 }
 
-void	clear_pipeline(t_smash *smash)
+static void	clear_pipelines(t_smash *smash)
 {
-	t_pipeline	*tmp;
+	t_pipeline	*iter;
+	t_pipeline	*next;
 
-	while (smash->first_pipeline)
+	iter = smash->first_pipeline;
+	while (iter)
 	{
-
-		tmp = smash->first_pipeline;
-		ft_free_double_pointer(tmp->cmd);
-		free_redir(tmp->redir_lst);
-		free(tmp);
-		smash->first_pipeline = smash->first_pipeline->next;
+		next = iter->next;
+		clear_redirs(iter);
+		free(iter->cmd);
+		free(iter);
+		iter = next;
 	}
 }
 
-static void	free_redir(t_redir *redir)
+static void	clear_redirs(t_pipeline *pipeline)
 {
-	t_redir	*tmp;
+	t_redir	*iter;
+	t_redir	*next;
 
-	while (redir)
+	iter = pipeline->redir_lst;
+	while (iter)
 	{
-		tmp = redir;
-		free(tmp->value);
-		free(tmp);
-		redir = redir->next;
+		next = iter->next;
+		free(iter->value);
+		free(iter);
+		iter = next;
 	}
 }
