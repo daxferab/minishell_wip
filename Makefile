@@ -54,8 +54,8 @@ SOURCES :=	\
 				input_handler.c\
 			)\
 			$(addprefix parse/,\
-				add_token.c\
 				clear_input.c\
+				expand_variables.c\
 				get_variable.c\
 				parse_pipeline.c\
 				read_line.c\

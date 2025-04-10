@@ -150,6 +150,7 @@ void	input_handler(t_smash *smash, char **input);
 /******************************************************************************/
 
 void	clear_input(t_smash *smash);
+bool	expand_variables(t_smash *smash);
 bool	get_variable(t_smash *smash, int pos);
 void	parse_pipeline(t_smash *smash);
 void	read_line(t_smash *smash);
