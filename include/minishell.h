@@ -149,7 +149,6 @@ void	input_handler(t_smash *smash, char **input);
 /*                             FUNCTIONS - PARSE                              */
 /******************************************************************************/
 
-bool	add_token(t_smash *smash, int start, int len, t_token_type type);
 void	clear_input(t_smash *smash);
 bool	get_variable(t_smash *smash, int pos);
 void	parse_pipeline(t_smash *smash);
