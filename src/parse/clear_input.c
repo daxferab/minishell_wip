@@ -70,7 +70,6 @@ static void	clear_redirs(t_pipeline *pipeline)
 	while (iter)
 	{
 		next = iter->next;
-		free(iter->value);
 		free(iter);
 		iter = next;
 	}

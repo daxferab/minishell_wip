@@ -76,6 +76,7 @@ static void	add_redirection(t_pipeline *pipelst, t_token **current)
 	redir = malloc(sizeof(t_redir)); // TODO: Proteger malloc
 	redir->type = (*current)->type;
 	redir->value = (*current)->next->value;
+	redir->fd = -1;
 	redir->next = NULL;
 	if (!pipelst->redir_lst)
 		pipelst->redir_lst = redir;

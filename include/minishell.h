@@ -9,6 +9,9 @@
 /*                                   MACROS                                   */
 /******************************************************************************/
 
+# define PIPE_READ	STDIN_FILENO
+# define PIPE_WRITE	STDOUT_FILENO
+
 /******************************************************************************/
 /*                                   ENUMS                                    */
 /******************************************************************************/
@@ -33,6 +36,7 @@ typedef struct s_redir
 {
 	t_token_type	type;
 	char			*value;
+	int				fd;
 	struct s_redir	*next;
 }	t_redir;
 
