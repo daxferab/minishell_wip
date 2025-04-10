@@ -2,7 +2,6 @@
 
 static bool			is_start_token(int start_token, char c);
 static bool			is_end_token(int start_token, char c, t_token_type type);
-static t_token_type	mutate(t_token_type type, char c);
 static bool			add_token(t_smash *smash,
 						int start, int len, t_token_type type);
 
@@ -18,12 +17,12 @@ bool	tokenize(t_smash *smash)
 	{
 		if (is_start_token(start_token, smash->user_input[iter]))
 		{
-			type = get_token_type(&(smash->user_input[iter]));
+			get_token_type(&type, &(smash->user_input[iter]));
 			start_token = iter;
 			if (type == HEREDOC || type == APPEND)
 				iter++;
 		}
-		type = mutate(type, smash->user_input[iter]);
+		mutate(&type, smash->user_input[iter]);
 		if (is_end_token(start_token, smash->user_input[iter + 1], type))
 		{
 			if (!add_token(smash, start_token, iter - start_token + 1, type))
@@ -41,7 +40,6 @@ static bool	is_start_token(int start_token, char c)
 	return (start_token == -1 && c != ' ' && c != '\t' && c != '\n');
 }
 
-//returns false if malloc fails
 static bool	is_end_token(int start_token, char c, t_token_type type)
 {
 	if (start_token == -1 || type == SINGLE_QUOTE || type == DOUBLE_QUOTE)
@@ -52,19 +50,7 @@ static bool	is_end_token(int start_token, char c, t_token_type type)
 	return (true);
 }
 
-t_token_type	mutate(t_token_type type, char c)
-{
-	if (type == LITERAL && c == '\'')
-		return (SINGLE_QUOTE);
-	else if (type == LITERAL && c == '"')
-		return (DOUBLE_QUOTE);
-	else if (type == SINGLE_QUOTE && c == '\'')
-		return (LITERAL);
-	else if (type == DOUBLE_QUOTE && c == '"')
-		return (LITERAL);
-	return (type);
-}
-
+//returns false if malloc fails
 static bool	add_token(t_smash *smash, int start, int len, t_token_type type)
 {
 	t_token	*token;

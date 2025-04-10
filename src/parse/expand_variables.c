@@ -1,7 +1,44 @@
-// #include "minishell.h"
+#include "minishell.h"
 
-// static bool	expand_variables(t_smash *smash, int start, int len);
 // static void	copy_variables(t_smash *smash, int start, int len);
+static bool	expand_token(t_smash *smash, t_token *token);
+
+bool	expand_variables(t_smash *smash)
+{
+	t_token			*iter;
+	t_token_type	last_type;
+
+	iter = smash->first_token;
+	last_type = -1;
+	while (iter)
+	{
+		if (iter->type == LITERAL && last_type != HEREDOC)
+			expand_token(smash, iter);
+		last_type = iter->type;
+		iter = iter->next;
+	}
+	return (true);
+}
+
+static bool	expand_token(t_smash *smash, t_token *token)
+{
+	int				iter;
+	t_token_type	type;
+
+	(void) smash; //TODO remove
+	iter = 0;
+	type = LITERAL;
+	while (token->value[iter])
+	{
+		mutate(&type, token->value[iter]);
+		if (token->value[iter] == '$'
+			&& !(iter > 0 && token->value[iter - 1] == '$')
+			&& (type == LITERAL || type == DOUBLE_QUOTE))
+			ft_printf("TODO: expand dollar at %i of %s\n", iter, token->value);
+		iter++;
+	}
+	return (true);
+}
 
 // static bool	expand_variables(t_smash *smash, int start, int len)
 // {

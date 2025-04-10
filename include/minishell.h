@@ -159,7 +159,8 @@ bool	tokenize(t_smash *smash);
 
 // token_type.c
 
-t_token_type	get_token_type(char *c);
+void	get_token_type(t_token_type *type, char *c);
+void	mutate(t_token_type *type, char c);
 bool	is_redirection(t_token_type type);
 bool	is_word(t_token_type type);
 

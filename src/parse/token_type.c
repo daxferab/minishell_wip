@@ -1,19 +1,30 @@
 #include "minishell.h"
 
-t_token_type	get_token_type(char *c)
+void	get_token_type(t_token_type *type, char *c)
 {
+	*type = LITERAL;
 	if (*c == '<' && *(c + 1) && *(c + 1) == '<')
-		return (HEREDOC);
+		*type = HEREDOC;
 	else if (*c == '<')
-		return (INPUT);
+		*type = INPUT;
 	else if (*c == '>' && *(c + 1) && *(c + 1) == '>')
-		return (APPEND);
+		*type = APPEND;
 	else if (*c == '>')
-		return (OUTPUT);
+		*type = OUTPUT;
 	else if (*c == '|')
-		return (PIPE);
-	else
-		return (LITERAL);
+		*type = PIPE;
+}
+
+void	mutate(t_token_type *type, char c)
+{
+	if (*type == LITERAL && c == '\'')
+		*type = SINGLE_QUOTE;
+	else if (*type == LITERAL && c == '"')
+		*type = DOUBLE_QUOTE;
+	else if (*type == SINGLE_QUOTE && c == '\'')
+		*type = LITERAL;
+	else if (*type == DOUBLE_QUOTE && c == '"')
+		*type = LITERAL;
 }
 
 bool	is_redirection(t_token_type type)
