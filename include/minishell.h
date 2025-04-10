@@ -143,6 +143,7 @@ bool	is_valid_key(char *key);
 /*                            FUNCTIONS - EXECUTION                           */
 /******************************************************************************/
 
+void	handle_redirections(t_smash *smash);
 void	input_handler(t_smash *smash, char **input);
 
 /******************************************************************************/

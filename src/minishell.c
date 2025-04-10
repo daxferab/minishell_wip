@@ -16,6 +16,7 @@ int	main(int argc, char **argv, char **envp)
 		split = ft_split(smash.user_input, ' ');
 		input_handler(&smash, split);
 		ft_free_double_pointer((void **)split);
+		handle_redirections(&smash);
 		clear_input(&smash);
 	}
 	free_smash(smash);

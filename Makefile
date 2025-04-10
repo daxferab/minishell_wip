@@ -51,6 +51,7 @@ SOURCES :=	\
 				env_utils.c\
 			)\
 			$(addprefix execution/,\
+				handle_redirections.c\
 				input_handler.c\
 			)\
 			$(addprefix parse/,\
