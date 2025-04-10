@@ -1,6 +1,7 @@
 #include "minishell.h"
 
 static void	clear_vars(t_token *token);
+static void	free_redir(t_redir *redir);
 
 void	clear_input(t_smash *smash)
 {
@@ -33,5 +34,33 @@ static void	clear_vars(t_token *token)
 		free(iter->value);
 		free(iter);
 		iter = next;
+	}
+}
+
+void	clear_pipeline(t_smash *smash)
+{
+	t_pipeline	*tmp;
+
+	while (smash->first_pipeline)
+	{
+
+		tmp = smash->first_pipeline;
+		ft_free_double_pointer(tmp->cmd);
+		free_redir(tmp->redir_lst);
+		free(tmp);
+		smash->first_pipeline = smash->first_pipeline->next;
+	}
+}
+
+static void	free_redir(t_redir *redir)
+{
+	t_redir	*tmp;
+
+	while (redir)
+	{
+		tmp = redir;
+		free(tmp->value);
+		free(tmp);
+		redir = redir->next;
 	}
 }
