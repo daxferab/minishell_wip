@@ -6,7 +6,10 @@ void	read_line(t_smash *smash)
 	if (!smash->user_input || !smash->user_input[0])
 		return ;
 	add_history_entry(smash);
-	tokenize(smash);
+	tokenize(smash);//TODO error
+	expand_variables(smash);//TODO error
+	remove_quotes(smash);//TODO error
+	debug_tokens(smash);
 	if (!syntax(smash))
 		ft_printf_fd(STDERR_FILENO, "smash: syntax error\n");
 	parse_pipeline(smash);

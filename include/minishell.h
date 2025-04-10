@@ -149,14 +149,20 @@ void	input_handler(t_smash *smash, char **input);
 /*                             FUNCTIONS - PARSE                              */
 /******************************************************************************/
 
-bool	add_token(t_smash *smash, int start, int len, t_token_type type);
 void	clear_input(t_smash *smash);
-bool	get_variable(t_smash *smash, int pos);
+bool	expand_variables(t_smash *smash);
+bool	get_variable(t_smash *smash, t_token *token, int pos);
 void	parse_pipeline(t_smash *smash);
 void	read_line(t_smash *smash);
+bool	remove_quotes(t_smash *smash);
 bool	syntax(t_smash *smash);
+bool	tokenize(t_smash *smash);
+
+// token_type.c
+
+void	get_token_type(t_token_type *type, char *c);
+void	mutate(t_token_type *type, char c);
 bool	is_redirection(t_token_type type);
 bool	is_word(t_token_type type);
-bool	tokenize(t_smash *smash);
 
 #endif
