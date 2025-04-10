@@ -19,6 +19,7 @@ void	free_smash(t_smash smash)
 {
 	free_t_envp(smash.envp);
 	free(smash.cwd);
+	free(smash.history_file);
 	rl_clear_history();
 }
 
