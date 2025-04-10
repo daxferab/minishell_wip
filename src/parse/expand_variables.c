@@ -1,7 +1,8 @@
 #include "minishell.h"
 
-// static void	copy_variables(t_smash *smash, int start, int len);
 static bool	expand_token(t_smash *smash, t_token *token);
+static bool	change_token_value(t_token *token, int new_len);
+static void	get_new_token_value(t_token *token, char **new_value);
 
 bool	expand_variables(t_smash *smash)
 {
@@ -23,73 +24,66 @@ bool	expand_variables(t_smash *smash)
 static bool	expand_token(t_smash *smash, t_token *token)
 {
 	int				iter;
+	int				new_len;
 	t_token_type	type;
 
-	(void) smash; //TODO remove
 	iter = 0;
 	type = LITERAL;
+	new_len = ft_strlen(token->value);
 	while (token->value[iter])
 	{
 		mutate(&type, token->value[iter]);
 		if (token->value[iter] == '$'
 			&& !(iter > 0 && token->value[iter - 1] == '$')
 			&& (type == LITERAL || type == DOUBLE_QUOTE))
-			ft_printf("TODO: expand dollar at %i of %s\n", iter, token->value);
+		{
+			if (!get_variable(smash, token, iter))
+				return (false);
+			new_len -= token->last_variable->key_len;
+			new_len += token->last_variable->value_len;
+		}
 		iter++;
 	}
+	return (change_token_value(token, new_len));
+}
+
+static bool	change_token_value(t_token *token, int new_len)
+{
+	char	*new_value;
+
+	new_value = malloc((new_len + 1) * sizeof(char));
+	if (!new_value)
+		return (false);
+	get_new_token_value(token, &new_value);
+	free(token->value);
+	token->value = new_value;
 	return (true);
 }
 
-// static bool	expand_variables(t_smash *smash, int start, int len)
-// {
-// 	int	iter;
-// 	int	new_len;
+static void	get_new_token_value(t_token *token, char **new_value)
+{
+	int		token_iter;
+	int		value_iter;
+	int		other_iter;
+	t_var	*var_iter;
 
-// 	iter = start;
-// 	new_len = len;
-// 	while (iter < start + len)
-// 	{
-// 		if (smash->user_input[iter] == '$'
-// 			&& !(iter > 0 && smash->user_input[iter - 1] == '$'))
-// 		{
-// 			if (!get_variable(smash, iter))
-// 				return (false);
-// 			new_len -= smash->last_token->last_variable->key_len;
-// 			new_len += smash->last_token->last_variable->value_len;
-// 		}
-// 		iter++;
-// 	}
-// 	smash->last_token->value = malloc((new_len + 1) * sizeof(char));
-// 	if (!smash->last_token->value)
-// 		return (false);
-// 	copy_variables(smash, start, len);
-// 	return (true);
-// }
-
-// static void	copy_variables(t_smash *smash, int start, int len)
-// {
-// 	int		user_iter;
-// 	int		iter;
-// 	int		val_iter;
-// 	t_var	*var_iter;
-
-// 	user_iter = start;
-// 	iter = 0;
-// 	var_iter = smash->last_token->first_variable;
-// 	while (user_iter < start + len)
-// 	{
-// 		while (var_iter && !var_iter->valid_name)
-// 			var_iter = var_iter->next;
-// 		if (var_iter && user_iter == var_iter->pos)
-// 		{
-// 			val_iter = 0;
-// 			while (val_iter < var_iter->value_len)
-// 				smash->last_token->value[iter++] = var_iter->value[val_iter++];
-// 			user_iter += var_iter->key_len;
-// 			var_iter = var_iter->next;
-// 		}
-// 		else
-// 			smash->last_token->value[iter++] = smash->user_input[user_iter++];
-// 	}
-// 	smash->last_token->value[iter] = 0;
-// }
+	token_iter = 0;
+	value_iter = 0;
+	var_iter = token->first_variable;
+	while (token->value[token_iter])
+	{
+		while (var_iter && !var_iter->valid_name)
+			var_iter = var_iter->next;
+		if (var_iter && token_iter == var_iter->pos)
+		{
+			other_iter = 0;
+			while (other_iter < var_iter->value_len)
+				(*new_value)[value_iter++] = var_iter->value[other_iter++];
+			token_iter += var_iter->key_len;
+			var_iter = var_iter->next;
+		}
+		else
+			(*new_value)[value_iter++] = token->value[token_iter++];
+	}
+	(*new_value)[value_iter] = 0;
+}
