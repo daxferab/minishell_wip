@@ -59,6 +59,7 @@ SOURCES :=	\
 				get_variable.c\
 				parse_pipeline.c\
 				read_line.c\
+				remove_quotes.c\
 				syntax.c\
 				token_type.c\
 				tokenize.c\

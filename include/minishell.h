@@ -154,6 +154,7 @@ bool	expand_variables(t_smash *smash);
 bool	get_variable(t_smash *smash, t_token *token, int pos);
 void	parse_pipeline(t_smash *smash);
 void	read_line(t_smash *smash);
+bool	remove_quotes(t_smash *smash);
 bool	syntax(t_smash *smash);
 bool	tokenize(t_smash *smash);
 

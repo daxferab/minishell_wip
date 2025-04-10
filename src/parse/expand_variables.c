@@ -14,7 +14,8 @@ bool	expand_variables(t_smash *smash)
 	while (iter)
 	{
 		if (iter->type == LITERAL && last_type != HEREDOC)
-			expand_token(smash, iter);
+			if (!expand_token(smash, iter))
+				return (false);
 		last_type = iter->type;
 		iter = iter->next;
 	}
