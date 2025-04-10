@@ -1,8 +1,9 @@
 #include "minishell.h"
 
-static void	new_pipeline(t_pipeline *pipelst, t_token *current);
-static int	get_cmd_num(t_token *current);
-static void	add_redirection(t_pipeline *pipelst, t_token *current);
+static t_pipeline	*new_pipeline(t_token *current);
+static int			get_cmd_num(t_token *current);
+static void			add_redirection(t_pipeline *pipelst, t_token *current);
+static void			pipe_add_back(t_pipeline *new_pipeline, t_pipeline *pipelst);
 
 void	parse_pipeline(t_smash *smash)
 {
@@ -13,7 +14,7 @@ void	parse_pipeline(t_smash *smash)
 	current = smash->first_token;
 	while (current)
 	{
-		new_pipeline(pipelst, current); //TODO: protect
+		pipe_add_back(new_pipeline(current), pipelst); //TODO: protect
 		while (current && current->type != PIPE)
 			current = current->next;
 		if (current && current->type == PIPE)
@@ -22,13 +23,12 @@ void	parse_pipeline(t_smash *smash)
 	smash->first_pipeline = pipelst;
 }
 
-static void	new_pipeline(t_pipeline *pipelst, t_token *current)
+static t_pipeline	*new_pipeline(t_token *current)
 {
 	int			cmd_num;
 	int			i;
 	t_pipeline	*new_pipeline;
 
-	(void) pipelst;
 	cmd_num = get_cmd_num(current);
 	i = 0;
 	new_pipeline = malloc(sizeof(t_pipeline)); //TODO: protect
@@ -46,6 +46,7 @@ static void	new_pipeline(t_pipeline *pipelst, t_token *current)
 		current = current->next;
 	}
 	new_pipeline->cmd[i] = NULL;
+	return (new_pipeline);
 }
 
 static int	get_cmd_num(t_token *current)
@@ -81,4 +82,19 @@ static void	add_redirection(t_pipeline *pipelst, t_token *current)
 		aux->next = redir;
 	else
 		pipelst->redir_lst = redir;
+}
+
+static void	pipe_add_back(t_pipeline *new_pipeline, t_pipeline *pipelst)
+{
+	t_pipeline	*aux;
+
+	if (!pipelst)
+	{
+		pipelst = new_pipeline;
+		return ;
+	}
+	aux = pipelst;
+	while (aux->next)
+		aux = aux->next;
+	aux->next = new_pipeline;
 }
