@@ -2,7 +2,7 @@
 
 void	parse_line(t_smash *smash)
 {
-	smash->user_input = readline("\e[1;35mSMASH -> \e[0m");
+	smash->user_input = readline("\e[1;38;5;99mSMASH -> \e[0m");
 	if (!smash->user_input || !smash->user_input[0])
 		return ;
 	add_history_entry(smash);
