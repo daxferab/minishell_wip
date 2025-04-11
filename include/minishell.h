@@ -4,6 +4,7 @@
 # include "libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <errno.h>
 
 /******************************************************************************/
 /*                                   MACROS                                   */
@@ -44,6 +45,8 @@ typedef struct s_pipeline
 {
 	char				**cmd;
 	t_redir				*redir_lst;
+	int					fd_in;
+	int					fd_out;
 	struct s_pipeline	*next;
 }	t_pipeline;
 
