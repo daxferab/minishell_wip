@@ -10,7 +10,7 @@ int	main(int argc, char **argv, char **envp)
 	smash = init(argc, argv, envp);
 	while (true)
 	{
-		read_line(&smash);
+		parse_line(&smash);
 		if (!smash.user_input)
 			break ;
 		split = ft_split(smash.user_input, ' ');

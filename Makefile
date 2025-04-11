@@ -58,8 +58,8 @@ SOURCES :=	\
 				clear_input.c\
 				expand_variables.c\
 				get_variable.c\
+				parse_line.c\
 				parse_pipeline.c\
-				read_line.c\
 				remove_quotes.c\
 				syntax.c\
 				token_type.c\
