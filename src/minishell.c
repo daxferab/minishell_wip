@@ -5,7 +5,6 @@ static t_smash	init(int argc, char **argv, char **envp);
 int	main(int argc, char **argv, char **envp)
 {
 	t_smash	smash;
-	char	**split;
 
 	smash = init(argc, argv, envp);
 	while (true)
@@ -13,10 +12,7 @@ int	main(int argc, char **argv, char **envp)
 		parse_line(&smash);
 		if (!smash.user_input)
 			break ;
-		split = ft_split(smash.user_input, ' ');
-		input_handler(&smash, split);
-		ft_free_double_pointer((void **)split);
-		handle_redirections(&smash);
+		execute(&smash);
 		clear_input(&smash);
 	}
 	free_smash(smash);

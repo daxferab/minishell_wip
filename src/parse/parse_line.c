@@ -9,7 +9,7 @@ void	parse_line(t_smash *smash)
 	tokenize(smash);//TODO error
 	expand_variables(smash);//TODO error
 	remove_quotes(smash);//TODO error
-	debug_tokens(smash);
+	//debug_tokens(smash);
 	if (!syntax(smash))
 		ft_printf_fd(STDERR_FILENO, "smash: syntax error\n");
 	parse_pipeline(smash);
