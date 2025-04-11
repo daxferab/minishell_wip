@@ -4,6 +4,7 @@
 # include "libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 
 /******************************************************************************/
 /*                                   MACROS                                   */
@@ -169,5 +170,10 @@ void	get_token_type(t_token_type *type, char *c);
 void	mutate(t_token_type *type, char c);
 bool	is_redirection(t_token_type type);
 bool	is_word(t_token_type type);
+
+/******************************************************************************/
+/*                             FUNCTIONS - SIGNALS                            */
+/******************************************************************************/
+void sig_init();
 
 #endif

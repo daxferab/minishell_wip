@@ -10,6 +10,7 @@ int	main(int argc, char **argv, char **envp)
 	smash = init(argc, argv, envp);
 	while (true)
 	{
+		sig_init();
 		read_line(&smash);
 		if (!smash.user_input)
 			break ;
