@@ -48,6 +48,8 @@ static t_pipeline	*new_pipeline(t_token *current)
 	}
 	new_pipeline->cmd[i] = NULL;
 	new_pipeline->next = NULL;
+	new_pipeline->fd_in = STDIN_FILENO;
+	new_pipeline->fd_out = STDOUT_FILENO;
 	return (new_pipeline);
 }
 

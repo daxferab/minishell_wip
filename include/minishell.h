@@ -4,6 +4,7 @@
 # include "libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <errno.h>
 # include <signal.h>
 
 /******************************************************************************/
@@ -45,6 +46,8 @@ typedef struct s_pipeline
 {
 	char				**cmd;
 	t_redir				*redir_lst;
+	int					fd_in;
+	int					fd_out;
 	struct s_pipeline	*next;
 }	t_pipeline;
 
@@ -159,7 +162,7 @@ void	clear_input(t_smash *smash);
 bool	expand_variables(t_smash *smash);
 bool	get_variable(t_smash *smash, t_token *token, int pos);
 void	parse_pipeline(t_smash *smash);
-void	read_line(t_smash *smash);
+void	parse_line(t_smash *smash);
 bool	remove_quotes(t_smash *smash);
 bool	syntax(t_smash *smash);
 bool	tokenize(t_smash *smash);
