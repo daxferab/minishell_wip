@@ -66,9 +66,9 @@ static void	open_fd(t_pipeline *pipeline, t_redir *redir)
 	if (redir->type == INPUT)
 		redir->fd = open(redir->value, O_RDONLY);
 	else if (redir->type == OUTPUT)
-		redir->fd = open(redir->value, O_CREAT | O_APPEND | O_WRONLY, 0644);
-	else if (redir->type == APPEND)
 		redir->fd = open(redir->value, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	else if (redir->type == APPEND)
+		redir->fd = open(redir->value, O_CREAT | O_APPEND | O_WRONLY, 0644);
 	if (redir->fd < 0)
 		ft_printf("smash: %s: %s\n", redir->value, strerror(errno));
 	if ((redir->type == INPUT || redir->type == HEREDOC)
