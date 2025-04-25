@@ -52,6 +52,7 @@ SOURCES :=	\
 			)\
 			$(addprefix execution/,\
 				execute.c\
+				get_command.c\
 				handle_redirections.c\
 				input_handler.c\
 			)\
