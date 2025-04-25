@@ -50,6 +50,7 @@ SOURCES :=	\
 			$(addprefix env/,\
 				env_list.c\
 				env_utils.c\
+				env_to_char.c\
 			)\
 			$(addprefix execution/,\
 				execute.c\

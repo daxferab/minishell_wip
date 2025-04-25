@@ -147,6 +147,10 @@ void	addnode_front(t_envp *node, t_envp **envp);
 int		envsize(t_envp *lst);
 bool	is_valid_key(char *key);
 
+//env_to_char.c
+
+char	**env_to_char(t_envp *env_lst);
+
 /******************************************************************************/
 /*                            FUNCTIONS - EXECUTION                           */
 /******************************************************************************/
