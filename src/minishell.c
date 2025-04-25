@@ -7,6 +7,8 @@ int	main(int argc, char **argv, char **envp)
 	t_smash	smash;
 
 	smash = init(argc, argv, envp);
+	if (smash.exit_status == 1)
+		return (free_smash(smash), ft_putstr_fd("Error initializing smash", 2), 1);
 	while (true)
 	{
 		sig_init();
@@ -26,12 +28,13 @@ static t_smash	init(int argc, char **argv, char **envp)
 
 	ft_printf("Minishell\n");
 	smash.debug_mode = argc > 1 && ft_str_equals(argv[1], "debug");
+	smash.exit_status = 0;
 	smash.envp = init_envp(envp);
-	//TODO: Handle error
 	smash.cwd = getcwd(NULL, 0);
+	if (!smash.envp || !smash.cwd)
+		smash.exit_status = 1;
 	smash.first_token = NULL;
 	smash.last_token = NULL;
-	smash.exit_status = 0;
 	smash.history_file = NULL;
 	import_history(&smash);
 	return (smash);

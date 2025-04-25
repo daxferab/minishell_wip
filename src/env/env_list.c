@@ -64,9 +64,7 @@ t_envp	*init_envp(char **envp)
 	while (envp[i])
 	{
 		sp_envp = split_char(envp[i], '=');
-		if (!sp_envp)
-			return (NULL);
-		if (!new_entry(&struct_envp, sp_envp[0], sp_envp[1]))
+		if (!sp_envp || !new_entry(&struct_envp, sp_envp[0], sp_envp[1]))
 			return (ft_free_double_pointer((void **)sp_envp), NULL);
 		free(sp_envp);
 		i++;
