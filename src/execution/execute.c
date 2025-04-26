@@ -15,69 +15,36 @@ void	open_pipes(t_smash *smash)
 	}
 }
 
-bool	execute_builtins(t_smash *smash, t_pipeline *pipeline)
+//TODO close all other fds from all pipelines
+void	close_unused_fds(t_smash *smash, t_pipeline *pipeline)
 {
-	// if (smash->first_pipeline->next)
-		// return (false);
-	if (ft_str_equals(pipeline->cmd[0], "env"))
-		smash->exit_status = cmd_env(*smash, pipeline->cmd);
-	else if (ft_str_equals(pipeline->cmd[0], "pwd"))
-		smash->exit_status = cmd_pwd(smash, pipeline->cmd);
-	else if (ft_str_equals(pipeline->cmd[0], "unset"))
-		smash->exit_status = cmd_unset(smash, pipeline->cmd);
-	else if (ft_str_equals(pipeline->cmd[0], "export"))
-		smash->exit_status = cmd_export(smash, pipeline->cmd);
-	else if (ft_str_equals(pipeline->cmd[0], "echo"))
-		smash->exit_status = cmd_echo(pipeline->cmd);
-	else if (ft_str_equals(pipeline->cmd[0], "cd"))
-		smash->exit_status = cmd_cd(smash, pipeline->cmd);
-	else if (ft_str_equals(pipeline->cmd[0], "exit"))
-		smash->exit_status = cmd_exit(smash, pipeline->cmd);
-	else
-		return (false);
-	return (true);
-}
+	t_pipeline	*iter;
 
-char	**get_env_path(t_smash *smash)
-{
-	char	*env_path;
-	char	**split;
-	char	*substr;
-
-	env_path = get_value(smash->envp, "PATH");
-	if (!env_path)
-		return (NULL);
-	substr = ft_substr(env_path, 5, ft_strlen(env_path) - 5);
-	if (!substr)
-		return (NULL);
-	split = ft_split(substr, ':');
-	free(substr);
-	return (split);
-}
-
-void	execute_command(t_smash *smash, t_pipeline *pipeline)
-{
-	char	**path;
-	char	*command;
-
-	path = get_env_path(smash);
-	get_command(path, pipeline->cmd[0], &command);
-	execve(command, pipeline->cmd, NULL);
-	//TODO free stuff
+	close(smash->fd_stdin);
+	close(smash->fd_stdout);
+	iter = smash->first_pipeline;
+	while (iter)
+	{
+		if(iter != pipeline)
+		{
+			if(iter->fd_in != STDIN_FILENO)
+				close(iter->fd_in);
+			if(iter->fd_out != STDOUT_FILENO)
+				close(iter->fd_out);
+		}
+		iter = iter->next;
+	}
 }
 
 void	child(t_smash *smash, t_pipeline *pipeline)
 {
+	close_unused_fds(smash, pipeline);
 	if (!execute_builtins(smash, pipeline))
-	{
-		execute_command(smash, pipeline);
-		ft_printf_fd(STDERR_FILENO, "not a builtin: %s\n", pipeline->cmd[0]);
-	}
+		execute_external(smash, pipeline);
+	close(pipeline->fd_in);
+	close(pipeline->fd_out);
 	clear_input(smash);
 	free_smash(*smash);
-	close(smash->fd_stdin);
-	close(smash->fd_stdout);
-	//TODO close all other fds from all pipelines
 	exit(smash->exit_status);
 }
 
@@ -124,5 +91,6 @@ void	execute(t_smash *smash)
 		close(smash->fd_stdout);
 		pipeline = pipeline->next;
 	}
+	clear_input(smash);
 	wait_children(smash, pid);
 }

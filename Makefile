@@ -53,10 +53,10 @@ SOURCES :=	\
 				env_to_char.c\
 			)\
 			$(addprefix execution/,\
+				execute_command.c\
 				execute.c\
 				get_command.c\
 				handle_redirections.c\
-				input_handler.c\
 			)\
 			$(addprefix parse/,\
 				clear_input.c\

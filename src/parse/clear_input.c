@@ -54,6 +54,10 @@ static void	clear_pipelines(t_smash *smash)
 	while (iter)
 	{
 		next = iter->next;
+		if (iter->fd_in != STDIN_FILENO)
+			close(iter->fd_in);
+		if (iter->fd_out != STDOUT_FILENO)
+			close(iter->fd_out);
 		clear_redirs(iter);
 		free(iter->cmd);
 		free(iter);

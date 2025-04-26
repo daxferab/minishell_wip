@@ -167,10 +167,14 @@ char	**env_to_char(t_envp *env_lst);
 /*                            FUNCTIONS - EXECUTION                           */
 /******************************************************************************/
 
+//execute_command.c
+
+bool	execute_builtins(t_smash *smash, t_pipeline *pipeline);
+void	execute_external(t_smash *smash, t_pipeline *pipeline);
+
 void	execute(t_smash *smash);
 t_exit_code	get_command(char **path, char *command, char **path_command);
 void	handle_redirections(t_smash *smash);
-void	input_handler(t_smash *smash, char **input);
 
 /******************************************************************************/
 /*                             FUNCTIONS - PARSE                              */
@@ -195,6 +199,7 @@ bool	is_word(t_token_type type);
 /******************************************************************************/
 /*                             FUNCTIONS - SIGNALS                            */
 /******************************************************************************/
-void sig_init();
+
+void	sig_init();
 
 #endif
