@@ -2,10 +2,11 @@
 # define MINISHELL_H
 
 # include "libft.h"
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <errno.h>
 # include <signal.h>
+# include <sys/wait.h>
 
 /******************************************************************************/
 /*                                   MACROS                                   */
@@ -29,6 +30,15 @@ typedef enum e_token_type
 	APPEND,
 	PIPE
 }	t_token_type;
+
+typedef enum e_exit_code
+{
+	EC_SUCCESS					= 0,
+	EC_ERROR					= 1,
+	EC_FILE_NOT_FOUND			= 2,
+	EC_COMMAND_NOT_EXECUTABLE	= 126,
+	EC_COMMAND_NOT_FOUND		= 127
+}	t_exit_code;
 
 /******************************************************************************/
 /*                                  STRUCTS                                   */
@@ -88,6 +98,8 @@ typedef struct s_smash
 	t_token		*first_token;
 	t_token		*last_token;
 	t_pipeline	*first_pipeline;
+	int			fd_stdin;
+	int			fd_stdout;
 }	t_smash;
 
 /******************************************************************************/
@@ -147,13 +159,22 @@ void	addnode_front(t_envp *node, t_envp **envp);
 int		envsize(t_envp *lst);
 bool	is_valid_key(char *key);
 
+//env_to_char.c
+
+char	**env_to_char(t_envp *env_lst);
+
 /******************************************************************************/
 /*                            FUNCTIONS - EXECUTION                           */
 /******************************************************************************/
 
+//execute_command.c
+
+bool	execute_builtins(t_smash *smash, t_pipeline *pipeline);
+void	execute_external(t_smash *smash, t_pipeline *pipeline);
+
 void	execute(t_smash *smash);
+t_exit_code	get_command(char **path, char *command, char **path_command);
 void	handle_redirections(t_smash *smash);
-void	input_handler(t_smash *smash, char **input);
 
 /******************************************************************************/
 /*                             FUNCTIONS - PARSE                              */
@@ -178,6 +199,7 @@ bool	is_word(t_token_type type);
 /******************************************************************************/
 /*                             FUNCTIONS - SIGNALS                            */
 /******************************************************************************/
-void sig_init();
+
+void	sig_init();
 
 #endif

@@ -16,7 +16,6 @@ int	main(int argc, char **argv, char **envp)
 		if (!smash.user_input)
 			break ;
 		execute(&smash);
-		clear_input(&smash);
 	}
 	free_smash(smash);
 	return (0);
