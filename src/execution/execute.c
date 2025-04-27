@@ -97,8 +97,8 @@ void	execute(t_smash *smash)
 		if (smash->first_pipeline->next || !execute_builtins(smash, pipeline))
 		{
 			pid = fork();
-			if (pid == -1)
-				;//TODO protect fork
+			// if (pid == -1)
+			// 	;//TODO protect fork
 			if (pid == 0)
 				child(smash, pipeline);
 		}

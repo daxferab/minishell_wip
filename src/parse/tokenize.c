@@ -31,7 +31,7 @@ bool	tokenize(t_smash *smash)
 		}
 	}
 	if (start_token != -1)
-		ft_printf_fd(STDERR_FILENO, "smash: unclosed quotes\n");
+		ft_printf_fd(STDERR_FILENO, "smash: unclosed quotes\n"); //TODO: Dont execute
 	return (true);
 }
 

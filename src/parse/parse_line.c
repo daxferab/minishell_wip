@@ -6,10 +6,19 @@ void	parse_line(t_smash *smash)
 	if (!smash->user_input || !smash->user_input[0])
 		return ;
 	add_history_entry(smash);
-	tokenize(smash);//TODO error
-	expand_variables(smash);//TODO error
-	remove_quotes(smash);//TODO error
-	//debug_tokens(smash);
+	if (!tokenize(smash))
+	{
+		ft_putstr_fd("Error tokenizing\n", 2);
+		free_smash(*smash);
+		exit(1);
+	}
+	expand_variables(smash);//TODO error ?
+	if (!remove_quotes(smash))
+	{
+		ft_putstr_fd("Malloc error\n", 2);
+		free_smash(*smash);
+		exit(1);
+	}
 	if (!syntax(smash))
 		ft_printf_fd(STDERR_FILENO, "smash: syntax error\n");
 	parse_pipeline(smash);
