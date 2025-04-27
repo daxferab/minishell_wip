@@ -12,8 +12,7 @@ void	parse_line(t_smash *smash)
 		free_smash(*smash);
 		exit(1);
 	}
-	expand_variables(smash);//TODO error ?
-	if (!remove_quotes(smash))
+	if (!expand_variables(smash) || !remove_quotes(smash))
 	{
 		ft_putstr_fd("Malloc error\n", 2);
 		free_smash(*smash);
