@@ -12,9 +12,10 @@ int	main(int argc, char **argv, char **envp)
 	while (true)
 	{
 		sig_init();
-		parse_line(&smash);
-		if (!smash.user_input)
-			break ;
+		if (!parse_line(&smash))
+			break;
+		// if (!smash.user_input)
+		// 	break ;
 		execute(&smash);
 	}
 	free_smash(smash);

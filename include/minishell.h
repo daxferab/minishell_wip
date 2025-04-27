@@ -184,7 +184,7 @@ void	clear_input(t_smash *smash);
 bool	expand_variables(t_smash *smash);
 bool	get_variable(t_smash *smash, t_token *token, int pos);
 void	parse_pipeline(t_smash *smash);
-void	parse_line(t_smash *smash);
+bool	parse_line(t_smash *smash);
 bool	remove_quotes(t_smash *smash);
 bool	syntax(t_smash *smash);
 bool	tokenize(t_smash *smash);
