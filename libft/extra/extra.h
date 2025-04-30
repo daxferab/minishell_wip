@@ -6,7 +6,7 @@
 /*   By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:15:29 by pdel-olm          #+#    #+#             */
-/*   Updated: 2024/10/24 20:38:55 by pdel-olm         ###   ########.fr       */
+/*   Updated: 2025/04/30 22:01:39 by pdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 
+bool	ft_atoi_better(char *str, int *num);
 size_t	ft_count_char(char *s, int c);
 char	*ft_dtoa(double n, int decimals);
 bool	ft_free_double_pointer(void **double_pointer);
