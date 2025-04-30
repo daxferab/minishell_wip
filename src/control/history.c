@@ -8,6 +8,8 @@ void	import_history(t_smash *smash)
 	bool	end;
 	int		fd;
 
+	if (smash->debug_mode)
+		return ;
 	history_file_name(smash);
 	if (!smash->history_file)
 		return ;
@@ -31,7 +33,9 @@ void	add_history_entry(t_smash *smash)
 {
 	int	fd;
 
-	if (ft_strlen(smash->user_input) == 0)
+	if (smash->debug_mode)
+		return ;
+	if (smash->user_input && !smash->user_input[0])
 		return ;
 	add_history(smash->user_input);
 	if (!smash->history_file)

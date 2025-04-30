@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pdel-olm <pdel-olm@student.42.fr>          +#+  +:+       +#+         #
+#    By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/02 16:43:04 by pdel-olm          #+#    #+#              #
-#    Updated: 2025/04/07 16:59:38 by pdel-olm         ###   ########.fr        #
+#    Updated: 2025/04/30 21:59:55 by pdel-olm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ AR_FLAGS = -rc
 
 SOURCES =	\
 			$(addprefix extra/,\
+				ft_atoi_better.c\
 				ft_count_char.c\
 				ft_dtoa.c\
 				ft_free_double_pointer.c\

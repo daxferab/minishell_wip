@@ -29,7 +29,6 @@ static t_smash	init(int argc, char **argv, char **envp)
 {
 	t_smash	smash;
 
-	ft_printf("Minishell\n");
 	smash.debug_mode = argc > 1 && ft_str_equals(argv[1], "debug");
 	smash.exit_status = 0;
 	smash.envp = init_envp(envp);
@@ -43,3 +42,4 @@ static t_smash	init(int argc, char **argv, char **envp)
 	import_history(&smash);
 	return (smash);
 }
+//TODO: protect builtins mallocs

@@ -6,7 +6,7 @@
 /*   By: pdel-olm <pdel-olm@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 21:03:15 by pdel-olm          #+#    #+#             */
-/*   Updated: 2025/02/11 00:11:04 by pdel-olm         ###   ########.fr       */
+/*   Updated: 2025/04/30 21:55:44 by pdel-olm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdbool.h>
+# include <limits.h>
 
 # include "extra/extra.h"
 
