@@ -8,7 +8,9 @@ int	cmd_export(t_smash *smash, char **input)
 
 	i = 0;
 	if (input[1] && !ft_strncmp(input[1], "-", 1))
-		return (ft_putstr_fd("bash: export: -: invalid option\n", 2), 2);
+		return (ft_putstr_fd("smash: export: -: invalid option\n", 2), 2);
+	if (!input[1])
+		return (ft_putstr_fd("smash: export: missing operand\n", 2), 2);
 	while (input[i])
 	{
 		entry = split_char(input[i], '=');

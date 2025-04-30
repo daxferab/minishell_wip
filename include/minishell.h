@@ -133,6 +133,8 @@ void	debug_tokens(t_smash *smash);
 void	free_smash(t_smash smash);
 void	free_t_envp(t_envp *envp);
 bool	free_node(t_envp *envp, char *key);
+void	free_redir(t_redir *redir);
+void	free_pipeline(t_pipeline *pipeline);
 
 // history.c
 
@@ -183,7 +185,7 @@ void	handle_redirections(t_smash *smash);
 void	clear_input(t_smash *smash);
 bool	expand_variables(t_smash *smash);
 bool	get_variable(t_smash *smash, t_token *token, int pos);
-void	parse_pipeline(t_smash *smash);
+bool	parse_pipeline(t_smash *smash);
 bool	parse_line(t_smash *smash);
 bool	remove_quotes(t_smash *smash);
 bool	syntax(t_smash *smash);

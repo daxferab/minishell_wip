@@ -16,8 +16,14 @@ bool	parse_line(t_smash *smash)
 	if (!syntax(smash))
 	{
 		ft_printf_fd(STDERR_FILENO, "smash: syntax error\n");
-		return (clear_input(smash), false);
+		return (false);
 	}
-	parse_pipeline(smash); //TODO: protect
+	if (!parse_pipeline(smash))
+	{
+		ft_putstr_fd("Malloc error\n", 2);
+		clear_input(smash);
+		free_smash(*smash);
+		exit(1);
+	}
 	return (true);
 }

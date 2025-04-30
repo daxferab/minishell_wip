@@ -2,10 +2,10 @@
 
 static t_pipeline	*new_pipeline(t_token *current);
 static int			get_cmd_num(t_token *current);
-static void			add_redirection(t_pipeline *pipelst, t_token **current);
+static bool			add_redirection(t_pipeline *pipelst, t_token **current);
 static void			pipe_add_back(t_pipeline *new, t_pipeline **pipelst);
 
-void	parse_pipeline(t_smash *smash)
+bool	parse_pipeline(t_smash *smash)
 {
 	t_pipeline	*pipelst;
 	t_token		*current;
@@ -16,6 +16,8 @@ void	parse_pipeline(t_smash *smash)
 	while (current)
 	{
 		new = new_pipeline(current);
+		if (!new)
+			return (false);
 		pipe_add_back(new, &pipelst);
 		while (current && current->type != PIPE)
 			current = current->next;
@@ -23,6 +25,7 @@ void	parse_pipeline(t_smash *smash)
 			current = current->next;
 	}
 	smash->first_pipeline = pipelst;
+	return (true);
 }
 
 static t_pipeline	*new_pipeline(t_token *current)
@@ -33,13 +36,20 @@ static t_pipeline	*new_pipeline(t_token *current)
 
 	cmd_num = get_cmd_num(current);
 	i = 0;
-	new_pipeline = malloc(sizeof(t_pipeline)); //TODO: protect
-	new_pipeline->cmd = malloc(sizeof(char *) * (cmd_num + 1)); //TODO: protect
+	new_pipeline = malloc(sizeof(t_pipeline));
+	if (!new_pipeline)
+		return (NULL);
+	new_pipeline->cmd = malloc(sizeof(char *) * (cmd_num + 1));
+	if (!new_pipeline->cmd)
+		return (free(new_pipeline), NULL);
 	new_pipeline->redir_lst = NULL;
 	while (current && current->type != PIPE)
 	{
 		if (is_redirection(current->type))
-			add_redirection(new_pipeline, &current);
+		{
+			if (!add_redirection(new_pipeline, &current))
+				return (free_pipeline(new_pipeline), NULL);
+		}
 		else
 		{
 			new_pipeline->cmd[i++] = current->value;
@@ -70,12 +80,14 @@ static int	get_cmd_num(t_token *current)
 	return (cmd_num);
 }
 
-static void	add_redirection(t_pipeline *pipelst, t_token **current)
+static bool	add_redirection(t_pipeline *pipelst, t_token **current)
 {
 	t_redir	*redir;
 	t_redir	*aux;
 
-	redir = malloc(sizeof(t_redir)); // TODO: Proteger malloc
+	redir = malloc(sizeof(t_redir));
+	if (!redir)
+		return (false);
 	redir->type = (*current)->type;
 	redir->value = (*current)->next->value;
 	redir->fd = -1;
@@ -90,6 +102,7 @@ static void	add_redirection(t_pipeline *pipelst, t_token **current)
 		aux->next = redir;
 	}
 	*current = (*current)->next->next;
+	return (true);
 }
 
 static void	pipe_add_back(t_pipeline *new, t_pipeline **pipelst)

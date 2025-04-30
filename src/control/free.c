@@ -46,3 +46,21 @@ bool	free_node(t_envp *envp, char *key)
 	}
 	return (false);
 }
+
+void	free_redir(t_redir *redir)
+{
+	while (redir)
+	{
+		free(redir->value);
+		redir = redir->next;
+	}
+	
+	free(redir);
+}
+
+void	free_pipeline(t_pipeline *pipeline)
+{
+	free(pipeline->cmd);
+	free_redir(pipeline->redir_lst);
+	free(pipeline);
+}
