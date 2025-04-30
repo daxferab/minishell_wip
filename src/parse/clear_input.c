@@ -63,6 +63,7 @@ static void	clear_pipelines(t_smash *smash)
 		free(iter);
 		iter = next;
 	}
+	smash->first_pipeline = NULL;
 }
 
 static void	clear_redirs(t_pipeline *pipeline)

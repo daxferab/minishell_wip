@@ -12,10 +12,13 @@ int	main(int argc, char **argv, char **envp)
 	while (true)
 	{
 		sig_init();
-		if (!parse_line(&smash))
-			break;
-		// if (!smash.user_input)
-		// 	break ;
+		if (!parse_line(&smash) || (smash.user_input && !smash.user_input[0]))
+		{
+			clear_input(&smash);
+			continue ;
+		}
+		if (!smash.user_input)
+			break ;
 		execute(&smash);
 	}
 	free_smash(smash);
@@ -35,6 +38,7 @@ static t_smash	init(int argc, char **argv, char **envp)
 		smash.exit_status = 1;
 	smash.first_token = NULL;
 	smash.last_token = NULL;
+	smash.first_pipeline = NULL;
 	smash.history_file = NULL;
 	import_history(&smash);
 	return (smash);

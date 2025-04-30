@@ -15,12 +15,12 @@ int	cmd_echo(char **input)
 	}
 	while (input[i])
 	{
-		printf("%s", input[i]);
+		ft_printf("%s", input[i]);
 		i++;
 		if (input[i])
-			printf(" ");
+			ft_printf(" ");
 	}
 	if (nl)
-		printf("\n");
+		ft_printf("\n");
 	return (0);
 }
