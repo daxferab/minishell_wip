@@ -15,7 +15,7 @@ void	parse_pipeline(t_smash *smash)
 	current = smash->first_token;
 	while (current)
 	{
-		new = new_pipeline(current); //TODO: protect
+		new = new_pipeline(current);
 		pipe_add_back(new, &pipelst);
 		while (current && current->type != PIPE)
 			current = current->next;

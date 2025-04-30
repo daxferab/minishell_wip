@@ -23,6 +23,6 @@ bool	parse_line(t_smash *smash)
 		ft_printf_fd(STDERR_FILENO, "smash: syntax error\n");
 		return (clear_input(smash), false);
 	}
-	parse_pipeline(smash);
+	parse_pipeline(smash); //TODO: protect
 	return (true);
 }
