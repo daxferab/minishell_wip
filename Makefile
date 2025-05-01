@@ -53,8 +53,9 @@ SOURCES :=	\
 				env_to_char.c\
 			)\
 			$(addprefix execution/,\
-				execute_child.c\
+				execute_builtins.c\
 				execute_command.c\
+				execute_external.c\
 				execute.c\
 				get_command.c\
 				handle_redirections.c\

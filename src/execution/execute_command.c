@@ -1,80 +1,88 @@
 #include "minishell.h"
 
-static char	**get_env_path(t_smash *smash);
-static void	error_message(t_exit_code *exit_value, char *cmd_path, char *cmd_0);
+static void	execute_child(t_smash *smash, t_pipeline *pipeline);
+static void	close_unused_fds(t_smash *smash, t_pipeline *pipeline);
+static void	backup_std_fds(t_smash *smash, t_pipeline *pipeline);
+static void	restore_std_fds(t_smash *smash);
 
-bool	execute_builtins(t_smash *smash, t_pipeline *pipeline)
+void	execute_command(t_smash *smash, t_pipeline *pipeline, pid_t *pid)
 {
-	if (ft_str_equals(pipeline->cmd[0], "env"))
-		smash->exit_status = cmd_env(*smash, pipeline->cmd);
-	else if (ft_str_equals(pipeline->cmd[0], "pwd"))
-		smash->exit_status = cmd_pwd(smash, pipeline->cmd);
-	else if (ft_str_equals(pipeline->cmd[0], "unset"))
-		smash->exit_status = cmd_unset(smash, pipeline->cmd);
-	else if (ft_str_equals(pipeline->cmd[0], "export"))
-		smash->exit_status = cmd_export(smash, pipeline->cmd);
-	else if (ft_str_equals(pipeline->cmd[0], "echo"))
-		smash->exit_status = cmd_echo(pipeline->cmd);
-	else if (ft_str_equals(pipeline->cmd[0], "cd"))
-		smash->exit_status = cmd_cd(smash, pipeline->cmd);
-	else if (ft_str_equals(pipeline->cmd[0], "exit"))
-		smash->exit_status = cmd_exit(smash, pipeline->cmd);
-	else
-		return (false);
-	return (true);
-}
-
-void	execute_external(t_smash *smash, t_pipeline *pipeline)
-{
-	char		**path;
-	char		*command;
-	char		**env_char;
-	t_exit_code	exit_code;
-
-	path = get_env_path(smash);
-	exit_code = get_command(path, pipeline->cmd[0], &command);
-	env_char = env_to_char(smash->envp);
-	if (exit_code == EC_SUCCESS)
-		execve(command, pipeline->cmd, env_char);
-	error_message(&exit_code, command, pipeline->cmd[0]);
-	ft_free_double_pointer((void **) path);
-	ft_free_double_pointer((void **) env_char);
-	free(command);
-	smash->exit_status = exit_code;
-}
-
-static char	**get_env_path(t_smash *smash)
-{
-	char	*env_path;
-	char	**split;
-	char	*substr;
-
-	env_path = get_value(smash->envp, "PATH");
-	if (!env_path)
-		return (NULL);
-	substr = ft_substr(env_path, 5, ft_strlen(env_path) - 5);
-	if (!substr)
-		return (NULL);
-	split = ft_split(substr, ':');
-	free(substr);
-	return (split);
-}
-
-static void	error_message(t_exit_code *exit_value, char *cmd_path, char *cmd_0)
-{
-	if (*exit_value == EC_SUCCESS)
+	if (pipeline->fd_in < 0 || pipeline->fd_out < 0 || !pipeline->cmd[0])
+		return ;
+	backup_std_fds(smash, pipeline);
+	if (smash->first_pipeline->next || !execute_builtins(smash, pipeline))
 	{
-		ft_printf_fd(STDERR_FILENO, "smash: %s: Is a directory\n", cmd_path);
-		*exit_value = EC_COMMAND_NOT_EXECUTABLE;
+		*pid = fork();
+		// if (pid == -1)
+		// 	;//TODO protect fork
+		if (*pid == 0)
+			execute_child(smash, pipeline);
 	}
-	else if (*exit_value == EC_FILE_NOT_FOUND)
+	restore_std_fds(smash);
+}
+
+void	execute_child(t_smash *smash, t_pipeline *pipeline)
+{
+	close_unused_fds(smash, pipeline);
+	if (!execute_builtins(smash, pipeline))
+		execute_external(smash, pipeline);
+	close(pipeline->fd_in);
+	close(pipeline->fd_out);
+	clear_input(smash);
+	free_smash(*smash);
+	exit(smash->exit_status);
+}
+
+static void	close_unused_fds(t_smash *smash, t_pipeline *pipeline)
+{
+	t_pipeline	*iter;
+
+	if (smash->fd_stdin != -1)
+		close(smash->fd_stdin);
+	if (smash->fd_stdout != -1)
+		close(smash->fd_stdout);
+	iter = smash->first_pipeline;
+	while (iter)
 	{
-		ft_printf_fd(STDERR_FILENO,
-			"smash: %s: No such file or directory\n", cmd_0);
-		*exit_value = EC_COMMAND_NOT_FOUND;
+		if (iter != pipeline)
+		{
+			if (iter->fd_in != STDIN_FILENO && iter->fd_in != -1)
+				close(iter->fd_in);
+			if (iter->fd_out != STDOUT_FILENO && iter->fd_out != -1)
+				close(iter->fd_out);
+		}
+		iter = iter->next;
 	}
-	else if (*exit_value == EC_COMMAND_NOT_EXECUTABLE)
-		ft_printf_fd(STDERR_FILENO, "smash: %s: Permission denied\n", cmd_path);
-	else if (*exit_value == EC_COMMAND_NOT_FOUND)
-		ft_printf_fd(STDERR_FILENO, "smash: %s: Command not found\n", cmd_0);
+}
+
+static void	backup_std_fds(t_smash *smash, t_pipeline *pipeline)
+{
+	smash->fd_stdin = -1;
+	smash->fd_stdout = -1;
+	if (pipeline->fd_in != STDIN_FILENO)
+	{
+		smash->fd_stdin = dup(STDIN_FILENO); //TODO protect dup
+		dup2(pipeline->fd_in, STDIN_FILENO); //TODO protect dup2
+		close(pipeline->fd_in);
+	}
+	if (pipeline->fd_out != STDOUT_FILENO)
+	{
+		smash->fd_stdout = dup(STDOUT_FILENO); //TODO protect dup
+		dup2(pipeline->fd_out, STDOUT_FILENO); //TODO protect dup2
+		close(pipeline->fd_out);
+	}
+}
+
+static void	restore_std_fds(t_smash *smash)
+{
+	if (smash->fd_stdin != -1)
+	{
+		dup2(smash->fd_stdin, STDIN_FILENO); //TODO protect dup2
+		close(smash->fd_stdin);
+	}
+	if (smash->fd_stdout != -1)
+	{
+		dup2(smash->fd_stdout, STDOUT_FILENO); //TODO protect dup2
+		close(smash->fd_stdout);
+	}
 }
