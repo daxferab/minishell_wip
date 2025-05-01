@@ -141,6 +141,8 @@ void	free_pipeline(t_pipeline *pipeline);
 void	import_history(t_smash *smash);
 void	add_history_entry(t_smash *smash);
 
+void	sig_init();
+
 /******************************************************************************/
 /*                              FUNCTIONS - ENV                               */
 /******************************************************************************/
@@ -174,6 +176,7 @@ char	**env_to_char(t_envp *env_lst);
 bool	execute_builtins(t_smash *smash, t_pipeline *pipeline);
 void	execute_external(t_smash *smash, t_pipeline *pipeline);
 
+void	execute_child(t_smash *smash, t_pipeline *pipeline);
 void	execute(t_smash *smash);
 t_exit_code	get_command(char **path, char *command, char **path_command);
 void	handle_redirections(t_smash *smash);
@@ -197,11 +200,5 @@ void	get_token_type(t_token_type *type, char *c);
 void	mutate(t_token_type *type, char c);
 bool	is_redirection(t_token_type type);
 bool	is_word(t_token_type type);
-
-/******************************************************************************/
-/*                             FUNCTIONS - SIGNALS                            */
-/******************************************************************************/
-
-void	sig_init();
 
 #endif

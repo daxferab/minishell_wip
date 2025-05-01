@@ -54,7 +54,6 @@ void	free_redir(t_redir *redir)
 		free(redir->value);
 		redir = redir->next;
 	}
-	
 	free(redir);
 }
 

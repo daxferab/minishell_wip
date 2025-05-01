@@ -43,6 +43,9 @@ static t_pipeline	*new_pipeline(t_token *current)
 	if (!new_pipeline->cmd)
 		return (free(new_pipeline), NULL);
 	new_pipeline->redir_lst = NULL;
+	new_pipeline->next = NULL;
+	new_pipeline->fd_in = STDIN_FILENO;
+	new_pipeline->fd_out = STDOUT_FILENO;
 	while (current && current->type != PIPE)
 	{
 		if (is_redirection(current->type))
@@ -57,9 +60,6 @@ static t_pipeline	*new_pipeline(t_token *current)
 		}
 	}
 	new_pipeline->cmd[i] = NULL;
-	new_pipeline->next = NULL;
-	new_pipeline->fd_in = STDIN_FILENO;
-	new_pipeline->fd_out = STDOUT_FILENO;
 	return (new_pipeline);
 }
 

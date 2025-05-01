@@ -29,7 +29,6 @@ DIRECTORIES :=	\
 				env\
 				execution\
 				parse\
-				signals\
 
 SOURCES :=	\
 			minishell.c\
@@ -46,6 +45,7 @@ SOURCES :=	\
 				debug.c\
 				free.c\
 				history.c\
+				sig_init.c\
 			)\
 			$(addprefix env/,\
 				env_list.c\
@@ -53,6 +53,7 @@ SOURCES :=	\
 				env_to_char.c\
 			)\
 			$(addprefix execution/,\
+				execute_child.c\
 				execute_command.c\
 				execute.c\
 				get_command.c\
@@ -68,9 +69,6 @@ SOURCES :=	\
 				syntax.c\
 				token_type.c\
 				tokenize.c\
-			)\
-			$(addprefix signals/,\
-				sig_init.c\
 			)\
 
 OBJECTS := $(addprefix $(OBJ_DIR), $(SOURCES:.c=.o))

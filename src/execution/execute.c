@@ -1,68 +1,7 @@
 #include "minishell.h"
 
-void	open_pipes(t_smash *smash)
-{
-	t_pipeline	*iter;
-	int			fds[2];
-
-	iter = smash->first_pipeline;
-	while (iter->next)
-	{
-		pipe(fds);//TODO protect
-		iter->fd_out = fds[PIPE_WRITE];
-		iter->next->fd_in = fds[PIPE_READ];
-		iter = iter->next;
-	}
-}
-
-void	close_unused_fds(t_smash *smash, t_pipeline *pipeline)
-{
-	t_pipeline	*iter;
-
-	if (smash->fd_stdin != -1)
-		close(smash->fd_stdin);
-	if (smash->fd_stdout != -1)
-		close(smash->fd_stdout);
-	iter = smash->first_pipeline;
-	while (iter)
-	{
-		if (iter != pipeline)
-		{
-			if (iter->fd_in != STDIN_FILENO && iter->fd_in != -1)
-				close(iter->fd_in);
-			if (iter->fd_out != STDOUT_FILENO && iter->fd_out != -1)
-				close(iter->fd_out);
-		}
-		iter = iter->next;
-	}
-}
-
-void	child(t_smash *smash, t_pipeline *pipeline)
-{
-	close_unused_fds(smash, pipeline);
-	if (!execute_builtins(smash, pipeline))
-		execute_external(smash, pipeline);
-	close(pipeline->fd_in);
-	close(pipeline->fd_out);
-	clear_input(smash);
-	free_smash(*smash);
-	exit(smash->exit_status);
-}
-
-void	wait_children(t_smash *smash, pid_t last_child)
-{
-	int		status;
-	pid_t	pid;
-
-	pid = 0;
-	status = -1;
-	while (pid != -1)
-	{
-		pid = wait(&status);
-		if (pid == last_child)
-			smash->exit_status = WEXITSTATUS(status);
-	}
-}
+void	open_pipes(t_smash *smash);
+void	wait_children(t_smash *smash, pid_t last_child);
 
 void	execute(t_smash *smash)
 {
@@ -77,7 +16,7 @@ void	execute(t_smash *smash)
 	smash->fd_stdout = -1;
 	while (pipeline)
 	{
-		if (pipeline->fd_in == -1 || pipeline->fd_out == -1)
+		if (pipeline->fd_in < 0 || pipeline->fd_out < 0 || !pipeline->cmd[0])
 		{
 			pipeline = pipeline->next;
 			continue ;
@@ -100,7 +39,7 @@ void	execute(t_smash *smash)
 			// if (pid == -1)
 			// 	;//TODO protect fork
 			if (pid == 0)
-				child(smash, pipeline);
+				execute_child(smash, pipeline);
 		}
 		if (smash->fd_stdin != -1)
 		{
@@ -118,4 +57,34 @@ void	execute(t_smash *smash)
 	}
 	clear_input(smash);
 	wait_children(smash, pid);
+}
+
+void	open_pipes(t_smash *smash)
+{
+	t_pipeline	*iter;
+	int			fds[2];
+
+	iter = smash->first_pipeline;
+	while (iter->next)
+	{
+		pipe(fds);//TODO protect
+		iter->fd_out = fds[PIPE_WRITE];
+		iter->next->fd_in = fds[PIPE_READ];
+		iter = iter->next;
+	}
+}
+
+void	wait_children(t_smash *smash, pid_t last_child)
+{
+	int		status;
+	pid_t	pid;
+
+	pid = 0;
+	status = -1;
+	while (pid != -1)
+	{
+		pid = wait(&status);
+		if (pid == last_child)
+			smash->exit_status = WEXITSTATUS(status);
+	}
 }
