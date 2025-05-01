@@ -21,14 +21,14 @@
 
 typedef enum e_token_type
 {
-	LITERAL,
-	SINGLE_QUOTE,
-	DOUBLE_QUOTE,
-	INPUT,
-	HEREDOC,
-	OUTPUT,
-	APPEND,
-	PIPE
+	LITERAL			= 0,
+	SINGLE_QUOTE	= 1,
+	DOUBLE_QUOTE	= 2,
+	INPUT			= 3,
+	HEREDOC			= 4,
+	OUTPUT			= 5,
+	APPEND			= 6,
+	PIPE			= 7
 }	t_token_type;
 
 typedef enum e_exit_code
@@ -182,14 +182,22 @@ void	handle_redirections(t_smash *smash);
 /*                             FUNCTIONS - PARSE                              */
 /******************************************************************************/
 
-void	clear_input(t_smash *smash);
-bool	expand_variables(t_smash *smash);
 bool	get_variable(t_smash *smash, t_token *token, int pos);
 bool	parse_pipeline(t_smash *smash);
 bool	parse_line(t_smash *smash);
 bool	remove_quotes(t_smash *smash);
 bool	syntax(t_smash *smash);
 bool	tokenize(t_smash *smash);
+
+// clear_input.c
+
+void	clear_input(t_smash *smash);
+void	clear_tokens(t_token *token);
+
+// expand_variables.c
+
+bool	expand_variables(t_smash *smash);
+bool	expand_token(t_smash *smash, t_token *token);
 
 // token_type.c
 

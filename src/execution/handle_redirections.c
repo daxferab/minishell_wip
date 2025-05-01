@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static void	open_heredoc(t_redir *redir);
+static void	open_heredoc(t_smash *smash, t_redir *redir);
 static void	open_fd(t_pipeline *pipeline, t_redir *redir);
 
 void	handle_redirections(t_smash *smash)
@@ -14,7 +14,7 @@ void	handle_redirections(t_smash *smash)
 		redir = pipeline->redir_lst;
 		while (redir)
 		{
-			open_heredoc(redir);
+			open_heredoc(smash, redir);
 			redir = redir->next;
 		}
 		pipeline = pipeline->next;
@@ -32,11 +32,13 @@ void	handle_redirections(t_smash *smash)
 	}
 }
 
-static void	open_heredoc(t_redir *redir)
+//TODO for now, heredoc closes with Ctrl+d
+static void	open_heredoc(t_smash *smash, t_redir *redir)
 {
 	int		fds[2];
 	char	*line;
 	bool	end;
+	t_token	*token;
 
 	if (redir->type != HEREDOC)
 		return ;
@@ -44,13 +46,18 @@ static void	open_heredoc(t_redir *redir)
 	pipe(fds);//TODO protect
 	while (!end)
 	{
-		line = readline("> ");
-		//TODO for now, heredoc closes with Ctrl+d
-		if (!line || ft_str_equals(redir->value, line))
+		token = ft_calloc(1, sizeof(t_token));//TODO protect
+		token->value = readline("> ");
+		if (!token->value || ft_str_equals(redir->value, token->value))
 			end = true;
 		if (!end)
+		{
+			expand_token(smash, token);//TODO protect
+			line = ft_strjoin(token->value, "\n");//TODO protect
 			ft_printf_fd(fds[PIPE_WRITE], "%s", line);
-		free(line);
+			free(line);
+		}
+		clear_tokens(token);
 	}
 	close(fds[PIPE_WRITE]);
 	redir->fd = fds[PIPE_READ];

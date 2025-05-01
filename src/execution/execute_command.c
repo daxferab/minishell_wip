@@ -21,7 +21,7 @@ void	execute_command(t_smash *smash, t_pipeline *pipeline, pid_t *pid)
 	restore_std_fds(smash);
 }
 
-void	execute_child(t_smash *smash, t_pipeline *pipeline)
+static void	execute_child(t_smash *smash, t_pipeline *pipeline)
 {
 	close_unused_fds(smash, pipeline);
 	if (!execute_builtins(smash, pipeline))

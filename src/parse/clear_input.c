@@ -1,81 +1,73 @@
 #include "minishell.h"
 
-static void	clear_tokens(t_smash *smash);
-static void	clear_vars(t_token *token);
-static void	clear_pipelines(t_smash *smash);
-static void	clear_redirs(t_pipeline *pipeline);
+static void	clear_vars(t_var *var);
+static void	clear_pipelines(t_pipeline *pipeline);
+static void	clear_redirs(t_redir *redir);
 
 void	clear_input(t_smash *smash)
 {
-	clear_tokens(smash);
-	clear_pipelines(smash);
+	clear_tokens(smash->first_token);
+	clear_pipelines(smash->first_pipeline);
 	free(smash->user_input);
-}
-
-static void	clear_tokens(t_smash *smash)
-{
-	t_token	*iter;
-	t_token	*next;
-
-	iter = smash->first_token;
-	while (iter)
-	{
-		next = iter->next;
-		clear_vars(iter);
-		free(iter->value);
-		free(iter);
-		iter = next;
-	}
 	smash->first_token = NULL;
 	smash->last_token = NULL;
-}
-
-static void	clear_vars(t_token *token)
-{
-	t_var	*iter;
-	t_var	*next;
-
-	iter = token->first_variable;
-	while (iter)
-	{
-		next = iter->next;
-		free(iter->value);
-		free(iter);
-		iter = next;
-	}
-}
-
-static void	clear_pipelines(t_smash *smash)
-{
-	t_pipeline	*iter;
-	t_pipeline	*next;
-
-	iter = smash->first_pipeline;
-	while (iter)
-	{
-		next = iter->next;
-		if (iter->fd_in != STDIN_FILENO && iter->fd_in != -1)
-			close(iter->fd_in);
-		if (iter->fd_out != STDOUT_FILENO && iter->fd_out != -1)
-			close(iter->fd_out);
-		clear_redirs(iter);
-		free(iter->cmd);
-		free(iter);
-		iter = next;
-	}
 	smash->first_pipeline = NULL;
 }
 
-static void	clear_redirs(t_pipeline *pipeline)
+void	clear_tokens(t_token *token)
 {
-	t_redir	*iter;
+	t_token	*next;
+
+	while (token)
+	{
+		next = token->next;
+		clear_vars(token->first_variable);
+		free(token->value);
+		free(token);
+		token = next;
+	}
+	
+}
+
+static void	clear_vars(t_var *var)
+{
+	t_var	*next;
+
+	while (var)
+	{
+		next = var->next;
+		free(var->value);
+		free(var);
+		var = next;
+	}
+}
+
+static void	clear_pipelines(t_pipeline *pipeline)
+{
+	t_pipeline	*next;
+
+	while (pipeline)
+	{
+		next = pipeline->next;
+		if (pipeline->fd_in != STDIN_FILENO && pipeline->fd_in != -1)
+			close(pipeline->fd_in);
+		if (pipeline->fd_out != STDOUT_FILENO && pipeline->fd_out != -1)
+			close(pipeline->fd_out);
+		clear_redirs(pipeline->redir_lst);
+		free(pipeline->cmd);
+		free(pipeline);
+		pipeline = next;
+	}
+}
+
+static void	clear_redirs(t_redir *redir)
+{
 	t_redir	*next;
 
-	iter = pipeline->redir_lst;
-	while (iter)
+	while (redir)
 	{
-		next = iter->next;
-		free(iter);
-		iter = next;
+		next = redir->next;
+		free(redir);
+		redir = next;
 	}
 }

@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-static bool	expand_token(t_smash *smash, t_token *token);
 static bool	change_token_value(t_token *token, int new_len);
 static void	get_new_token_value(t_token *token, char **new_value);
 
@@ -22,7 +21,7 @@ bool	expand_variables(t_smash *smash)
 	return (true);
 }
 
-static bool	expand_token(t_smash *smash, t_token *token)
+bool	expand_token(t_smash *smash, t_token *token)
 {
 	int				iter;
 	int				new_len;
