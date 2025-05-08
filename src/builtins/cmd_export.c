@@ -19,7 +19,7 @@ int	cmd_export(t_smash *smash, char **input)
 			if (!get_value(smash->envp, entry[0]))
 			{
 				if (!new_entry(&smash->envp, entry[0], entry[1]))
-					return (1);
+					return (ft_free_double_pointer((void **)entry), ft_putstr_fd("Malloc error\n", 2), -1);
 				return (free(entry), 0);
 			}
 			update_envp(&(smash->envp), entry[0], entry[1]);

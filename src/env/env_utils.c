@@ -10,7 +10,7 @@ char	**split_char(char *envp, char c)
 
 	delimiter_position = ft_strchr(envp, c);
 	if (!delimiter_position)
-		return (NULL);
+		return (false);
 	keysize = delimiter_position - envp;
 	key = malloc(sizeof(char) * (keysize + 1));
 	if (!key)
