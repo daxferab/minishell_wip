@@ -8,7 +8,7 @@ void	execute(t_smash *smash)
 	t_pipeline	*pipeline;
 	pid_t		pid;
 
-	pid = -1;
+	pid = INIT_PID;
 	open_pipes(smash);
 	handle_redirections(smash);
 	pipeline = smash->first_pipeline;
