@@ -36,29 +36,25 @@ void	handle_redirections(t_smash *smash)
 static void	open_heredoc(t_smash *smash, t_redir *redir)
 {
 	int		fds[2];
-	char	*line;
-	bool	end;
-	t_token	*token;
+	t_token	*head;
+	t_token	*iter;
 
 	if (redir->type != HEREDOC)
 		return ;
-	end = false;
 	pipe(fds);//TODO protect
-	while (!end)
+	head = ft_calloc(1, sizeof(t_token));//TODO protect
+	iter = head;
+	while (true)
 	{
-		token = ft_calloc(1, sizeof(t_token));//TODO protect
-		token->value = readline("> ");
-		if (!token->value || ft_str_equals(redir->value, token->value))
-			end = true;
-		if (!end)
-		{
-			expand_token(smash, token);//TODO protect
-			line = ft_strjoin(token->value, "\n");//TODO protect
-			ft_printf_fd(fds[PIPE_WRITE], "%s", line);
-			free(line);
-		}
-		clear_tokens(token);
+		iter->value = readline("> ");
+		if (!iter->value || ft_str_equals(redir->value, iter->value))
+			break ;
+		expand_token(smash, iter);//TODO protect
+		ft_printf_fd(fds[PIPE_WRITE], "%s\n", iter->value);
+		iter->next = ft_calloc(1, sizeof(t_token));//TODO protect
+		iter = iter->next;
 	}
+	clear_tokens(head);
 	close(fds[PIPE_WRITE]);
 	redir->fd = fds[PIPE_READ];
 }
