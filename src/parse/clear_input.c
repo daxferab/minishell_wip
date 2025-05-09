@@ -26,7 +26,6 @@ void	clear_tokens(t_token *token)
 		free(token);
 		token = next;
 	}
-	
 }
 
 static void	clear_vars(t_var *var)

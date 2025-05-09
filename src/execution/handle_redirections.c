@@ -49,7 +49,7 @@ static void	open_heredoc(t_smash *smash, t_redir *redir)
 		iter->value = readline("> ");
 		if (!iter->value || ft_str_equals(redir->value, iter->value))
 			break ;
-		expand_token(smash, iter);//TODO protect
+		expand_token(smash, iter, true);//TODO protect
 		ft_printf_fd(fds[PIPE_WRITE], "%s\n", iter->value);
 		iter->next = ft_calloc(1, sizeof(t_token));//TODO protect
 		iter = iter->next;

@@ -199,7 +199,7 @@ void	clear_tokens(t_token *token);
 // expand_variables.c
 
 bool	expand_variables(t_smash *smash);
-bool	expand_token(t_smash *smash, t_token *token);
+bool	expand_token(t_smash *smash, t_token *token, bool in_heredoc);
 
 // token_type.c
 

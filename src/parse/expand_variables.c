@@ -13,7 +13,7 @@ bool	expand_variables(t_smash *smash)
 	while (iter)
 	{
 		if (iter->type == LITERAL && last_type != HEREDOC)
-			if (!expand_token(smash, iter))
+			if (!expand_token(smash, iter, false))
 				return (false);
 		last_type = iter->type;
 		iter = iter->next;
@@ -21,7 +21,7 @@ bool	expand_variables(t_smash *smash)
 	return (true);
 }
 
-bool	expand_token(t_smash *smash, t_token *token)
+bool	expand_token(t_smash *smash, t_token *token, bool in_heredoc)
 {
 	int				iter;
 	int				new_len;
@@ -32,7 +32,8 @@ bool	expand_token(t_smash *smash, t_token *token)
 	new_len = ft_strlen(token->value);
 	while (token->value[iter])
 	{
-		mutate(&type, token->value[iter]);
+		if (!in_heredoc)
+			mutate(&type, token->value[iter]);
 		if (token->value[iter] == '$'
 			&& !(iter > 0 && token->value[iter - 1] == '$')
 			&& (type == LITERAL || type == DOUBLE_QUOTE))
