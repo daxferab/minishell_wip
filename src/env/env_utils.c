@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char	**split_char(char *envp, char c)
+char	**split_char(char *envp, char c) //FIXME?: Just ignoring the variable if malloc error, not closing the program
 {
 	int		keysize;
 	char	*key;
@@ -10,18 +10,18 @@ char	**split_char(char *envp, char c)
 
 	delimiter_position = ft_strchr(envp, c);
 	if (!delimiter_position)
-		return (false);
+		return (NULL);
 	keysize = delimiter_position - envp;
 	key = malloc(sizeof(char) * (keysize + 1));
 	if (!key)
-		return (NULL);
+		return (ft_putstr_fd("Malloc error, couldn't export\n", 2), NULL);
 	ft_strlcpy(key, envp, keysize + 1);
 	value = ft_strdup(delimiter_position + 1);
 	if (!value)
-		return (free(key), NULL);
+		return (ft_putstr_fd("Malloc error, couldn't export\n", 2), free(key), NULL);
 	splitted = malloc(sizeof(char *) * 3);
 	if (!splitted)
-		return (free(key), free(value), NULL);
+		return (ft_putstr_fd("Malloc error, couldn't export\n", 2), free(key), free(value), NULL);
 	splitted[0] = key;
 	splitted[1] = value;
 	splitted[2] = NULL;

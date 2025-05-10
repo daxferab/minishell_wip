@@ -18,7 +18,7 @@ bool	execute_builtins(t_smash *smash, t_pipeline *pipeline)
 		smash->exit_status = cmd_exit(smash, pipeline->cmd);
 	else
 		return (false);
-	// if (smash->exit_status == -1)
-	// 	;//TODO: malloc error
+	if (smash->exit_status == -1)
+		return (false);
 	return (true);
 }
