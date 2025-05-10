@@ -8,7 +8,7 @@ int	main(int argc, char **argv, char **envp)
 
 	smash = init(argc, argv, envp);
 	if (smash.exit_status == 1)
-		return (free_smash(smash), ft_putstr_fd("Error initializing smash", 2), 1);
+		return (free_smash(smash), ft_putstr_fd("Error initializing smash\n", 2), 1);
 	while (true)
 	{
 		sig_init();

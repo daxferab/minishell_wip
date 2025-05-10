@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static void	update_wd(t_smash *smash);
+static bool	update_wd(t_smash *smash);
 static int	array_len(char **array);
 
 int	cmd_cd(t_smash *smash, char **input)
@@ -25,18 +25,20 @@ int	cmd_cd(t_smash *smash, char **input)
 		return (1);
 	if (chdir(input[1]) == -1)
 		return (1);
-	update_wd(smash);
+	if (!update_wd(smash))
+		ft_printf_fd(2, "Couldn`t set PWD or OLDPWD variable\n"); //TODO: close or only error msg?
 	return (0);
 }
 
-static void	update_wd(t_smash *smash)
+static bool	update_wd(t_smash *smash)
 {
 	update_envp(&smash->envp, "OLDPWD", get_value(smash->envp, "PWD"));
 	if (smash->cwd)
 		free(smash->cwd);
 	smash->cwd = getcwd(NULL, 0);
-	if (get_value(smash->envp, "PWD"))
-		update_envp(&smash->envp, "PWD", smash->cwd);
+	if (get_value(smash->envp, "PWD") && smash->cwd)
+		return (update_envp(&smash->envp, "PWD", smash->cwd));
+	return (false);
 }
 
 static int	array_len(char **array)

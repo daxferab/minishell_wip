@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 int	cmd_echo(char **input)
 {
 	int		i;

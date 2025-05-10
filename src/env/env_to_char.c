@@ -11,7 +11,7 @@ char	**env_to_char(t_envp *env_lst)
 	i = 0;
 	envp = malloc((lstlen(env_lst) + 1) * sizeof(t_envp));
 	if (!envp)
-		return (ft_putstr_fd("Malloc error", 2), NULL);
+		return (ft_putstr_fd("Malloc error\n", 2), NULL);
 	while (env_lst)
 	{
 		envp[i] = create_line(env_lst->key, "=", env_lst->value);
@@ -46,10 +46,10 @@ static char	*create_line(char *s1, char *s2, char *s3)
 
 	aux = ft_strjoin(s1, s2);
 	if (!aux)
-		return (ft_putstr_fd("Malloc error", 2), NULL);
+		return (ft_putstr_fd("Malloc error\n", 2), NULL);
 	line = ft_strjoin(aux, s3);
 	free(aux);
 	if (!line)
-		return (ft_putstr_fd("Malloc error", 2), NULL);
+		return (ft_putstr_fd("Malloc error\n", 2), NULL);
 	return (line);
 }

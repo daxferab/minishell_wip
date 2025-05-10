@@ -10,5 +10,5 @@ int	cmd_pwd(t_smash *smash, char **input)
 	smash->cwd = getcwd(NULL, 0);
 	if (smash->cwd)
 		return (ft_printf("%s\n", smash->cwd), 0);
-	return (1);
+	return (ft_printf_fd(2, "Couldn`t find working directory\n"), 2); //TODO: close or only error msg?
 }
