@@ -143,7 +143,7 @@ void	free_pipeline(t_pipeline *pipeline);
 void	import_history(t_smash *smash);
 void	add_history_entry(t_smash *smash);
 
-void	sig_init();
+void	sig_init(void);
 
 /******************************************************************************/
 /*                              FUNCTIONS - ENV                               */
@@ -207,5 +207,6 @@ void	get_token_type(t_token_type *type, char *c);
 void	mutate(t_token_type *type, char c);
 bool	is_redirection(t_token_type type);
 bool	is_word(t_token_type type);
+char	*get_token_name(t_token_type type);
 
 #endif

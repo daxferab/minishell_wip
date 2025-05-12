@@ -37,3 +37,16 @@ bool	is_word(t_token_type type)
 {
 	return (type == LITERAL || type == SINGLE_QUOTE || type == DOUBLE_QUOTE);
 }
+
+char	*get_token_name(t_token_type type)
+{
+	if (type == INPUT)
+		return ("<");
+	if (type == OUTPUT)
+		return (">");
+	if (type == HEREDOC)
+		return ("<<");
+	if (type == APPEND)
+		return (">>");
+	return (NULL);
+}
