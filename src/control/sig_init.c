@@ -2,7 +2,7 @@
 #include <sys/ioctl.h>
 
 static void	init_sigquit(void);
-static void	new_line(void);
+static void	new_line(int sig);
 static void	init_sigint(void);
 
 void	sig_init(void)
@@ -27,8 +27,9 @@ static void	init_sigint(void)
 	sigaction(SIGINT, &sa, NULL);
 }
 
-static void	new_line(void)
+static void	new_line(int sig)
 {
+	(void)sig;
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
