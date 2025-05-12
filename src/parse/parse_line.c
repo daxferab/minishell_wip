@@ -16,10 +16,7 @@ bool	parse_line(t_smash *smash)
 		exit(1);
 	}
 	if (!syntax(smash))
-	{
-		ft_printf_fd(STDERR_FILENO, "smash: syntax error\n");
 		return (false);
-	}
 	if (!parse_pipeline(smash))
 	{
 		ft_putstr_fd("Malloc error\n", 2);
