@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-//TODO syntax error, but where?
 bool	syntax(t_smash *smash)
 {
 	t_token	*iter;
@@ -13,9 +12,13 @@ bool	syntax(t_smash *smash)
 	{
 		if (iter->type == PIPE && (!iter->next || iter->next->type == PIPE))
 			return (ft_printf_fd(STDERR_FILENO, "smash: syntax error near '|'\n"), false);
-		if (is_redirection(iter->type)
-			&& (!iter->next || !is_word(iter->next->type)))
-			return (ft_printf_fd(STDERR_FILENO, "smash: syntax error near '%s'\n", NULL), false); //TODO: Print next token
+		if (is_redirection(iter->type))
+		{
+			if (!iter->next)
+				return (ft_printf_fd(STDERR_FILENO, "smash: syntax error near '\\n'\n"), false);
+			if (!is_word(iter->next->type))
+				return (ft_printf_fd(STDERR_FILENO, "smash: syntax error near '%s'\n", iter->next->value), false); //TODO: Print next token
+		}
 		iter = iter->next;
 	}
 	return (true);
