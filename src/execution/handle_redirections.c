@@ -3,8 +3,9 @@
 static bool	open_heredoc(t_smash *smash, t_redir *redir);
 static bool	heredoc_loop(t_smash *smash, t_token *token, int *fds, char *delim);
 static void	open_fd(t_pipeline *pipeline, t_redir *redir);
+static void	handle_fd(t_smash *smash);
 
-bool	handle_redirections(t_smash *smash, t_pipeline	*pipeline)
+bool	handle_redirections(t_smash *smash)
 {
 	t_pipeline	*pipeline;
 	t_redir		*redir;
@@ -21,6 +22,15 @@ bool	handle_redirections(t_smash *smash, t_pipeline	*pipeline)
 		}
 		pipeline = pipeline->next;
 	}
+	handle_fd(smash);
+	return (true);
+}
+
+static void	handle_fd(t_smash *smash)
+{
+	t_pipeline	*pipeline;
+	t_redir		*redir;
+
 	pipeline = smash->first_pipeline;
 	while (pipeline)
 	{
@@ -32,7 +42,6 @@ bool	handle_redirections(t_smash *smash, t_pipeline	*pipeline)
 		}
 		pipeline = pipeline->next;
 	}
-	return (true);
 }
 
 //TODO SIGNALS for now, heredoc closes with Ctrl+d
