@@ -42,4 +42,3 @@ static t_smash	init(int argc, char **argv, char **envp)
 	import_history(&smash);
 	return (smash);
 }
-//TODO: protect builtins mallocs

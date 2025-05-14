@@ -62,7 +62,7 @@ int	envsize(t_envp *lst)
 	return (count);
 }
 
-bool	is_valid_key(char *key) //TODO: try to use valid_char
+bool	is_valid_key(char *key)
 {
 	int	i;
 
