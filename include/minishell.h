@@ -12,6 +12,9 @@
 /*                                   MACROS                                   */
 /******************************************************************************/
 
+# define PROMPT			"\e[1;38;5;99mSMASH -> \e[0m"
+# define HEREDOC_PROMPT	"\e[1;38;5;99m> \e[0m"
+
 # define PIPE_READ	STDIN_FILENO
 # define PIPE_WRITE	STDOUT_FILENO
 
@@ -143,6 +146,7 @@ void	free_pipeline(t_pipeline *pipeline);
 void	import_history(t_smash *smash);
 void	add_history_entry(t_smash *smash);
 
+char 	*prompt(t_smash *smash, bool in_heredoc);
 void	sig_init(void);
 
 /******************************************************************************/

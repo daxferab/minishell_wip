@@ -37,17 +37,6 @@ bool	handle_redirections(t_smash *smash)
 	return (true);
 }
 
-static char *heredoc_prompt(t_smash *smash)
-{
-	if (smash->debug_mode)
-	{
-		ft_printf("\e[1;38;5;99m> \e[0m");
-		return (ft_get_next_line_no_nl(STDIN_FILENO));
-	}
-	else
-		return (readline("\e[1;38;5;99m> \e[0m"));
-}
-
 //TODO for now, heredoc closes with Ctrl+d
 static bool	open_heredoc(t_smash *smash, t_redir *redir)
 {
@@ -68,7 +57,7 @@ static bool	open_heredoc(t_smash *smash, t_redir *redir)
 	iter = head;
 	while (true)
 	{
-		iter->value = heredoc_prompt(smash);
+		iter->value = prompt(smash, true);
 		if (!iter->value || ft_str_equals(redir->value, iter->value))
 			break ;
 		if (!expand_token(smash, iter, true))
