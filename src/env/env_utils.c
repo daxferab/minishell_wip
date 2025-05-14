@@ -35,8 +35,8 @@ t_envp	*new_node(char *key, char *value)
 	newnode = malloc(sizeof(t_envp));
 	if (!newnode)
 		return (NULL);
-	newnode->key = key;
-	newnode->value = value;
+	newnode->key = ft_strdup(key);
+	newnode->value = ft_strdup(value);
 	newnode->next = NULL;
 	return (newnode);
 }
@@ -62,7 +62,7 @@ int	envsize(t_envp *lst)
 	return (count);
 }
 
-bool	is_valid_key(char *key) //TODO: try to use valid_char
+bool	is_valid_key(char *key)
 {
 	int	i;
 

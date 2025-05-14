@@ -1,9 +1,7 @@
 #include "minishell.h"
 
-
 static bool	has_valid_args(char **input);
 
-//FIXME: Export without arguments
 int	cmd_export(t_smash *smash, char **input)
 {
 	int		i;
@@ -18,15 +16,14 @@ int	cmd_export(t_smash *smash, char **input)
 		if (entry && is_valid_key(entry[0]))
 		{
 			if (!get_value(smash->envp, entry[0]))
-			{
-				if (!new_entry(&smash->envp, entry[0], entry[1]))
+				if (!new_entry(&(smash->envp), entry[0], entry[1]))
 					return (ft_free_double_pointer((void **)entry), ft_putstr_fd("Malloc error\n", 2), -1);
-				return (free(entry), 0);
-			}
 			if (!update_envp(&(smash->envp), entry[0], entry[1]))
 				return (ft_free_double_pointer((void **)entry), ft_putstr_fd("Malloc error\n", 2), -1);
-			ft_free_double_pointer((void **)entry);
 		}
+		else
+			ft_printf_fd(2, "smash: export: '%s': not a valid identifier\n", input[i]);
+		ft_free_double_pointer((void **)entry);
 		i++;
 	}
 	return (0);
