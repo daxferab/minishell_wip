@@ -178,7 +178,7 @@ void	execute_command(t_smash *smash, t_pipeline *pipeline, pid_t *pid);
 void	execute_external(t_smash *smash, t_pipeline *pipeline);
 void	execute(t_smash *smash);
 t_exit_code	get_command(char **path, char *command, char **path_command);
-void	handle_redirections(t_smash *smash);
+bool	handle_redirections(t_smash *smash);
 
 /******************************************************************************/
 /*                             FUNCTIONS - PARSE                              */

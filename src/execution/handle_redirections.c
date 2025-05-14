@@ -1,9 +1,9 @@
 #include "minishell.h"
 
-static void	open_heredoc(t_smash *smash, t_redir *redir);
+static bool	open_heredoc(t_smash *smash, t_redir *redir);
 static void	open_fd(t_pipeline *pipeline, t_redir *redir);
 
-void	handle_redirections(t_smash *smash)
+bool	handle_redirections(t_smash *smash)
 {
 	t_pipeline	*pipeline;
 	t_redir		*redir;
@@ -14,7 +14,11 @@ void	handle_redirections(t_smash *smash)
 		redir = pipeline->redir_lst;
 		while (redir)
 		{
-			open_heredoc(smash, redir);
+			if (!open_heredoc(smash, redir))
+			{
+				ft_printf_fd(2, "ERROR opening heredocs\n");
+				return (false);
+			}
 			redir = redir->next;
 		}
 		pipeline = pipeline->next;
@@ -30,33 +34,65 @@ void	handle_redirections(t_smash *smash)
 		}
 		pipeline = pipeline->next;
 	}
+	return (true);
+}
+
+static char *heredoc_prompt(t_smash *smash)
+{
+	if (smash->debug_mode)
+	{
+		ft_printf("\e[1;38;5;99m> \e[0m");
+		return (ft_get_next_line_no_nl(STDIN_FILENO));
+	}
+	else
+		return (readline("\e[1;38;5;99m> \e[0m"));
 }
 
 //TODO for now, heredoc closes with Ctrl+d
-static void	open_heredoc(t_smash *smash, t_redir *redir)
+static bool	open_heredoc(t_smash *smash, t_redir *redir)
 {
 	int		fds[2];
 	t_token	*head;
 	t_token	*iter;
 
 	if (redir->type != HEREDOC)
-		return ;
-	pipe(fds);//TODO protect
-	head = ft_calloc(1, sizeof(t_token));//TODO protect
+		return (true);
+	head = ft_calloc(1, sizeof(t_token));
+	if (!head)
+		return (false);
+	if (pipe(fds) == -1)
+	{
+		free(head);
+		return (false);
+	}
 	iter = head;
 	while (true)
 	{
-		iter->value = readline("> ");
+		iter->value = heredoc_prompt(smash);
 		if (!iter->value || ft_str_equals(redir->value, iter->value))
 			break ;
-		expand_token(smash, iter, true);//TODO protect
+		if (!expand_token(smash, iter, true))
+		{
+			clear_tokens(head);
+			close(fds[0]);
+			close(fds[1]);
+			return (false);
+		}
 		ft_printf_fd(fds[PIPE_WRITE], "%s\n", iter->value);
-		iter->next = ft_calloc(1, sizeof(t_token));//TODO protect
+		iter->next = ft_calloc(1, sizeof(t_token));
+		if (!iter->next)
+		{
+			clear_tokens(head);
+			close(fds[0]);
+			close(fds[1]);
+			return (false);
+		}
 		iter = iter->next;
 	}
 	clear_tokens(head);
 	close(fds[PIPE_WRITE]);
 	redir->fd = fds[PIPE_READ];
+	return (true);
 }
 
 static void	open_fd(t_pipeline *pipeline, t_redir *redir)
