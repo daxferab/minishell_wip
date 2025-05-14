@@ -13,6 +13,7 @@ bool	tokenize(t_smash *smash)
 
 	iter = -1;
 	start_token = -1;
+	type = -1;
 	while (smash->user_input[++iter])
 	{
 		if (is_start_token(start_token, smash->user_input[iter]))
