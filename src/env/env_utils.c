@@ -35,8 +35,8 @@ t_envp	*new_node(char *key, char *value)
 	newnode = malloc(sizeof(t_envp));
 	if (!newnode)
 		return (NULL);
-	newnode->key = key;
-	newnode->value = value;
+	newnode->key = ft_strdup(key);
+	newnode->value = ft_strdup(value);
 	newnode->next = NULL;
 	return (newnode);
 }

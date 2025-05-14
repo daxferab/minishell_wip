@@ -20,10 +20,10 @@ int	cmd_export(t_smash *smash, char **input)
 					return (ft_free_double_pointer((void **)entry), ft_putstr_fd("Malloc error\n", 2), -1);
 			if (!update_envp(&(smash->envp), entry[0], entry[1]))
 				return (ft_free_double_pointer((void **)entry), ft_putstr_fd("Malloc error\n", 2), -1);
-			free(entry); //FIXME: value weird char "?"
 		}
 		else
 			ft_printf_fd(2, "smash: export: '%s': not a valid identifier\n", input[i]);
+		ft_free_double_pointer((void **)entry);
 		i++;
 	}
 	return (0);
