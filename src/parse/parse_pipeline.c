@@ -36,15 +36,12 @@ static t_pipeline	*new_pipeline(t_token *current)
 
 	cmd_num = get_cmd_num(current);
 	i = 0;
-	new_pipeline = malloc(sizeof(t_pipeline));
+	new_pipeline = ft_calloc(1, sizeof(t_pipeline));
 	if (!new_pipeline)
 		return (NULL);
-	new_pipeline->cmd = malloc(sizeof(char *) * (cmd_num + 1));
+	new_pipeline->cmd = ft_calloc(cmd_num + 1, sizeof(char *));
 	if (!new_pipeline->cmd)
 		return (free(new_pipeline), NULL);
-	new_pipeline->redir_lst = NULL;
-	new_pipeline->next = NULL;
-	new_pipeline->fd_in = STDIN_FILENO;
 	new_pipeline->fd_out = STDOUT_FILENO;
 	while (current && current->type != PIPE)
 	{
@@ -59,7 +56,6 @@ static t_pipeline	*new_pipeline(t_token *current)
 			current = current->next;
 		}
 	}
-	new_pipeline->cmd[i] = NULL;
 	return (new_pipeline);
 }
 
