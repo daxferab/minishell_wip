@@ -7,20 +7,10 @@ bool	parse_line(t_smash *smash)
 		return (true);
 	add_history_entry(smash);
 	if (!tokenize(smash) || !expand_variables(smash) || !remove_quotes(smash))
-	{
-		ft_putstr_fd("Malloc error\n", 2);
-		clear_input(smash);
-		free_smash(*smash);
-		exit(1);
-	}
+		return (ft_putstr_fd("Internal error\n", 2), clear_input(smash), false);
 	if (!syntax(smash))
-		return (false);
+		return (true); //TODO: Handle syntax error
 	if (!parse_pipeline(smash))
-	{
-		ft_putstr_fd("Malloc error\n", 2);
-		clear_input(smash);
-		free_smash(*smash);
-		exit(1);
-	}
+		return (ft_putstr_fd("Internal error\n", 2), clear_input(smash), false);
 	return (true);
 }
