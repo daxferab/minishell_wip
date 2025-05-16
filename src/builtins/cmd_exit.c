@@ -8,7 +8,7 @@ int	cmd_exit(t_smash *smash, char **input)
 	(void) input;
 	num = 0;
 	if (input[1] && !ft_strncmp(input[1], "-", 1))
-		return (ft_putstr_fd("smash: export: -: invalid option\n", 2), 2);
+		return (ft_putstr_fd("smash: exit: -: invalid option\n", 2), 2);
 	ft_printf("exit\n");
 	if (input[1] && input[2])
 		return (ft_printf_fd(2, "smash: exit: too many arguments\n"), 2);
