@@ -45,6 +45,15 @@ typedef enum e_exit_code
 	EC_COMMAND_NOT_FOUND		= 127
 }	t_exit_code;
 
+typedef enum e_error_type
+{
+	OK,
+	EMPTY_PROMPT,
+	INTERNAL,
+	UNCLOSED_QUOTES,
+	SYNTAX
+}	t_error_type;
+
 /******************************************************************************/
 /*                                  STRUCTS                                   */
 /******************************************************************************/
@@ -94,17 +103,18 @@ typedef struct s_envp
 
 typedef struct s_smash
 {
-	char		*user_input;
-	bool		debug_mode;
-	t_envp		*envp;
-	char		*cwd;
-	int			exit_status;
-	char		*history_file;
-	t_token		*first_token;
-	t_token		*last_token;
-	t_pipeline	*first_pipeline;
-	int			fd_stdin;
-	int			fd_stdout;
+	char			*user_input;
+	bool			debug_mode;
+	t_envp			*envp;
+	char			*cwd;
+	int				exit_status;
+	char			*history_file;
+	t_token			*first_token;
+	t_token			*last_token;
+	t_pipeline		*first_pipeline;
+	int				fd_stdin;
+	int				fd_stdout;
+	t_error_type	error_type;
 }	t_smash;
 
 /******************************************************************************/
