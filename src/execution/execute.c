@@ -10,14 +10,19 @@ bool	execute(t_smash *smash)
 
 	pid = INIT_PID;
 	if (!open_pipes(smash->first_pipeline) || !handle_redirections(smash))
-	{
+	{//TODO refactor
 		clear_input(smash);
 		return (false);
 	}
 	pipeline = smash->first_pipeline;
 	while (pipeline)
 	{
-		execute_command(smash, pipeline, &pid);
+		if (!execute_command(smash, pipeline, &pid))
+		{//TODO refactor
+			clear_input(smash);
+			wait_children(smash, pid);
+			return (false);
+		}
 		pipeline = pipeline->next;
 	}
 	clear_input(smash);
