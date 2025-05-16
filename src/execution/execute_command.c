@@ -2,25 +2,32 @@
 
 static void	execute_child(t_smash *smash, t_pipeline *pipeline);
 static void	close_unused_fds(t_smash *smash, t_pipeline *pipeline);
-static void	backup_std_fds(t_smash *smash, t_pipeline *pipeline);
-static void	restore_std_fds(t_smash *smash);
+static bool	backup_std_fds(t_smash *smash, t_pipeline *pipeline);
+static bool	restore_std_fds(t_smash *smash);
 
-void	execute_command(t_smash *smash, t_pipeline *pipeline, pid_t *pid)
+bool	execute_command(t_smash *smash, t_pipeline *pipeline, pid_t *pid)
 {
+	smash->fd_stdin = -1;
+	smash->fd_stdout = -1;
 	if (pipeline->fd_in < 0 || pipeline->fd_out < 0 || !pipeline->cmd[0])
-		return ;
-	backup_std_fds(smash, pipeline);
+		return (true);
+	if (!backup_std_fds(smash, pipeline))
+		return (false);
 	if (smash->first_pipeline->next || !execute_builtins(smash, pipeline))
 	{
 		*pid = fork();
-		// if (pid == -1)
-		// 	;//TODO protect fork
+		if (*pid == -1)
+		{
+			restore_std_fds(smash);
+			return (false);
+		}
 		if (*pid == 0)
 			execute_child(smash, pipeline);
 	}
-	restore_std_fds(smash);
+	return (restore_std_fds(smash));
 }
 
+//TODO check deeply and protect
 static void	execute_child(t_smash *smash, t_pipeline *pipeline)
 {
 	close_unused_fds(smash, pipeline);
@@ -55,34 +62,53 @@ static void	close_unused_fds(t_smash *smash, t_pipeline *pipeline)
 	}
 }
 
-static void	backup_std_fds(t_smash *smash, t_pipeline *pipeline)
+static bool	backup_std_fds(t_smash *smash, t_pipeline *pipeline)
 {
-	smash->fd_stdin = -1;
-	smash->fd_stdout = -1;
 	if (pipeline->fd_in != STDIN_FILENO)
 	{
-		smash->fd_stdin = dup(STDIN_FILENO); //TODO protect dup
-		dup2(pipeline->fd_in, STDIN_FILENO); //TODO protect dup2
-		close(pipeline->fd_in);
+		smash->fd_stdin = dup(STDIN_FILENO);
+		if (smash->fd_stdin == -1)
+			return (false);
+		if (dup2(pipeline->fd_in, STDIN_FILENO) == -1 || close(pipeline->fd_in) == -1)
+			return (close(smash->fd_stdin), false);
 	}
 	if (pipeline->fd_out != STDOUT_FILENO)
 	{
-		smash->fd_stdout = dup(STDOUT_FILENO); //TODO protect dup
-		dup2(pipeline->fd_out, STDOUT_FILENO); //TODO protect dup2
-		close(pipeline->fd_out);
+		smash->fd_stdout = dup(STDOUT_FILENO);
+		if (smash->fd_stdout == -1)
+		{
+			if (smash->fd_stdin != -1)
+				close(smash->fd_stdin);
+			return (false);
+		}
+		if (dup2(pipeline->fd_out, STDOUT_FILENO) == -1 || close(pipeline->fd_out) == -1)
+		{
+			if (smash->fd_stdin != -1)
+				close(smash->fd_stdin);
+			return (close(smash->fd_stdout), false);
+		}
 	}
+	return (true);
 }
 
-static void	restore_std_fds(t_smash *smash)
+static bool	restore_std_fds(t_smash *smash)
 {
+	bool	ok;
+
+	ok = true;
 	if (smash->fd_stdin != -1)
 	{
-		dup2(smash->fd_stdin, STDIN_FILENO); //TODO protect dup2
-		close(smash->fd_stdin);
+		if (dup2(smash->fd_stdin, STDIN_FILENO) == -1)
+			ok = false;
+		if (close(smash->fd_stdin) == -1)
+			ok = false;
 	}
 	if (smash->fd_stdout != -1)
 	{
-		dup2(smash->fd_stdout, STDOUT_FILENO); //TODO protect dup2
-		close(smash->fd_stdout);
+		if (dup2(smash->fd_stdout, STDOUT_FILENO) == -1)
+			ok = false;
+		if (close(smash->fd_stdout) == -1)
+			ok = false;
 	}
+	return (ok);
 }
