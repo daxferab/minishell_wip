@@ -11,12 +11,11 @@ bool	remove_quotes(t_smash *smash)
 	iter = smash->first_token;
 	while (iter)
 	{
-		if (iter->type == LITERAL)
-			if (!remove_token(iter))
-			{
-				smash->error_type = INTERNAL;
-				return (false);
-			}
+		if (iter->type == LITERAL && !remove_token(iter))
+		{
+			smash->error_type = INTERNAL;
+			return (false);
+		}
 		iter = iter->next;
 	}
 	return (true);

@@ -15,7 +15,6 @@ int	main(int argc, char **argv, char **envp)
 		parse_line(&smash);
 		if (smash.error_type != OK)
 		{
-			clear_input(&smash);
 			if (smash.error_type == CTRL_D || smash.error_type == INTERNAL)
 				break ;
 			else
@@ -40,6 +39,7 @@ static t_smash	init(int argc, char **argv, char **envp)
 	smash.cwd = getcwd(NULL, 0);
 	if (!smash.envp || !smash.cwd)
 		smash.exit_status = 1;
+	smash.user_input = NULL;
 	smash.first_token = NULL;
 	smash.last_token = NULL;
 	smash.first_pipeline = NULL;

@@ -2,6 +2,7 @@
 
 void	parse_line(t_smash *smash)
 {
+	clear_input(smash);
 	smash->user_input = prompt(smash, false);
 	if (!smash->user_input)
 		smash->error_type = CTRL_D;

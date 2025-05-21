@@ -10,24 +10,17 @@ bool	execute(t_smash *smash)
 
 	pid = INIT_PID;
 	if (!open_pipes(smash->first_pipeline) || !handle_redirections(smash))
-	{//TODO refactor
-		clear_input(smash);
-		return (false);
-	}
+		smash->error_type = INTERNAL;
 	pipeline = smash->first_pipeline;
-	while (pipeline)
+	while (smash->error_type != INTERNAL && pipeline)
 	{
 		if (!execute_command(smash, pipeline, &pid))
-		{//TODO refactor
-			clear_input(smash);
-			wait_children(smash, pid);
-			return (false);
-		}
+			smash->error_type = INTERNAL;
 		pipeline = pipeline->next;
 	}
 	clear_input(smash);
 	wait_children(smash, pid);
-	return (true);
+	return (smash->error_type != INTERNAL);
 }
 
 static bool	open_pipes(t_pipeline *pipeline)

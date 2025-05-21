@@ -12,6 +12,7 @@ void	clear_input(t_smash *smash)
 	smash->first_token = NULL;
 	smash->last_token = NULL;
 	smash->first_pipeline = NULL;
+	smash->user_input = NULL;
 }
 
 void	clear_tokens(t_token *token)

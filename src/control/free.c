@@ -17,6 +17,7 @@ void	free_t_envp(t_envp *envp)
 
 void	free_smash(t_smash smash)
 {
+	clear_input(&smash);
 	free_t_envp(smash.envp);
 	free(smash.cwd);
 	free(smash.history_file);
