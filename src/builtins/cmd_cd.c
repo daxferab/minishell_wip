@@ -1,16 +1,12 @@
 #include "minishell.h"
 
 static bool	update_wd(t_smash *smash);
-static int	array_len(char **array);
 
 int	cmd_cd(t_smash *smash, char **input)
 {
-	int	cmd_len;
-
-	cmd_len = array_len(input);
-	if (cmd_len > 2)
+	if (input[1] && input[2])
 		return (ft_putstr_fd("smash: cd: too many args\n", 2), 1);
-	if (cmd_len == 1)
+	if (!input[1])
 	{
 		if (!get_value(smash->envp, "HOME"))
 			return (ft_putstr_fd("smash: cd: HOME is not set\n", 2), 1);
@@ -39,14 +35,4 @@ static bool	update_wd(t_smash *smash)
 	if (get_value(smash->envp, "PWD") && smash->cwd)
 		return (update_envp(&smash->envp, "PWD", smash->cwd));
 	return (false);
-}
-
-static int	array_len(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-		i++;
-	return (i);
 }

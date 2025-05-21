@@ -4,16 +4,13 @@ int	cmd_exit(t_smash *smash, char **input)
 {
 	int	num;
 
-	(void) smash;
-	(void) input;
 	num = 0;
-	if (input[1] && !ft_strncmp(input[1], "-", 1))
-		return (ft_putstr_fd("smash: exit: -: invalid option\n", 2), 2);
 	ft_printf("exit\n");
 	if (input[1] && input[2])
-		return (ft_printf_fd(2, "smash: exit: too many arguments\n"), 2);
+		return (ft_printf_fd(2, "smash: exit: too many arguments\n"), 1);
 	if (input[1] && !ft_atoi_better(input[1], &num))
-		return (ft_printf_fd(2, "smash: exit: %s: numeric argument required\n", input[1]), 2);
+		ft_printf_fd(2, "smash: exit: %s: numeric argument required\n", input[1]);
+	free_smash(*smash);
 	exit(num);
 	return (0);
 }
