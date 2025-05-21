@@ -27,17 +27,16 @@ bool	execute_command(t_smash *smash, t_pipeline *pipeline, pid_t *pid)
 	return (restore_std_fds(smash));
 }
 
-//TODO check deeply and protect
 static void	execute_child(t_smash *smash, t_pipeline *pipeline)
 {
+	int	exit_status;
+
 	close_unused_fds(smash, pipeline);
 	if (!execute_builtins(smash, pipeline))
 		execute_external(smash, pipeline);
-	close(pipeline->fd_in);
-	close(pipeline->fd_out);
-	clear_input(smash);
+	exit_status = smash->exit_status;
 	free_smash(*smash);
-	exit(smash->exit_status);
+	exit(exit_status);
 }
 
 static void	close_unused_fds(t_smash *smash, t_pipeline *pipeline)
