@@ -13,35 +13,19 @@ int	main(int argc, char **argv, char **envp)
 	{
 		sig_init();
 		parse_line(&smash);
-		if (smash.error_type == CTRL_D)
+		if (smash.error_type != OK)
 		{
 			clear_input(&smash);
-			break ;
-		}
-		else if (smash.error_type == EMPTY_PROMPT)
-		{
-			clear_input(&smash);
-			continue ;
-		}
-		else if (smash.error_type == UNCLOSED_QUOTES)
-		{
-			clear_input(&smash);
-			continue ;
-		}
-		else if (smash.error_type == SYNTAX)
-		{
-			clear_input(&smash);
-			continue ;
-		}
-		else if (smash.error_type == INTERNAL)
-		{
-			ft_printf_fd(2, "Internal error\n");
-			clear_input(&smash);
-			break ;
+			if (smash.error_type == CTRL_D || smash.error_type == INTERNAL)
+				break ;
+			else
+				continue ;
 		}
 		if (!execute(&smash))
 			break ;
 	}
+	if (smash.error_type == INTERNAL)
+		ft_printf_fd(2, "Internal error\n");
 	free_smash(smash);
 	return (0);
 }
