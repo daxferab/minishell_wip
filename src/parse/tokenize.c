@@ -27,12 +27,19 @@ bool	tokenize(t_smash *smash)
 		if (is_end_token(start_token, smash->user_input[iter + 1], type))
 		{
 			if (!add_token(smash, start_token, iter - start_token + 1, type))
+			{
+				smash->error_type = INTERNAL;
 				return (false);
+			}
 			start_token = -1;
 		}
 	}
 	if (start_token != -1)
-		ft_printf_fd(STDERR_FILENO, "smash: unclosed quotes\n"); //TODO: Dont execute
+	{
+		ft_printf_fd(STDERR_FILENO, "smash: unclosed quotes\n");
+		smash->error_type = UNCLOSED_QUOTES;
+		return (false);
+	}
 	return (true);
 }
 

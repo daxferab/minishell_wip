@@ -48,10 +48,11 @@ typedef enum e_exit_code
 typedef enum e_error_type
 {
 	OK,
+	CTRL_D,
 	EMPTY_PROMPT,
-	INTERNAL,
 	UNCLOSED_QUOTES,
-	SYNTAX
+	SYNTAX,
+	INTERNAL
 }	t_error_type;
 
 /******************************************************************************/
@@ -200,7 +201,7 @@ bool	handle_redirections(t_smash *smash);
 
 bool	get_variable(t_smash *smash, t_token *token, int pos);
 bool	parse_pipeline(t_smash *smash);
-bool	parse_line(t_smash *smash);
+void	parse_line(t_smash *smash);
 bool	remove_quotes(t_smash *smash);
 bool	syntax(t_smash *smash);
 bool	tokenize(t_smash *smash);

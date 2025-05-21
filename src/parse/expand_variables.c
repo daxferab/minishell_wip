@@ -14,7 +14,10 @@ bool	expand_variables(t_smash *smash)
 	{
 		if (iter->type == LITERAL && last_type != HEREDOC)
 			if (!expand_token(smash, iter, false))
+			{
+				smash->error_type = INTERNAL;
 				return (false);
+			}
 		last_type = iter->type;
 		iter = iter->next;
 	}
