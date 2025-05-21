@@ -12,13 +12,33 @@ int	main(int argc, char **argv, char **envp)
 	while (true)
 	{
 		sig_init();
-		if (!parse_line(&smash) || (smash.user_input && !smash.user_input[0]))
+		parse_line(&smash);
+		if (smash.error_type == CTRL_D)
+		{
+			clear_input(&smash);
+			break ;
+		}
+		else if (smash.error_type == EMPTY_PROMPT)
 		{
 			clear_input(&smash);
 			continue ;
 		}
-		if (!smash.user_input)
+		else if (smash.error_type == UNCLOSED_QUOTES)
+		{
+			clear_input(&smash);
+			continue ;
+		}
+		else if (smash.error_type == SYNTAX)
+		{
+			clear_input(&smash);
+			continue ;
+		}
+		else if (smash.error_type == INTERNAL)
+		{
+			ft_printf_fd(2, "Internal error\n");
+			clear_input(&smash);
 			break ;
+		}
 		if (!execute(&smash))
 			break ;
 	}
@@ -40,6 +60,7 @@ static t_smash	init(int argc, char **argv, char **envp)
 	smash.last_token = NULL;
 	smash.first_pipeline = NULL;
 	smash.history_file = NULL;
+	smash.error_type = OK;
 	import_history(&smash);
 	return (smash);
 }

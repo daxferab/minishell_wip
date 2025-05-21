@@ -4,6 +4,7 @@ bool	syntax(t_smash *smash)
 {
 	t_token	*iter;
 
+	smash->error_type = SYNTAX;
 	if ((smash->first_token && smash->first_token->type == PIPE)
 		|| (smash->last_token && smash->last_token->type == PIPE))
 		return (ft_printf_fd(2, "smash: syntax error near '|'\n"), false);
@@ -23,5 +24,6 @@ bool	syntax(t_smash *smash)
 		}
 		iter = iter->next;
 	}
+	smash->error_type = OK;
 	return (true);
 }

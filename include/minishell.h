@@ -45,6 +45,16 @@ typedef enum e_exit_code
 	EC_COMMAND_NOT_FOUND		= 127
 }	t_exit_code;
 
+typedef enum e_error_type
+{
+	OK,
+	CTRL_D,
+	EMPTY_PROMPT,
+	UNCLOSED_QUOTES,
+	SYNTAX,
+	INTERNAL
+}	t_error_type;
+
 /******************************************************************************/
 /*                                  STRUCTS                                   */
 /******************************************************************************/
@@ -94,17 +104,18 @@ typedef struct s_envp
 
 typedef struct s_smash
 {
-	char		*user_input;
-	bool		debug_mode;
-	t_envp		*envp;
-	char		*cwd;
-	int			exit_status;
-	char		*history_file;
-	t_token		*first_token;
-	t_token		*last_token;
-	t_pipeline	*first_pipeline;
-	int			fd_stdin;
-	int			fd_stdout;
+	char			*user_input;
+	bool			debug_mode;
+	t_envp			*envp;
+	char			*cwd;
+	int				exit_status;
+	char			*history_file;
+	t_token			*first_token;
+	t_token			*last_token;
+	t_pipeline		*first_pipeline;
+	int				fd_stdin;
+	int				fd_stdout;
+	t_error_type	error_type;
 }	t_smash;
 
 /******************************************************************************/
@@ -190,7 +201,7 @@ bool	handle_redirections(t_smash *smash);
 
 bool	get_variable(t_smash *smash, t_token *token, int pos);
 bool	parse_pipeline(t_smash *smash);
-bool	parse_line(t_smash *smash);
+void	parse_line(t_smash *smash);
 bool	remove_quotes(t_smash *smash);
 bool	syntax(t_smash *smash);
 bool	tokenize(t_smash *smash);
