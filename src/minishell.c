@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	if (smash.error_type == INTERNAL)
 		ft_printf_fd(2, "Internal error\n");
-	free_smash(smash);
+	cmd_exit(&smash, NULL);
 	return (0);
 }
 

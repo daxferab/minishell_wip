@@ -55,5 +55,5 @@ static void	error_message(t_exit_code *exit_value, char *cmd_path, char *cmd_0)
 	else if (*exit_value == EC_COMMAND_NOT_EXECUTABLE)
 		ft_printf_fd(STDERR_FILENO, "smash: %s: Permission denied\n", cmd_path);
 	else if (*exit_value == EC_COMMAND_NOT_FOUND)
-		ft_printf_fd(STDERR_FILENO, "smash: %s: Command not found\n", cmd_0);
+		ft_printf_fd(STDERR_FILENO, "smash: %s: command not found\n", cmd_0);
 }
