@@ -12,8 +12,8 @@
 /*                                   MACROS                                   */
 /******************************************************************************/
 
-# define PROMPT			"\e[1;38;5;99mSMASH -> \e[0m"
-# define HEREDOC_PROMPT	"\e[1;38;5;99m> \e[0m"
+# define PROMPT			"\001\033[1;38;5;99m\002SMASH -> \001\033[0m\002"
+# define HEREDOC_PROMPT	"\001\033[1;38;5;99m\002> \001\033[0m\002"
 
 # define PIPE_READ	STDIN_FILENO
 # define PIPE_WRITE	STDOUT_FILENO

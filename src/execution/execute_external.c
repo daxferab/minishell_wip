@@ -25,18 +25,11 @@ void	execute_external(t_smash *smash, t_pipeline *pipeline)
 static char	**get_env_path(t_smash *smash)
 {
 	char	*env_path;
-	char	**split;
-	char	*substr;
 
 	env_path = get_value(smash->envp, "PATH");
 	if (!env_path)
 		return (NULL);
-	substr = ft_substr(env_path, 5, ft_strlen(env_path) - 5);
-	if (!substr)
-		return (NULL);
-	split = ft_split(substr, ':');
-	free(substr);
-	return (split);
+	return (ft_split(env_path, ':'));
 }
 
 static void	error_message(t_exit_code *exit_value, char *cmd_path, char *cmd_0)
