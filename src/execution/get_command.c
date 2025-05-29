@@ -7,7 +7,7 @@ t_exit_code	get_command(char **path, char *command, char **path_command)
 {
 	int		path_iter;
 
-	if (!path || !command)
+	if (!path || !command || !command[0])
 		return (EC_FILE_NOT_FOUND);
 	if (ft_strchr(command, '/'))
 		return (relative_absolute_path(command, path_command));

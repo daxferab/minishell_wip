@@ -15,6 +15,14 @@ void	clear_input(t_smash *smash)
 	smash->user_input = NULL;
 }
 
+//TODO refactor
+void	free_token(t_token *token)
+{
+	clear_vars(token->first_variable);
+	free(token->value);
+	free(token);
+}
+
 void	clear_tokens(t_token *token)
 {
 	t_token	*next;
