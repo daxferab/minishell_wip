@@ -30,7 +30,6 @@ bool	remove_empty_tokens(t_smash *smash)
 	return (smash->error_type != EMPTY_PROMPT);
 }
 
-//TODO syntax before removing empty tokens
 void	parse_line(t_smash *smash)
 {
 	clear_input(smash);
@@ -43,16 +42,13 @@ void	parse_line(t_smash *smash)
 		add_history_entry(smash);
 		if (!tokenize(smash))
 			return ;
-		debug_tokens(smash);
 		if (!expand_variables(smash))
 			return ;
-		debug_tokens(smash);
+		if (!syntax(smash))
+			return ;
 		if (!remove_empty_tokens(smash))
 			return ;
 		if (!remove_quotes(smash))
-			return ;
-		debug_tokens(smash);
-		if (!syntax(smash))
 			return ;
 		if (!parse_pipeline(smash))
 			return ;

@@ -9,7 +9,9 @@ bool	execute_command(t_smash *smash, t_pipeline *pipeline, pid_t *pid)
 {
 	smash->fd_stdin = -1;
 	smash->fd_stdout = -1;
-	if (!smash->first_pipeline->next && (pipeline->fd_in < 0 || pipeline->fd_out < 0 || !pipeline->cmd[0]))
+	if (!pipeline->cmd[0])
+		return (true);
+	if (!smash->first_pipeline->next && (pipeline->fd_in < 0 || pipeline->fd_out < 0))
 	{
 		smash->exit_status = 1;
 		return (true);
@@ -35,7 +37,7 @@ static void	execute_child(t_smash *smash, t_pipeline *pipeline)
 	int	exit_status;
 
 	exit_status = 0;
-	if (pipeline->fd_in < 0 || pipeline->fd_out < 0 || !pipeline->cmd[0])
+	if (pipeline->fd_in < 0 || pipeline->fd_out < 0)
 	{
 		if (!smash->first_pipeline->next || pipeline->cmd[0])
 			exit_status = 1;
