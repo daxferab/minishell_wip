@@ -51,3 +51,24 @@ void	debug_tokens(t_smash *smash)
 	}
 	ft_putstr_fd("\e[0m", STDERR_FILENO);
 }
+
+void	debug_pipelines(t_smash *smash)
+{
+	t_pipeline	*iter;
+	int			i;
+
+	if (!smash->debug_mode)
+		return ;
+	ft_putstr_fd("\e[3;33m", STDERR_FILENO);
+	iter = smash->first_pipeline;
+	while (iter)
+	{
+		ft_printf_fd(STDERR_FILENO, "Pipeline: \nfd in: %i\nfd out: %i\ncmd:\n",
+			iter->fd_in, iter->fd_out);
+		i = 0;
+		while (iter->cmd[i])
+			ft_printf_fd(STDERR_FILENO, "\t%s\n", iter->cmd[i++]);
+		iter = iter->next;
+	}
+	ft_putstr_fd("\e[0m", STDERR_FILENO);
+}

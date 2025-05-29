@@ -143,6 +143,7 @@ int		cmd_unset(t_smash *smash, char **input);
 void	debug_int(t_smash *smash, char *variable, int value);
 void	debug_string(t_smash *smash, char *variable, char *value);
 void	debug_tokens(t_smash *smash);
+void	debug_pipelines(t_smash *smash);
 
 // free.c
 
