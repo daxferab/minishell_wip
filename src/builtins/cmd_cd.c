@@ -5,7 +5,7 @@ static bool	update_wd(t_smash *smash);
 int	cmd_cd(t_smash *smash, char **input)
 {
 	if (input[1] && input[2])
-		return (ft_putstr_fd("smash: cd: too many args\n", 2), 1);
+		return (ft_putstr_fd("smash: cd: too many arguments\n", 2), 1);
 	if (!input[1])
 	{
 		if (!get_value(smash->envp, "HOME"))
@@ -18,7 +18,7 @@ int	cmd_cd(t_smash *smash, char **input)
 	if (ft_strncmp(input[1], "-", 1) == 0)
 		return (ft_putstr_fd("smash: cd: -: invalid option\n", 2), 2);
 	if (access(input[1], F_OK | X_OK) == -1)
-		return (1);
+		return (ft_putstr_fd("smash: cd: No such file or directory\n", 2), 1);
 	if (chdir(input[1]) == -1)
 		return (1);
 	if (!update_wd(smash))

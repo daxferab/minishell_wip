@@ -6,8 +6,10 @@ int	cmd_export(t_smash *smash, char **input)
 {
 	int		i;
 	char	**entry;
+	int		returnvalue;
 
 	i = 1;
+	returnvalue = 0;
 	if (!has_valid_args(input))
 		return (2);
 	while (input[i])
@@ -22,11 +24,14 @@ int	cmd_export(t_smash *smash, char **input)
 				return (ft_free_double_pointer((void **)entry), ft_putstr_fd("Internal error\n", 2), -1);
 		}
 		else
-			ft_printf_fd(2, "smash: export: '%s': not a valid identifier\n", input[i]);
+		{
+			returnvalue = 1;
+			ft_printf_fd(2, "smash: export: '%s': not a valid identifier\n", input[i]); //TODO: only if !is_valid_key
+		}
 		ft_free_double_pointer((void **)entry);
 		i++;
 	}
-	return (0);
+	return (returnvalue);
 }
 
 static bool	has_valid_args(char **input)
