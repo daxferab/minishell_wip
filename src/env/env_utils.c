@@ -69,7 +69,7 @@ bool	is_valid_key(char *key)
 	i = 0;
 	if (!ft_isalpha(key[0]) && key[0] != '_')
 		return (false);
-	while (key[i])
+	while (key[i] && key[i] != '=')
 	{
 		if (!ft_isalnum(key[i]) && key[i] != '_')
 			return (false);
