@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 int	cmd_pwd(t_smash *smash, char **input)
 {
 	if (input[1] && !ft_strncmp(input[1], "-", 1))

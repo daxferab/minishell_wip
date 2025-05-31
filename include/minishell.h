@@ -126,13 +126,13 @@ typedef struct s_smash
 /*                            FUNCTIONS - BUILTINS                            */
 /******************************************************************************/
 
-int		cmd_cd(t_smash *smash, char **input);
-int		cmd_echo(char **input);
-int		cmd_env(t_smash smash, char **input);
-int		cmd_exit(t_smash *smash, char **input);
-int		cmd_export(t_smash *smash, char **input);
-int		cmd_pwd(t_smash *smash, char **input);
-int		cmd_unset(t_smash *smash, char **input);
+int			cmd_cd(t_smash *smash, char **input);
+int			cmd_echo(char **input);
+int			cmd_env(t_smash smash, char **input);
+int			cmd_exit(t_smash *smash, char **input);
+int			cmd_export(t_smash *smash, char **input);
+int			cmd_pwd(t_smash *smash, char **input);
+int			cmd_unset(t_smash *smash, char **input);
 
 /******************************************************************************/
 /*                            FUNCTIONS - CONTROL                             */
@@ -140,26 +140,26 @@ int		cmd_unset(t_smash *smash, char **input);
 
 //debug.c
 
-void	debug_int(t_smash *smash, char *variable, int value);
-void	debug_string(t_smash *smash, char *variable, char *value);
-void	debug_tokens(t_smash *smash);
-void	debug_pipelines(t_smash *smash);
+void		debug_int(t_smash *smash, char *variable, int value);
+void		debug_string(t_smash *smash, char *variable, char *value);
+void		debug_tokens(t_smash *smash);
+void		debug_pipelines(t_smash *smash);
 
 // free.c
 
-void	free_smash(t_smash smash);
-void	free_t_envp(t_envp *envp);
-bool	free_node(t_envp *envp, char *key);
-void	free_redir(t_redir *redir);
-void	free_pipeline(t_pipeline *pipeline);
+void		free_smash(t_smash smash);
+void		free_t_envp(t_envp *envp);
+bool		free_node(t_envp *envp, char *key);
+void		free_redir(t_redir *redir);
+void		free_pipeline(t_pipeline *pipeline);
 
 // history.c
 
-void	import_history(t_smash *smash);
-void	add_history_entry(t_smash *smash);
+void		import_history(t_smash *smash);
+void		add_history_entry(t_smash *smash);
 
-char	*prompt(t_smash *smash, bool in_heredoc);
-void	sig_init(void);
+char		*prompt(t_smash *smash, bool in_heredoc);
+void		sig_init(void);
 
 /******************************************************************************/
 /*                              FUNCTIONS - ENV                               */
@@ -167,65 +167,65 @@ void	sig_init(void);
 
 // envlist.c
 
-char	*get_value(t_envp *envp, char *key);
-bool	new_entry(t_envp **envp, char *key, char *value);
-bool	update_envp(t_envp **envp, char	*key, char *newvalue);
-void	display_envp(t_envp *envp);
-t_envp	*init_envp(char **envp);
+char		*get_value(t_envp *envp, char *key);
+bool		new_entry(t_envp **envp, char *key, char *value);
+bool		update_envp(t_envp **envp, char	*key, char *newvalue);
+void		display_envp(t_envp *envp);
+t_envp		*init_envp(char **envp);
 
 //envutils.c
 
-char	**split_char(char *envp, char c);
-t_envp	*new_node(char *key, char *value);
-void	addnode_front(t_envp *node, t_envp **envp);
-int		envsize(t_envp *lst);
-bool	is_valid_key(char *key);
+char		**split_char(char *envp, char c);
+t_envp		*new_node(char *key, char *value);
+void		addnode_front(t_envp *node, t_envp **envp);
+int			envsize(t_envp *lst);
+bool		is_valid_key(char *key);
 
 //env_to_char.c
 
-char	**env_to_char(t_envp *env_lst);
+char		**env_to_char(t_envp *env_lst);
 
 /******************************************************************************/
 /*                            FUNCTIONS - EXECUTION                           */
 /******************************************************************************/
 
-bool	execute_builtins(t_smash *smash, t_pipeline *pipeline);
-bool	execute_command(t_smash *smash, t_pipeline *pipeline, pid_t *pid);
-void	execute_external(t_smash *smash, t_pipeline *pipeline);
-bool	execute(t_smash *smash);
+bool		execute_builtins(t_smash *smash, t_pipeline *pipeline);
+bool		execute_command(t_smash *smash, t_pipeline *pipeline, pid_t *pid);
+void		execute_external(t_smash *smash, t_pipeline *pipeline);
+bool		execute(t_smash *smash);
 t_exit_code	get_command(char **path, char *command, char **path_command);
-bool	handle_redirections(t_smash *smash);
+bool		handle_redirections(t_smash *smash);
 
 /******************************************************************************/
 /*                             FUNCTIONS - PARSE                              */
 /******************************************************************************/
 
-bool	get_variable(t_smash *smash, t_token *token, int pos);
-bool	parse_pipeline(t_smash *smash);
-void	parse_line(t_smash *smash);
-bool	remove_quotes(t_smash *smash);
-bool	syntax(t_smash *smash);
-bool	tokenize(t_smash *smash);
+bool		get_variable(t_smash *smash, t_token *token, int pos);
+bool		parse_pipeline(t_smash *smash);
+void		parse_line(t_smash *smash);
+bool		remove_quotes(t_smash *smash);
+bool		syntax(t_smash *smash);
+bool		tokenize(t_smash *smash);
 
 // clear_input.c
 
 //TODO refactor
-void	free_token(t_token *token);
+void		free_token(t_token *token);
 
-void	clear_input(t_smash *smash);
-void	clear_tokens(t_token *token);
+void		clear_input(t_smash *smash);
+void		clear_tokens(t_token *token);
 
 // expand_variables.c
 
-bool	expand_variables(t_smash *smash);
-bool	expand_token(t_smash *smash, t_token *token, bool in_heredoc);
+bool		expand_variables(t_smash *smash);
+bool		expand_token(t_smash *smash, t_token *token, bool in_heredoc);
 
 // token_type.c
 
-void	get_token_type(t_token_type *type, char *c);
-void	mutate(t_token_type *type, char c);
-bool	is_redirection(t_token_type type);
-bool	is_word(t_token_type type);
-char	*get_token_name(t_token_type type);
+void		get_token_type(t_token_type *type, char *c);
+void		mutate(t_token_type *type, char c);
+bool		is_redirection(t_token_type type);
+bool		is_word(t_token_type type);
+char		*get_token_name(t_token_type type);
 
 #endif

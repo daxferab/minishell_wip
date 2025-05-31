@@ -46,10 +46,8 @@ static t_pipeline	*new_pipeline(t_token *current)
 	while (current && current->type != PIPE)
 	{
 		if (is_redirection(current->type))
-		{
 			if (!add_redirection(new_pipeline, &current))
 				return (free_pipeline(new_pipeline), NULL);
-		}
 		else
 		{
 			new_pipeline->cmd[i++] = current->value;

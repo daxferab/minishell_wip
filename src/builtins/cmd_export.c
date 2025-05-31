@@ -1,6 +1,7 @@
 #include "minishell.h"
 
 static bool	has_valid_args(char **input);
+static bool	add_entry(t_smash *smash, char	**entry);
 
 int	cmd_export(t_smash *smash, char **input)
 {
@@ -18,20 +19,25 @@ int	cmd_export(t_smash *smash, char **input)
 		{
 			returnvalue = 1;
 			ft_printf_fd(2, "smash: export: '%s': not a valid identifier\n", input[i++]);
-			continue;
+			continue ;
 		}
 		entry = split_char(input[i++], '=');
 		if (entry)
-		{
-			if (!get_value(smash->envp, entry[0]))
-				if (!new_entry(&(smash->envp), entry[0], entry[1]))
-					return (ft_free_double_pointer((void **)entry), ft_putstr_fd("Internal error\n", 2), -1);
-			if (!update_envp(&(smash->envp), entry[0], entry[1]))
+			if (!add_entry(smash, entry))
 				return (ft_free_double_pointer((void **)entry), ft_putstr_fd("Internal error\n", 2), -1);
-		}		
 		ft_free_double_pointer((void **)entry);
 	}
 	return (returnvalue);
+}
+
+static bool	add_entry(t_smash *smash, char **entry)
+{
+	if (!get_value(smash->envp, entry[0]))
+		if (!new_entry(&(smash->envp), entry[0], entry[1]))
+			return (false);
+	if (!update_envp(&(smash->envp), entry[0], entry[1]))
+		return (false);
+	return (true);
 }
 
 static bool	has_valid_args(char **input)
