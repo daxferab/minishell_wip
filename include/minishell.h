@@ -138,6 +138,12 @@ int		cmd_unset(t_smash *smash, char **input);
 /*                            FUNCTIONS - CONTROL                             */
 /******************************************************************************/
 
+// clear_input.c
+
+void	clear_input(t_smash *smash);
+void	free_tokens(t_token *token);
+void	free_token(t_token *token);
+
 //debug.c
 
 void	debug_int(t_smash *smash, char *variable, int value);
@@ -202,17 +208,11 @@ bool	handle_redirections(t_smash *smash);
 
 bool	get_variable(t_smash *smash, t_token *token, int pos);
 bool	parse_pipeline(t_smash *smash);
+bool	remove_empty_tokens(t_smash *smash);
 void	parse_line(t_smash *smash);
 bool	remove_quotes(t_smash *smash);
 bool	syntax(t_smash *smash);
 bool	tokenize(t_smash *smash);
-
-// clear_input.c
-
-
-void	clear_input(t_smash *smash);
-void	free_tokens(t_token *token);
-void	free_token(t_token *token);
 
 // expand_variables.c
 
