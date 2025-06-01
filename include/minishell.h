@@ -199,7 +199,7 @@ bool	execute_builtins(t_smash *smash, t_pipeline *pipeline);
 bool	execute_command(t_smash *smash, t_pipeline *pipeline, pid_t *pid);
 void	execute_external(t_smash *smash, t_pipeline *pipeline);
 bool	execute(t_smash *smash);
-t_exit_code	get_command(char **path, char *command, char **path_command);
+char	*get_command(char **path, char *command, t_exit_code *exit_code);
 bool	handle_redirections(t_smash *smash);
 
 /******************************************************************************/

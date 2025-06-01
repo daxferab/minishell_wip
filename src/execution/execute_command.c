@@ -39,7 +39,7 @@ static void	execute_child(t_smash *smash, t_pipeline *pipeline)
 	exit_status = 0;
 	if (pipeline->fd_in < 0 || pipeline->fd_out < 0)
 	{
-		if (!smash->first_pipeline->next || pipeline->cmd[0])
+		if (!smash->first_pipeline->next)
 			exit_status = 1;
 		free_smash(*smash);
 		exit(exit_status);
