@@ -64,7 +64,7 @@ static bool	open_heredoc(t_smash *smash, t_redir *redir)
 	else
 		redir->fd = fds[PIPE_READ];
 	close(fds[PIPE_WRITE]);
-	clear_tokens(head);
+	free_tokens(head);
 	return (ok);
 }
 

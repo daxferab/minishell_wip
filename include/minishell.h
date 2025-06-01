@@ -209,11 +209,10 @@ bool	tokenize(t_smash *smash);
 
 // clear_input.c
 
-//TODO refactor
-void	free_token(t_token *token);
 
 void	clear_input(t_smash *smash);
-void	clear_tokens(t_token *token);
+void	free_tokens(t_token *token);
+void	free_token(t_token *token);
 
 // expand_variables.c
 
