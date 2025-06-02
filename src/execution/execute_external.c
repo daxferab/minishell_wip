@@ -12,7 +12,7 @@ void	execute_external(t_smash *smash, t_pipeline *pipeline)
 
 	command = NULL;
 	path = get_env_path(smash);
-	exit_code = get_command(path, pipeline->cmd[0], &command);
+	command = get_command(path, pipeline->cmd[0], &exit_code);
 	env_char = env_to_char(smash->envp);
 	if (exit_code == EC_SUCCESS)
 		execve(command, pipeline->cmd, env_char);

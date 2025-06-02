@@ -1,13 +1,12 @@
 #include "minishell.h"
 
-static void	clear_vars(t_var *var);
-static void	clear_pipelines(t_pipeline *pipeline);
-static void	clear_redirs(t_redir *redir);
+static void	free_pipelines(t_pipeline *pipeline);
+static void	free_redirs(t_redir *redir);
 
 void	clear_input(t_smash *smash)
 {
-	clear_tokens(smash->first_token);
-	clear_pipelines(smash->first_pipeline);
+	free_tokens(smash->first_token);
+	free_pipelines(smash->first_pipeline);
 	free(smash->user_input);
 	smash->first_token = NULL;
 	smash->last_token = NULL;
@@ -15,32 +14,24 @@ void	clear_input(t_smash *smash)
 	smash->user_input = NULL;
 }
 
-//TODO refactor
-void	free_token(t_token *token)
-{
-	clear_vars(token->first_variable);
-	free(token->value);
-	free(token);
-}
-
-void	clear_tokens(t_token *token)
+void	free_tokens(t_token *token)
 {
 	t_token	*next;
 
 	while (token)
 	{
 		next = token->next;
-		clear_vars(token->first_variable);
-		free(token->value);
-		free(token);
+		free_token(token);
 		token = next;
 	}
 }
 
-static void	clear_vars(t_var *var)
+void	free_token(t_token *token)
 {
+	t_var	*var;
 	t_var	*next;
 
+	var = token->first_variable;
 	while (var)
 	{
 		next = var->next;
@@ -48,9 +39,11 @@ static void	clear_vars(t_var *var)
 		free(var);
 		var = next;
 	}
+	free(token->value);
+	free(token);
 }
 
-static void	clear_pipelines(t_pipeline *pipeline)
+static void	free_pipelines(t_pipeline *pipeline)
 {
 	t_pipeline	*next;
 
@@ -61,14 +54,14 @@ static void	clear_pipelines(t_pipeline *pipeline)
 			close(pipeline->fd_in);
 		if (pipeline->fd_out != STDOUT_FILENO && pipeline->fd_out != -1)
 			close(pipeline->fd_out);
-		clear_redirs(pipeline->redir_lst);
+		free_redirs(pipeline->redir_lst);
 		free(pipeline->cmd);
 		free(pipeline);
 		pipeline = next;
 	}
 }
 
-static void	clear_redirs(t_redir *redir)
+static void	free_redirs(t_redir *redir)
 {
 	t_redir	*next;
 

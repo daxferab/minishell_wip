@@ -1,45 +1,64 @@
 #include "minishell.h"
 
-static t_exit_code	relative_absolute_path(char *command, char **path_command);
-static char			*join_path(char *path, char *command);
+static char	*relative_absolute_path(char *command, t_exit_code *exit_code);
+static char	*empty_command(char **path, char *command, t_exit_code *exit_code);
+static char	*join_path(char *path, char *command);
 
-t_exit_code	get_command(char **path, char *command, char **path_command)
+char	*get_command(char **path, char *command, t_exit_code *exit_code)
 {
+	char	*path_command;
 	int		path_iter;
 
-	if (!path || !command || !command[0])
-		return (EC_FILE_NOT_FOUND);
 	if (ft_strchr(command, '/'))
-		return (relative_absolute_path(command, path_command));
+		return (relative_absolute_path(command, exit_code));
+	if (!command[0] || !path)
+		return (empty_command(path, command, exit_code));
 	path_iter = -1;
 	while (path[++path_iter])
 	{
-		*path_command = join_path(path[path_iter], command);
-		if (!(*path_command))
-			return (EC_ERROR);
-		if (access(*path_command, F_OK) == -1)
+		path_command = join_path(path[path_iter], command);
+		if (!path_command)
+			*exit_code = EC_ERROR;
+		else if (access(path_command, F_OK) == -1)
 		{
-			free(*path_command);
+			free(path_command);
 			continue ;
 		}
-		if (access(*path_command, X_OK) == -1)
-			return (EC_COMMAND_NOT_EXECUTABLE);
-		return (EC_SUCCESS);
+		else if (access(path_command, X_OK) == -1)
+			*exit_code = EC_COMMAND_NOT_EXECUTABLE;
+		return (path_command);
 	}
-	*path_command = NULL;
-	return (EC_COMMAND_NOT_FOUND);
+	*exit_code = EC_COMMAND_NOT_FOUND;
+	return (NULL);
 }
 
-static t_exit_code	relative_absolute_path(char *command, char **path_command)
+static char	*relative_absolute_path(char *command, t_exit_code *exit_code)
 {
-	*path_command = ft_strdup(command);
-	if (!(*path_command))
-		return (EC_ERROR);
-	if (access(*path_command, F_OK) == -1)
-		return (EC_FILE_NOT_FOUND);
-	if (access(*path_command, X_OK) == -1)
-		return (EC_COMMAND_NOT_EXECUTABLE);
-	return (EC_SUCCESS);
+	char	*path_command;
+
+	path_command = ft_strdup(command);
+	if (!path_command)
+		*exit_code = EC_ERROR;
+	else if (access(path_command, F_OK) == -1)
+		*exit_code = EC_FILE_NOT_FOUND;
+	else if (access(path_command, X_OK) == -1)
+		*exit_code = EC_COMMAND_NOT_EXECUTABLE;
+	else
+		*exit_code = EC_SUCCESS;
+	return (path_command);
+}
+
+static char	*empty_command(char **path, char *command, t_exit_code *exit_code)
+{
+	char	*path_command;
+
+	path_command = ft_strdup(command);
+	*exit_code = EC_FILE_NOT_FOUND;
+	if (!path_command)
+		*exit_code = EC_ERROR;
+	else if (path)
+		*exit_code = EC_COMMAND_NOT_FOUND;
+	return (path_command);
 }
 
 static char	*join_path(char *path, char *command)

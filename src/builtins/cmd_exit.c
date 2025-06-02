@@ -12,7 +12,8 @@ int	cmd_exit(t_smash *smash, char **input)
 			return (ft_printf_fd(2, "smash: exit: too many arguments\n"), 1);
 		if (input[1] && !ft_atoi_better(input[1], &num))
 		{
-			ft_printf_fd(2, "smash: exit: %s: numeric argument required\n", input[1]);
+			ft_printf_fd(2,
+				"smash: exit: %s: numeric argument required\n", input[1]);
 			num = 2;
 		}
 	}

@@ -42,6 +42,7 @@ SOURCES :=	\
 				cmd_unset.c\
 			)\
 			$(addprefix control/,\
+				clear_input.c\
 				debug.c\
 				free.c\
 				history.c\
@@ -62,11 +63,11 @@ SOURCES :=	\
 				handle_redirections.c\
 			)\
 			$(addprefix parse/,\
-				clear_input.c\
 				expand_variables.c\
 				get_variable.c\
 				parse_line.c\
 				parse_pipeline.c\
+				remove_empty_tokens.c\
 				remove_quotes.c\
 				syntax.c\
 				token_type.c\
