@@ -9,11 +9,11 @@ bool	execute_command(t_smash *smash, t_pipeline *pipeline, pid_t *pid)
 {
 	smash->fd_stdin = -1;
 	smash->fd_stdout = -1;
-	if (!pipeline->cmd[0])
-		return (true);
-	if (!smash->first_pipeline->next && (pipeline->fd_in < 0 || pipeline->fd_out < 0))
+	if (!smash->first_pipeline->next
+		&& (pipeline->fd_in < 0 || pipeline->fd_out < 0 || !pipeline->cmd[0]))
 	{
-		smash->exit_status = 1;
+		if (pipeline->fd_in < 0 || pipeline->fd_out < 0)
+			smash->exit_status = 1;
 		return (true);
 	}
 	if (!backup_std_fds(smash, pipeline))
@@ -37,9 +37,9 @@ static void	execute_child(t_smash *smash, t_pipeline *pipeline)
 	int	exit_status;
 
 	exit_status = 0;
-	if (pipeline->fd_in < 0 || pipeline->fd_out < 0)
+	if (pipeline->fd_in < 0 || pipeline->fd_out < 0 || !pipeline->cmd[0])
 	{
-		if (!smash->first_pipeline->next)
+		if (pipeline->fd_in < 0 || pipeline->fd_out < 0)
 			exit_status = 1;
 		free_smash(*smash);
 		exit(exit_status);
@@ -81,7 +81,7 @@ static bool	backup_std_fds(t_smash *smash, t_pipeline *pipeline)
 		smash->fd_stdin = dup(STDIN_FILENO);
 		if (smash->fd_stdin == -1)
 			return (false);
-		if (dup2(pipeline->fd_in, STDIN_FILENO) == -1 || close(pipeline->fd_in) == -1)
+		if (dup2(pipeline->fd_in, 0) == -1 || close(pipeline->fd_in) == -1)
 			return (close(smash->fd_stdin), false);
 	}
 	if (pipeline->fd_out != STDOUT_FILENO && pipeline->fd_out >= 0)
@@ -93,7 +93,7 @@ static bool	backup_std_fds(t_smash *smash, t_pipeline *pipeline)
 				close(smash->fd_stdin);
 			return (false);
 		}
-		if (dup2(pipeline->fd_out, STDOUT_FILENO) == -1 || close(pipeline->fd_out) == -1)
+		if (dup2(pipeline->fd_out, 1) == -1 || close(pipeline->fd_out) == -1)
 		{
 			if (smash->fd_stdin != -1)
 				close(smash->fd_stdin);

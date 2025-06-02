@@ -15,7 +15,6 @@ bool	new_entry(t_envp **envp, char *key, char *value)
 {
 	t_envp	*node;
 
-
 	node = new_node(key, value);
 	if (!node)
 		return (false);
