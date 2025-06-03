@@ -8,7 +8,7 @@ int	main(int argc, char **argv, char **envp)
 
 	smash = init(argc, argv, envp);
 	if (smash.exit_status == 1)
-		return (free_smash(smash), ft_putstr_fd("Error initializing smash\n", 2), 1);
+		return (free_smash(smash), ft_putstr_fd("Internal error\n", 2), 1);
 	while (true)
 	{
 		sig_init();
@@ -37,7 +37,7 @@ static t_smash	init(int argc, char **argv, char **envp)
 	smash.exit_status = 0;
 	smash.envp = init_envp(envp);
 	smash.cwd = getcwd(NULL, 0);
-	if (!smash.envp || !smash.cwd)
+	if (!smash.envp || !smash.cwd || !shlvl(&smash))
 		smash.exit_status = 1;
 	smash.user_input = NULL;
 	smash.first_token = NULL;

@@ -47,6 +47,7 @@ SOURCES :=	\
 				free.c\
 				history.c\
 				prompt.c\
+				shlvl.c\
 				sig_init.c\
 			)\
 			$(addprefix env/,\
