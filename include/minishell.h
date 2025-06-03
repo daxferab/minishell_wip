@@ -215,14 +215,6 @@ bool	remove_quotes(t_smash *smash);
 bool	syntax(t_smash *smash);
 bool	tokenize(t_smash *smash);
 
-// clear_input.c
-
-//TODO refactor
-void	free_token(t_token *token);
-
-void	clear_input(t_smash *smash);
-void	clear_tokens(t_token *token);
-
 // expand_variables.c
 
 bool	expand_variables(t_smash *smash);
