@@ -18,7 +18,8 @@ bool	shlvl(t_smash *smash)
 		num = 1;
 	if (num >= 1000)
 	{
-		ft_printf_fd(2, "smash: warning: shell level (1000) too high, resetting to 1\n");
+		ft_printf_fd(2,
+			"smash: warning: shell level (1000) too high, resetting to 1\n");
 		num = 1;
 	}
 	itoa = ft_itoa(num);

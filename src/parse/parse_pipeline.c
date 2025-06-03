@@ -45,33 +45,30 @@ static t_pipeline	*new_pipeline(t_token *current)
 	new_pipeline->fd_out = STDOUT_FILENO;
 	while (current && current->type != PIPE)
 	{
-		if (is_redirection(current->type))
-		{
-			if (!add_redirection(new_pipeline, &current))
-				return (free_pipeline(new_pipeline), NULL);
-		}
-		else
+		if (!is_redirection(current->type))
 		{
 			new_pipeline->cmd[i++] = current->value;
 			current = current->next;
 		}
+		else if (!add_redirection(new_pipeline, &current))
+			return (free_pipeline(new_pipeline), NULL);
 	}
 	return (new_pipeline);
 }
 
-static int	get_cmd_num(t_token *current)
+static int	get_cmd_num(t_token *token)
 {
 	int		cmd_num;
 	t_token	*before;
 
 	cmd_num = 0;
 	before = NULL;
-	while (current && current->type != PIPE)
+	while (token && token->type != PIPE)
 	{
-		if (is_word(current->type) && (!before || !is_redirection(before->type)))
+		if (is_word(token->type) && (!before || !is_redirection(before->type)))
 			cmd_num++;
-		before = current;
-		current = current->next;
+		before = token;
+		token = token->next;
 	}
 	return (cmd_num);
 }

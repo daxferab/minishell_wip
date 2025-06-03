@@ -22,7 +22,7 @@ int	cmd_cd(t_smash *smash, char **input)
 	if (chdir(input[1]) == -1)
 		return (1);
 	if (!update_wd(smash))
-		ft_printf_fd(2, "Couldn`t set PWD or OLDPWD variable\n"); //TODO: close or only error msg?
+		ft_printf_fd(2, "smash: can't set PWD or OLDPWD variable\n");
 	return (0);
 }
 

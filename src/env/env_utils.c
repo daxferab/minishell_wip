@@ -21,7 +21,8 @@ char	**split_char(char *envp, char c)
 		return (ft_putstr_fd("Internal error\n", 2), free(key), NULL);
 	splitted = malloc(sizeof(char *) * 3);
 	if (!splitted)
-		return (ft_putstr_fd("Internal error\n", 2), free(key), free(value), NULL);
+		return (ft_putstr_fd("Internal error\n", 2),
+			free(key), free(value), NULL);
 	splitted[0] = key;
 	splitted[1] = value;
 	splitted[2] = NULL;

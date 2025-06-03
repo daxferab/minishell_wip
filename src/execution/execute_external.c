@@ -11,6 +11,7 @@ void	execute_external(t_smash *smash, t_pipeline *pipeline)
 	t_exit_code	exit_code;
 
 	command = NULL;
+	exit_code = EC_SUCCESS;
 	path = get_env_path(smash);
 	command = get_command(path, pipeline->cmd[0], &exit_code);
 	env_char = env_to_char(smash->envp);

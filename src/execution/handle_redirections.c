@@ -100,7 +100,7 @@ static void	open_fd(t_pipeline *pipeline, t_redir *redir)
 	else if (redir->type == APPEND)
 		redir->fd = open(redir->value, O_CREAT | O_APPEND | O_WRONLY, 0644);
 	if (redir->fd < 0)
-		ft_printf_fd(STDERR_FILENO, "smash: %s: %s\n", redir->value, strerror(errno));
+		ft_printf_fd(2, "smash: %s: %s\n", redir->value, strerror(errno));
 	if ((redir->type == INPUT || redir->type == HEREDOC)
 		&& pipeline->fd_in != STDIN_FILENO)
 		close(pipeline->fd_in);

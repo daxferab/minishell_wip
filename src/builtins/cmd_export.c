@@ -18,13 +18,14 @@ int	cmd_export(t_smash *smash, char **input)
 		if (!is_valid_key(input[i]))
 		{
 			returnvalue = 1;
-			ft_printf_fd(2, "smash: export: '%s': not a valid identifier\n", input[i++]);
+			ft_printf_fd(2, "smash: export: '%s': not a valid identifier\n",
+				input[i++]);
 			continue ;
 		}
 		entry = split_char(input[i++], '=');
-		if (entry)
-			if (!add_entry(smash, entry))
-				return (ft_free_double_pointer((void **)entry), ft_putstr_fd("Internal error\n", 2), -1);
+		if (entry && !add_entry(smash, entry))
+			return (ft_free_double_pointer((void **)entry),
+				ft_putstr_fd("Internal error\n", 2), -1);
 		ft_free_double_pointer((void **)entry);
 	}
 	return (returnvalue);
