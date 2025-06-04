@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+static void	custom_prompt(char	**entry);
 static bool	has_valid_args(char **input);
 static bool	add_entry(t_smash *smash, char	**entry);
 
@@ -23,12 +24,24 @@ int	cmd_export(t_smash *smash, char **input)
 			continue ;
 		}
 		entry = split_char(input[i++], '=');
+		custom_prompt(entry);
 		if (entry && !add_entry(smash, entry))
 			return (ft_free_double_pointer((void **)entry),
 				ft_putstr_fd("Internal error\n", 2), -1);
 		ft_free_double_pointer((void **)entry);
 	}
 	return (returnvalue);
+}
+
+static void	custom_prompt(char	**entry)
+{
+	char	*aux;
+	if ((ft_str_equals(entry[0], "PS1") || ft_str_equals(entry[0], "PS2")) && entry[1])
+	{
+		aux = parse_octals_prompt(entry[1]);
+		free(entry[1]);
+		entry[1] = aux;
+	}
 }
 
 static bool	add_entry(t_smash *smash, char **entry)
