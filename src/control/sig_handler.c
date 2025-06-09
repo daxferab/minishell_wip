@@ -1,6 +1,8 @@
 #include "minishell.h"
 #include <sys/ioctl.h>
 
+volatile sig_atomic_t g_heredoc_interrupted = 0;
+
 static void	handle_sigquit(void);
 static void	handle_sigint(void);
 static void	new_line(int sig);
@@ -30,6 +32,7 @@ static void	handle_sigint(void)
 static void	new_line(int sig)
 {
 	(void)sig;
+	g_heredoc_interrupted = 1;
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);

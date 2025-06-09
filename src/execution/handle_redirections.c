@@ -53,6 +53,7 @@ static bool	open_heredoc(t_smash *smash, t_redir *redir)
 
 	if (redir->type != HEREDOC)
 		return (true);
+	g_heredoc_interrupted = 0;
 	head = ft_calloc(1, sizeof(t_token));
 	if (!head)
 		return (false);
@@ -72,6 +73,8 @@ static bool	heredoc_loop(t_smash *smash, t_token *token, int *fds, char *delim)
 {
 	while (true)
 	{
+		if (g_heredoc_interrupted) 
+			break ;
 		token->value = prompt(smash, true);
 		if (!token->value || ft_str_equals(delim, token->value))
 			break ;
