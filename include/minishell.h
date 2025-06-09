@@ -167,6 +167,7 @@ void	import_history(t_smash *smash);
 void	add_history_entry(t_smash *smash);
 
 char	*prompt(t_smash *smash, bool in_heredoc);
+char	*parse_octals_prompt(char *prompt);
 bool	shlvl(t_smash *smash);
 void	sig_handler(void);
 
