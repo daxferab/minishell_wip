@@ -26,7 +26,6 @@ char	*prompt(t_smash *smash, bool in_heredoc)
 	return (readline(prompt));
 }
 
-//TODO free, or just call after export
 char	*parse_octals_prompt(char *prompt)
 {
 	char	*new;

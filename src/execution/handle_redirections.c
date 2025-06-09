@@ -44,7 +44,6 @@ static void	handle_fd(t_smash *smash)
 	}
 }
 
-//TODO SIGNALS for now, heredoc closes with Ctrl+d pero no con ctrl+C :)
 static bool	open_heredoc(t_smash *smash, t_redir *redir)
 {
 	int		fds[2];
