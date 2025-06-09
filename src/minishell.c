@@ -11,7 +11,7 @@ int	main(int argc, char **argv, char **envp)
 		return (free_smash(smash), ft_putstr_fd("Internal error\n", 2), 1);
 	while (true)
 	{
-		sig_init();
+		sig_handler();
 		parse_line(&smash);
 		if (smash.error_type != OK)
 		{

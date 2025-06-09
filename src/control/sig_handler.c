@@ -1,17 +1,17 @@
 #include "minishell.h"
 #include <sys/ioctl.h>
 
-static void	init_sigquit(void);
+static void	handle_sigquit(void);
+static void	handle_sigint(void);
 static void	new_line(int sig);
-static void	init_sigint(void);
 
-void	sig_init(void)
+void	sig_handler(void)
 {
-	init_sigquit(); // Ctrl + \ //
-	init_sigint(); // Ctrl + C //
+	handle_sigquit(); // Ctrl + \ //
+	handle_sigint(); // Ctrl + C //
 }
 
-static void	init_sigquit(void)
+static void	handle_sigquit(void)
 {
 	struct sigaction	sa;
 
@@ -19,7 +19,7 @@ static void	init_sigquit(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-static void	init_sigint(void)
+static void	handle_sigint(void)
 {
 	struct sigaction	sa;
 
