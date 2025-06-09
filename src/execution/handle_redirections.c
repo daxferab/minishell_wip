@@ -72,7 +72,7 @@ static bool	heredoc_loop(t_smash *smash, t_token *token, int *fds, char *delim)
 {
 	while (true)
 	{
-		if (g_heredoc_interrupted) 
+		if (g_heredoc_interrupted)
 			break ;
 		token->value = prompt(smash, true);
 		if (!token->value || ft_str_equals(delim, token->value))

@@ -1,7 +1,7 @@
 #include "minishell.h"
 #include <sys/ioctl.h>
 
-volatile sig_atomic_t g_heredoc_interrupted = 0;
+volatile sig_atomic_t	g_heredoc_interrupted = 0;
 
 static void	handle_sigquit(void);
 static void	handle_sigint(void);
@@ -9,8 +9,8 @@ static void	new_line(int sig);
 
 void	sig_handler(void)
 {
-	handle_sigquit(); // Ctrl + \ //
-	handle_sigint(); // Ctrl + C //
+	handle_sigquit();
+	handle_sigint();
 }
 
 static void	handle_sigquit(void)

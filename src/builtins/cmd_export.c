@@ -36,7 +36,9 @@ int	cmd_export(t_smash *smash, char **input)
 static void	custom_prompt(char	**entry)
 {
 	char	*aux;
-	if ((ft_str_equals(entry[0], "PS1") || ft_str_equals(entry[0], "PS2")) && entry[1])
+
+	if ((ft_str_equals(entry[0], "PS1") || ft_str_equals(entry[0], "PS2"))
+		&& entry[1])
 	{
 		aux = parse_octals_prompt(entry[1]);
 		free(entry[1]);
