@@ -1,11 +1,14 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define _GNU_SOURCE
+
 # include "libft.h"
 # include <errno.h>
-# include <readline/readline.h>
 # include <readline/history.h>
+# include <readline/readline.h>
 # include <signal.h>
+# include <sys/ioctl.h>
 # include <sys/wait.h>
 
 /******************************************************************************/
@@ -20,7 +23,7 @@
 
 # define INIT_PID -2
 
-extern volatile sig_atomic_t g_heredoc_interrupted;
+extern volatile sig_atomic_t	g_heredoc_interrupted;
 
 /******************************************************************************/
 /*                                   ENUMS                                    */
