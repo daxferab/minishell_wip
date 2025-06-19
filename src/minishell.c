@@ -11,7 +11,6 @@ int	main(int argc, char **argv, char **envp)
 		return (free_smash(smash), ft_putstr_fd("Internal error\n", 2), 1);
 	while (true)
 	{
-		sig_handler();
 		parse_line(&smash);
 		if (smash.error_type != OK)
 		{
@@ -46,5 +45,6 @@ static t_smash	init(int argc, char **argv, char **envp)
 	smash.history_file = NULL;
 	smash.error_type = OK;
 	import_history(&smash);
+	sig_handler();
 	return (smash);
 }

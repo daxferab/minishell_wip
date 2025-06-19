@@ -4,7 +4,7 @@ int	cmd_unset(t_smash *smash, char **input)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	if (!smash->envp)
 		return (1);
 	if (input[1] && !ft_strncmp(input[1], "-", 1))

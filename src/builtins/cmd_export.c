@@ -37,7 +37,8 @@ static void	custom_prompt(char	**entry)
 {
 	char	*aux;
 
-	if ((ft_str_equals(entry[0], "PS1") || ft_str_equals(entry[0], "PS2"))
+	if (entry
+		&& (ft_str_equals(entry[0], "PS1") || ft_str_equals(entry[0], "PS2"))
 		&& entry[1])
 	{
 		aux = parse_octals_prompt(entry[1]);
