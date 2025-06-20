@@ -12,7 +12,7 @@ int	cmd_unset(t_smash *smash, char **input)
 	while (input[i])
 	{
 		if (get_value(smash->envp, input[i]))
-			free_node(smash->envp, input[i]);
+			free_node(&(smash->envp), input[i]);
 		i++;
 	}
 	return (0);

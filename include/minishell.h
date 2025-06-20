@@ -160,7 +160,7 @@ void	debug_pipelines(t_smash *smash);
 
 void	free_smash(t_smash smash);
 void	free_t_envp(t_envp *envp);
-bool	free_node(t_envp *envp, char *key);
+bool	free_node(t_envp **envp, char *key);
 void	free_redir(t_redir *redir);
 void	free_pipeline(t_pipeline *pipeline);
 

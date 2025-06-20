@@ -27,23 +27,28 @@ void	free_smash(t_smash smash)
 	rl_clear_history();
 }
 
-bool	free_node(t_envp *envp, char *key)
+bool	free_node(t_envp **envp, char *key)
 {
+	t_envp	*current;
 	t_envp	*prev;
 
-	prev = envp;
-	while (envp)
+	current = *envp;
+	prev = NULL;
+	while (current)
 	{
-		if (ft_str_equals(envp->key, key))
+		if (ft_str_equals(current->key, key))
 		{
-			prev->next = envp->next;
-			free(envp->key);
-			free(envp->value);
-			free(envp);
+			if (prev == NULL)
+				*envp = current->next;
+			else
+				prev->next = current->next;
+			free(current->key);
+			free(current->value);
+			free(current);
 			return (true);
 		}
-		prev = envp;
-		envp = envp->next;
+		prev = current;
+		current = current->next;
 	}
 	return (false);
 }
