@@ -1,38 +1,37 @@
 #include "minishell.h"
 
-volatile sig_atomic_t	g_heredoc_interrupted = 0;
+bool	g_heredoc_interrupted = false;
 
-static void	handle_sigquit(void);
-static void	handle_sigint(void);
-static void	new_line(int sig);
+static void	handle_sigint(int sig);
 
-void	sig_handler(void)
+bool	sig_handler(void)
 {
-	handle_sigquit();
-	handle_sigint();
+	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+		return (false);
+	if (signal(SIGINT, handle_sigint) == SIG_ERR)
+		return (false);
+	return (true);
 }
 
-static void	handle_sigquit(void)
+/*
+ioctl(1, TIOCSTI, "\n")
+inyecta un carácter en la entrada del terminal.
+se simula que el usuario presionó Enter para que el shell siga funcionando.
+
+rl_on_new_line()
+Indica que el cursor está en una nueva línea (evita problemas de visualización).
+
+rl_replace_line("", 0)
+Borra el contenido de la línea actual en Readline
+*/
+
+static void	handle_sigint(int sig)
 {
-	struct sigaction	sa;
-
-	sa.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &sa, NULL);
-}
-
-static void	handle_sigint(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = new_line;
-	sigaction(SIGINT, &sa, NULL);
-}
-
-static void	new_line(int sig)
-{
-	(void) sig;
-	g_heredoc_interrupted = 1;
-	ioctl(STDIN_FILENO, TIOCSTI, "\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
+	if (sig == SIGINT)
+	{
+		g_heredoc_interrupted = true;
+		ioctl(1, TIOCSTI, "\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+	}
 }

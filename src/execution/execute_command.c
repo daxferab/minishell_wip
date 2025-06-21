@@ -37,6 +37,7 @@ static void	execute_child(t_smash *smash, t_pipeline *pipeline)
 	int	exit_status;
 
 	exit_status = 0;
+	signal(SIGQUIT, SIG_DFL);
 	if (pipeline->fd_in < 0 || pipeline->fd_out < 0 || !pipeline->cmd[0])
 	{
 		if (pipeline->fd_in < 0 || pipeline->fd_out < 0)

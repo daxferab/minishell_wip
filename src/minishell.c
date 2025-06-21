@@ -45,6 +45,7 @@ static t_smash	init(int argc, char **argv, char **envp)
 	smash.history_file = NULL;
 	smash.error_type = OK;
 	import_history(&smash);
-	sig_handler();
+	if (sig_handler() == false)
+		smash.exit_status = 1;
 	return (smash);
 }

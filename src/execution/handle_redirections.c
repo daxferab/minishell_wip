@@ -52,7 +52,7 @@ static bool	open_heredoc(t_smash *smash, t_redir *redir)
 
 	if (redir->type != HEREDOC)
 		return (true);
-	g_heredoc_interrupted = 0;
+	g_heredoc_interrupted = false;
 	head = ft_calloc(1, sizeof(t_token));
 	if (!head)
 		return (false);
