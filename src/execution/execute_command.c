@@ -26,6 +26,7 @@ bool	execute_command(t_smash *smash, t_pipeline *pipeline, pid_t *pid)
 			restore_std_fds(smash);
 			return (false);
 		}
+		signal(SIGINT, SIG_IGN);
 		if (*pid == 0)
 			execute_child(smash, pipeline);
 	}
@@ -37,7 +38,7 @@ static void	execute_child(t_smash *smash, t_pipeline *pipeline)
 	int	exit_status;
 
 	exit_status = 0;
-	signal(SIGQUIT, SIG_DFL);
+	sig_handler(smash);
 	if (pipeline->fd_in < 0 || pipeline->fd_out < 0 || !pipeline->cmd[0])
 	{
 		if (pipeline->fd_in < 0 || pipeline->fd_out < 0)

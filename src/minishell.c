@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+bool	g_sigint_heredoc = false;
+
 static t_smash	init(int argc, char **argv, char **envp);
 
 int	main(int argc, char **argv, char **envp)
@@ -11,6 +13,8 @@ int	main(int argc, char **argv, char **envp)
 		return (free_smash(smash), ft_putstr_fd("Internal error\n", 2), 1);
 	while (true)
 	{
+		if (!sig_handler(&smash))
+			break ;
 		parse_line(&smash);
 		if (smash.error_type != OK)
 		{
@@ -45,7 +49,5 @@ static t_smash	init(int argc, char **argv, char **envp)
 	smash.history_file = NULL;
 	smash.error_type = OK;
 	import_history(&smash);
-	if (sig_handler() == false)
-		smash.exit_status = 1;
 	return (smash);
 }

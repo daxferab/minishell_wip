@@ -5,7 +5,6 @@ static bool		get_var_regular_variable(t_smash *smash,
 					t_token *token, int pos);
 static size_t	len(char *value, int pos);
 
-//returns false if malloc fails
 bool	get_variable(t_smash *smash, t_token *token, int pos)
 {
 	t_var	*var;

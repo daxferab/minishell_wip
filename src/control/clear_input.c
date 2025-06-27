@@ -12,6 +12,9 @@ void	clear_input(t_smash *smash)
 	smash->last_token = NULL;
 	smash->first_pipeline = NULL;
 	smash->user_input = NULL;
+	if (g_sigint_heredoc)
+		smash->exit_status = 130;
+	g_sigint_heredoc = false;
 }
 
 void	free_tokens(t_token *token)

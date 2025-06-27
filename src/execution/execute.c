@@ -12,7 +12,7 @@ bool	execute(t_smash *smash)
 	if (!open_pipes(smash->first_pipeline) || !handle_redirections(smash))
 		smash->error_type = INTERNAL;
 	pipeline = smash->first_pipeline;
-	while (smash->error_type != INTERNAL && pipeline)
+	while (smash->error_type != INTERNAL && pipeline && !g_sigint_heredoc)
 	{
 		if (!execute_command(smash, pipeline, &pid))
 			smash->error_type = INTERNAL;
@@ -45,10 +45,17 @@ static void	wait_children(t_smash *smash, pid_t last_child)
 
 	pid = 0;
 	status = -1;
-	while (pid != -1)
+	while (true)
 	{
 		pid = wait(&status);
+		if (pid == -1)
+			break ;
 		if (pid == last_child)
 			smash->exit_status = WEXITSTATUS(status);
+		if (WIFSIGNALED(status))
+		{
+			ft_printf("\n");
+			smash->exit_status = WTERMSIG(status) + 128;
+		}
 	}
 }

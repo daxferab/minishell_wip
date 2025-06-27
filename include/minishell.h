@@ -23,7 +23,7 @@
 
 # define INIT_PID -2
 
-extern bool	g_heredoc_interrupted;
+extern bool	g_sigint_heredoc;
 
 /******************************************************************************/
 /*                                   ENUMS                                    */
@@ -172,7 +172,7 @@ void	add_history_entry(t_smash *smash);
 char	*prompt(t_smash *smash, bool in_heredoc);
 char	*parse_octals_prompt(char *prompt);
 bool	shlvl(t_smash *smash);
-bool	sig_handler(void);
+bool	sig_handler(t_smash *smash);
 
 /******************************************************************************/
 /*                              FUNCTIONS - ENV                               */

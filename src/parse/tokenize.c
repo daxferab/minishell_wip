@@ -66,7 +66,6 @@ static bool	is_end_token(int start_token, char c, t_token_type type)
 	return (true);
 }
 
-//returns false if malloc fails
 static bool	add_token(t_smash *smash, int start, int len, t_token_type type)
 {
 	t_token	*token;
